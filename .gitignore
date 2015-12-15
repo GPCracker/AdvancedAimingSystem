@@ -1,0 +1,6 @@
+# Excluding build
+build/
+# Excluding release
+release/
+# Excluding temp
+temp/
