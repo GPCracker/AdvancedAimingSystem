@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- *** This file contains umlaut replace pairs for BigWorld GUI.Text containers. *** -->
+<!-- *** To see this file content correctly you should switch encoding into 'UTF-8 without BOM'! *** -->
+<!-- *** Editing file in incorrect encoding will cause content damage. Check encoding before saving. *** -->
+<!-- *** It is recommended to use Notepad++, Sublime Text or any other professional text editor for making changes in this file. *** -->
+<root>
+	<umlaut><uml>Ä</uml><rpl>A</rpl></umlaut>
+	<umlaut><uml>ä</uml><rpl>a</rpl></umlaut>
+	<umlaut><uml>Â</uml><rpl>A</rpl></umlaut>
+	<umlaut><uml>â</uml><rpl>a</rpl></umlaut>
+	<umlaut><uml>À</uml><rpl>A</rpl></umlaut>
+	<umlaut><uml>à</uml><rpl>a</rpl></umlaut>
+	<umlaut><uml>Ç</uml><rpl>C</rpl></umlaut>
+	<umlaut><uml>ç</uml><rpl>c</rpl></umlaut>
+	<umlaut><uml>É</uml><rpl>E</rpl></umlaut>
+	<umlaut><uml>é</uml><rpl>e</rpl></umlaut>
+	<umlaut><uml>Ê</uml><rpl>E</rpl></umlaut>
+	<umlaut><uml>ê</uml><rpl>e</rpl></umlaut>
+	<umlaut><uml>È</uml><rpl>E</rpl></umlaut>
+	<umlaut><uml>è</uml><rpl>e</rpl></umlaut>
+	<umlaut><uml>Ë</uml><rpl>E</rpl></umlaut>
+	<umlaut><uml>ë</uml><rpl>e</rpl></umlaut>
+	<umlaut><uml>Ï</uml><rpl>I</rpl></umlaut>
+	<umlaut><uml>ï</uml><rpl>i</rpl></umlaut>
+	<umlaut><uml>Î</uml><rpl>I</rpl></umlaut>
+	<umlaut><uml>î</uml><rpl>i</rpl></umlaut>
+	<umlaut><uml>Ö</uml><rpl>O</rpl></umlaut>
+	<umlaut><uml>ö</uml><rpl>o</rpl></umlaut>
+	<umlaut><uml>Ô</uml><rpl>O</rpl></umlaut>
+	<umlaut><uml>ô</uml><rpl>o</rpl></umlaut>
+	<umlaut><uml>ẞ</uml><rpl>SS</rpl></umlaut>
+	<umlaut><uml>ß</uml><rpl>ss</rpl></umlaut>
+	<umlaut><uml>Ü</uml><rpl>U</rpl></umlaut>
+	<umlaut><uml>ü</uml><rpl>u</rpl></umlaut>
+	<umlaut><uml>Û</uml><rpl>U</rpl></umlaut>
+	<umlaut><uml>û</uml><rpl>u</rpl></umlaut>
+	<umlaut><uml>Ù</uml><rpl>U</rpl></umlaut>
+	<umlaut><uml>ù</uml><rpl>u</rpl></umlaut>
+	<umlaut><uml>ø</uml><rpl>Y</rpl></umlaut>
+	<umlaut><uml>ÿ</uml><rpl>y</rpl></umlaut>
+</root>
