@@ -3,6 +3,7 @@ import os
 import imp
 import json
 import time
+import shutil
 import struct
 import marshal
 import zipfile
@@ -87,10 +88,12 @@ if __name__ == '__main__':
 		zipPath = config["zipPath"]
 		sources = config["sources"]
 		resources = config["resources"]
-		if not os.path.isdir(buildPath):
-			os.makedirs(buildPath)
-		if not os.path.isdir(releasePath):
-			os.makedirs(releasePath)
+		if os.path.isdir(buildPath):
+			shutil.rmtree(buildPath)
+		if os.path.isdir(releasePath):
+			shutil.rmtree(releasePath)
+		os.makedirs(buildPath)
+		os.makedirs(releasePath)
 		with zipfile.ZipFile(os.path.join(releasePath, application + '.zip').replace(os.sep, '/'), 'w', zipfile.ZIP_DEFLATED) as fzip:
 			src_file = getPath(buildPath, '{0}.py'.format(application))
 			bin_file = getPath(buildPath, '{0}.pyc'.format(application))
