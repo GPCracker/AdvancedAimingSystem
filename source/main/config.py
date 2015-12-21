@@ -116,10 +116,10 @@ def defaultConfig():
 				'activated': ('Bool', True),
 				'key': ('String', 'KEY_LCONTROL+KEY_A'),
 				'switch': ('Bool', True),
-				'template': ('WideString', u'Remains: {{remainingAimingTime:.2f}}s;\\nDistance: {{aimingDistance:.1f}}m;\\nDeviation: {{deviation:.2f}}m;\\nFly time: {{flyTime:.2f}}s;'),
+				'template': ('WideString', u'Remains: {{remainingAimingTime:.2f}}s;\\nDistance: {{aimingDistance:.1f}}m;\\nDeviation: {{deviation:.2f}}m;\\nFly time: {{flyTime:.2f}}s;\\nHit angle: {{hitAngleDeg:+.1f}}deg;'),
 				'settings': {
 					'window': {
-						'size': ('Vector2', Math.Vector2(180, 85)),
+						'size': ('Vector2', Math.Vector2(180, 105)),
 						'colour': ('Vector4', Math.Vector4(0, 0, 0, 127)),
 						'position': ('Vector3', Math.Vector3(0.4, -0.1, 1.0)),
 						'textureName': ('String', 'gui/maps/ingame/textures/AdvancedAimingSystem/aimingInfoBG.dds'),
@@ -207,10 +207,10 @@ def defaultConfig():
 				'activated': ('Bool', True),
 				'key': ('String', 'KEY_LCONTROL+KEY_A'),
 				'switch': ('Bool', True),
-				'template': ('WideString', u'Remains: {{remainingAimingTime:.2f}}s;\\nDistance: {{aimingDistance:.1f}}m;\\nDeviation: {{deviation:.2f}}m;\\nFly time: {{flyTime:.2f}}s;'),
+				'template': ('WideString', u'Remains: {{remainingAimingTime:.2f}}s;\\nDistance: {{aimingDistance:.1f}}m;\\nDeviation: {{deviation:.2f}}m;\\nFly time: {{flyTime:.2f}}s;\\nHit angle: {{hitAngleDeg:+.1f}}deg;'),
 				'settings': {
 					'window': {
-						'size': ('Vector2', Math.Vector2(180, 85)),
+						'size': ('Vector2', Math.Vector2(180, 105)),
 						'colour': ('Vector4', Math.Vector4(0, 0, 0, 127)),
 						'position': ('Vector3', Math.Vector3(0.4, -0.25, 1.0)),
 						'textureName': ('String', 'gui/maps/ingame/textures/AdvancedAimingSystem/aimingInfoBG.dds'),
@@ -303,10 +303,10 @@ def defaultConfig():
 				'activated': ('Bool', True),
 				'key': ('String', 'KEY_LCONTROL+KEY_A'),
 				'switch': ('Bool', True),
-				'template': ('WideString', u'Remains: {{remainingAimingTime:.2f}}s;\\nDistance: {{aimingDistance:.1f}}m;\\nDeviation: {{deviation:.2f}}m;\\nFly time: {{flyTime:.2f}}s;'),
+				'template': ('WideString', u'Remains: {{remainingAimingTime:.2f}}s;\\nDistance: {{aimingDistance:.1f}}m;\\nDeviation: {{deviation:.2f}}m;\\nFly time: {{flyTime:.2f}}s;\\nHit angle: {{hitAngleDeg:+.1f}}deg;'),
 				'settings': {
 					'window': {
-						'size': ('Vector2', Math.Vector2(180, 85)),
+						'size': ('Vector2', Math.Vector2(180, 105)),
 						'colour': ('Vector4', Math.Vector4(0, 0, 0, 127)),
 						'position': ('Vector3', Math.Vector3(-0.3, -0.4, 1.0)),
 						'textureName': ('String', 'gui/maps/ingame/textures/AdvancedAimingSystem/aimingInfoBG.dds'),

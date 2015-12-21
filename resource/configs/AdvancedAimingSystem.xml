@@ -174,12 +174,12 @@
 			<activated>True</activated>
 			<key>KEY_LCONTROL+KEY_A</key>
 			<switch>True</switch>
-			<template>Осталось: {{remainingAimingTime:.2f}}с;\nДистанция: {{aimingDistance:.1f}}м;\nРазброс: {{deviation:.2f}}м;\nВремя полета: {{flyTime:.2f}}с;</template>
+			<template>Осталось: {{remainingAimingTime:.2f}}с;\nДистанция: {{aimingDistance:.1f}}м;\nРазброс: {{deviation:.2f}}м;\nВремя полета: {{flyTime:.2f}}с;\nУгол падения: {{hitAngleDeg:+.1f}}гр;</template>
 			<!-- BW GUI component settings. Advanced users only. -->
 			<!-- Настройки компонента BW GUI. Для опытных пользователей. -->
 			<settings>
 				<window>
-					<size>205 85</size>
+					<size>205 105</size>
 					<position>0.4 -0.1 1.0</position>
 				</window>
 				<label>
@@ -244,10 +244,10 @@
 			<activated>True</activated>
 			<key>KEY_LCONTROL+KEY_A</key>
 			<switch>True</switch>
-			<template>Осталось: {{remainingAimingTime:.2f}}с;\nДистанция: {{aimingDistance:.1f}}м;\nРазброс: {{deviation:.2f}}м;\nВремя полета: {{flyTime:.2f}}с;</template>
+			<template>Осталось: {{remainingAimingTime:.2f}}с;\nДистанция: {{aimingDistance:.1f}}м;\nРазброс: {{deviation:.2f}}м;\nВремя полета: {{flyTime:.2f}}с;\nУгол падения: {{hitAngleDeg:+.1f}}гр;</template>
 			<settings>
 				<window>
-					<size>205 85</size>
+					<size>205 105</size>
 					<position>0.4 -0.25 1.0</position>
 				</window>
 				<label>
@@ -316,10 +316,10 @@
 			<activated>True</activated>
 			<key>KEY_LCONTROL+KEY_A</key>
 			<switch>True</switch>
-			<template>Осталось: {{remainingAimingTime:.2f}}с;\nДистанция: {{aimingDistance:.1f}}м;\nРазброс: {{deviation:.2f}}м;\nВремя полета: {{flyTime:.2f}}с;</template>
+			<template>Осталось: {{remainingAimingTime:.2f}}с;\nДистанция: {{aimingDistance:.1f}}м;\nРазброс: {{deviation:.2f}}м;\nВремя полета: {{flyTime:.2f}}с;\nУгол падения: {{hitAngleDeg:+.1f}}гр;</template>
 			<settings>
 				<window>
-					<size>205 85</size>
+					<size>205 105</size>
 					<position>-0.3 -0.4 1.0</position>
 				</window>
 				<label>
