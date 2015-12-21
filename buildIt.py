@@ -82,7 +82,18 @@ if __name__ == '__main__':
 		cfg_file = joinPath(os.path.splitext(__file__)[0] + '.cfg')
 		with open(cfg_file, 'rb') as f:
 			config = json.loads(f.read())
+		vcs_file = joinPath(os.path.dirname(__file__), 'version.cfg')
+		version = '<custom_build>'
+		if os.path.isfile(vcs_file):
+			with open(vcs_file, 'r+b') as f:
+				vcs_info = json.load(f)
+				version = '{release}#{next_build}'.format(**vcs_info)
+				vcs_info['next_build'] += 1
+				f.seek(0)
+				f.truncate()
+				f.write(json.dumps(vcs_info) + '\n')
 		application = config["application"]
+		versionMacros = config["versionMacros"]
 		clientVersion = config["clientVersion"]
 		buildPath = config["buildPath"].replace('<client>', clientVersion)
 		releasePath = config["releasePath"].replace('<client>', clientVersion)
@@ -96,10 +107,11 @@ if __name__ == '__main__':
 		os.makedirs(buildPath)
 		os.makedirs(releasePath)
 		with zipfile.ZipFile(os.path.join(releasePath, application + '.zip').replace(os.sep, '/'), 'w', zipfile.ZIP_DEFLATED) as fzip:
-			processScript(getSource(list(sourceIterator(sources))), src_file, bin_file, zip_file, fzip, '{0}.py'.format(application))
 			src_file = joinPath(buildPath, '{0}.py'.format(application))
 			bin_file = joinPath(buildPath, '{0}.pyc'.format(application))
 			zip_file = joinPath(zipPath, '{0}.pyc'.format(application))
+			script = getSource(sourceIterator(sources)).replace(versionMacros, version)
+			processScript(script, src_file, bin_file, zip_file, fzip, '{0}.py'.format(application))
 			for src_file, zip_file in resourceIterator(resources):
 				processResource(src_file, zip_file.replace('<client>', clientVersion), fzip)
 	except:
