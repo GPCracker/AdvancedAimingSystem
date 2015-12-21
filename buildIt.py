@@ -17,18 +17,18 @@ def compileSource(source, filename = '<string>', filetime = time.time()):
 		result = bytesIO.getvalue()
 	return result
 
-def getPath(*args, **kwargs):
+def joinPath(*args, **kwargs):
 	return os.path.normpath(os.path.join(*args, **kwargs)).replace(os.sep, '/')
 
 def sourceIterator(src_list):
 	for source in src_list:
 		if os.path.isfile(source):
-			yield getPath(source)
+			yield joinPath(source)
 		elif os.path.isdir(source):
 			for root, dirs, files in os.walk(source):
 				root = os.path.relpath(root, source)
 				for file in files:
-					yield getPath(source, root, file)
+					yield joinPath(source, root, file)
 	return
 
 def processSource(src_file):
@@ -59,16 +59,16 @@ def resourceIterator(res_list):
 	for resource, target in res_list:
 		if os.path.isfile(resource):
 			yield (
-				getPath(resource),
-				getPath(target)
+				joinPath(resource),
+				joinPath(target)
 			)
 		elif os.path.isdir(resource):
 			for root, dirs, files in os.walk(resource):
 				root = os.path.relpath(root, resource)
 				for file in files:
 					yield (
-						getPath(resource, root, file),
-						getPath(target, root, file)
+						joinPath(resource, root, file),
+						joinPath(target, root, file)
 					)
 	return
 
@@ -79,9 +79,9 @@ def processResource(src_file, zip_file, fzip):
 
 if __name__ == '__main__':
 	try:
-		cfg_file = (os.path.splitext(__file__)[0] + '.cfg').replace(os.sep, '/')
-		with open(cfg_file, 'rt') as f:
-			config = json.load(f)
+		cfg_file = joinPath(os.path.splitext(__file__)[0] + '.cfg')
+		with open(cfg_file, 'rb') as f:
+			config = json.loads(f.read())
 		application = config["application"]
 		clientVersion = config["clientVersion"]
 		buildPath = config["buildPath"].replace('<client>', clientVersion)
@@ -96,10 +96,10 @@ if __name__ == '__main__':
 		os.makedirs(buildPath)
 		os.makedirs(releasePath)
 		with zipfile.ZipFile(os.path.join(releasePath, application + '.zip').replace(os.sep, '/'), 'w', zipfile.ZIP_DEFLATED) as fzip:
-			src_file = getPath(buildPath, '{0}.py'.format(application))
-			bin_file = getPath(buildPath, '{0}.pyc'.format(application))
-			zip_file = getPath(zipPath, '{0}.pyc'.format(application))
 			processScript(getSource(list(sourceIterator(sources))), src_file, bin_file, zip_file, fzip, '{0}.py'.format(application))
+			src_file = joinPath(buildPath, '{0}.py'.format(application))
+			bin_file = joinPath(buildPath, '{0}.pyc'.format(application))
+			zip_file = joinPath(zipPath, '{0}.pyc'.format(application))
 			for src_file, zip_file in resourceIterator(resources):
 				processResource(src_file, zip_file.replace('<client>', clientVersion), fzip)
 	except:
