@@ -53,6 +53,13 @@ def new_StrategicCamera_XSwitchMode(self, isSniperMode=False, shotPoint=None):
 	if shotPoint is not None and hasattr(self.aimingSystem, 'XStrategicSniper') and self.aimingSystem.XStrategicSniper is not None:
 		self.aimingSystem.XStrategicSniper.isSniperMode = isSniperMode
 		self.aimingSystem.updateTargetPos(shotPoint)
+		## Minimap Strategic Cell
+		minimapStrategicCellMP = BigWorld.camera().invViewMatrix
+		if isSniperMode:
+			minimapStrategicCellMP = Math.WGCombinedMP()
+			minimapStrategicCellMP.translationSrc = self.aimingSystem.matrix
+			minimapStrategicCellMP.rotationSrc = BigWorld.camera().invViewMatrix
+		XModLib.AppLoader.AppLoader.getBattleApp().minimap._Minimap__cameraMatrix.source = minimapStrategicCellMP
 	return
 
 _inject_hooks_ += functools.partial(setattr, AvatarInputHandler.DynamicCameras.StrategicCamera.StrategicCamera, 'XSwitchMode', new_StrategicCamera_XSwitchMode)
