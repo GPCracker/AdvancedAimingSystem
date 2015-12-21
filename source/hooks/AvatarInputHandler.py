@@ -50,7 +50,7 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 			elif not config3['switch']:
 				config3['activated'] = isDown
 			if hasattr(self.ctrl, 'XAimingInfo') and self.ctrl.XAimingInfo is not None:
-				self.ctrl.XAimingInfo.window.gui.visible = config3['activated']
+				self.ctrl.XAimingInfo.window.gui.visible = config3['activated'] and BigWorld.player().isGuiVisible
 	## HotKeys - Sniper
 	elif self.ctrlModeName == 'sniper':
 		config0 = _config_['sniperAS']['aimCorrection']['manualMode']
@@ -85,7 +85,7 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 			elif not config3['switch']:
 				config3['activated'] = isDown
 			if hasattr(self.ctrl, 'XAimingInfo') and self.ctrl.XAimingInfo is not None:
-				self.ctrl.XAimingInfo.window.gui.visible = config3['activated']
+				self.ctrl.XAimingInfo.window.gui.visible = config3['activated'] and BigWorld.player().isGuiVisible
 	## HotKeys - Strategic
 	elif self.ctrlModeName == 'strategic':
 		config0 = _config_['strategicAS']['aimCorrection']['manualMode']
@@ -126,7 +126,7 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 			elif not config3['switch']:
 				config3['activated'] = isDown
 			if hasattr(self.ctrl, 'XAimingInfo') and self.ctrl.XAimingInfo is not None:
-				self.ctrl.XAimingInfo.window.gui.visible = config3['activated']
+				self.ctrl.XAimingInfo.window.gui.visible = config3['activated'] and BigWorld.player().isGuiVisible
 		## HotKeys - Strategic Sniper - Switch
 		elif config4['enabled'] and (key, modifiers) == parseSequence(config4['key']):
 			if isDown and config4['switch']:

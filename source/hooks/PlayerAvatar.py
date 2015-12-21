@@ -106,6 +106,32 @@ def new_PlayerAvatar_autoAim(old_PlayerAvatar_autoAim, self, target):
 			)
 	return old_PlayerAvatar_autoAim(self, target)
 
+@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, Avatar.PlayerAvatar, '_PlayerAvatar__setVisibleGUI')
+def new_PlayerAvatar_setVisibleGUI(self, flag):
+	currentControl = self.inputHandler.ctrl
+	if hasattr(currentControl, 'XAimCorrectionGUI') and currentControl.XAimCorrectionGUI is not None:
+		currentControl.XAimCorrectionGUI.gui.visible = True and flag
+	if hasattr(currentControl, 'XTargetInfoGUI') and currentControl.XTargetInfoGUI is not None:
+		currentControl.XTargetInfoGUI.gui.visible = True and flag
+	if hasattr(currentControl, 'XAimingInfo') and currentControl.XAimingInfo is not None:
+		ctrlModeName = self.inputHandler.ctrlModeName
+		if ctrlModeName in ['arcade', 'sniper', 'strategic']:
+			if ctrlModeName == 'arcade':
+				config0 = _config_['arcadeAS']['aimingInfo']
+			elif ctrlModeName == 'sniper':
+				config0 = _config_['sniperAS']['aimingInfo']
+			elif ctrlModeName == 'strategic':
+				config0 = _config_['strategicAS']['aimingInfo']
+			currentControl.XAimingInfo.window.gui.visible = config0['activated'] and flag
+	return
+
+def new_PlayerAvatar_isGuiVisible_getter(self):
+	if not hasattr(self, '_PlayerAvatar__isGuiVisible'):
+		self._PlayerAvatar__isGuiVisible = True
+	return self._PlayerAvatar__isGuiVisible
+
+_inject_hooks_ += functools.partial(setattr, Avatar.PlayerAvatar, 'isGuiVisible', property(new_PlayerAvatar_isGuiVisible_getter))
+
 def new_PlayerAvatar_MSOVDD_getter(self):
 	if not hasattr(self, '_maySeeOtherVehicleDamagedDevices'):
 		self._maySeeOtherVehicleDamagedDevices = False

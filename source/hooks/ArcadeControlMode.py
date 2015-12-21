@@ -15,7 +15,7 @@ def new_ArcadeControlMode_enable(self, *args, **kwargs):
 			self.XTargetInfoGUI = XModLib.GUIWrapper.GUIWrapper.createGUI('Text', config1['settings'])
 		if hasattr(self, 'XTargetInfoGUI') and self.XTargetInfoGUI is not None:
 			## Set GUI visible
-			self.XTargetInfoGUI.gui.visible = True
+			self.XTargetInfoGUI.gui.visible = True and BigWorld.player().isGuiVisible
 	## AimingInfo - GUI
 	config2 = _config_['arcadeAS']['aimingInfo']
 	if config2['enabled']:
@@ -24,7 +24,7 @@ def new_ArcadeControlMode_enable(self, *args, **kwargs):
 			self.XAimingInfo = AimingInfo(config2['settings']['window'], config2['settings']['label'])
 		if hasattr(self, 'XAimingInfo') and self.XAimingInfo is not None:
 			## Set GUI visible
-			self.XAimingInfo.window.gui.visible = config2['activated']
+			self.XAimingInfo.window.gui.visible = config2['activated'] and BigWorld.player().isGuiVisible
 	return
 
 @XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.control_modes.ArcadeControlMode, 'disable')
