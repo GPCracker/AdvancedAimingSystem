@@ -113,7 +113,11 @@ def new_StrategicAimingSystem_getDesiredShotPoint(old_StrategicAimingSystem_getD
 		return AvatarInputHandler.AimingSystems.getDesiredShotPoint(cameraPoint, cameraRay, True, False)
 	## AimCorrection
 	config0 = _config_['strategicAS']['aimCorrection']['relativeMode']
-	result = old_StrategicAimingSystem_getDesiredShotPoint(self, terrainOnlyCheck or (config0['enabled'] and config0['ignoreVehicles']))
+	result = old_StrategicAimingSystem_getDesiredShotPoint(self, terrainOnlyCheck)
+	if config0['enabled'] and config0['ignoreVehicles']:
+		cameraRay, cameraPoint = AvatarInputHandler.cameras.getWorldRayAndPoint(*BigWorld.player().inputHandler.aim.offset())
+		result = XModLib.Colliders.Colliders.collideStatic(cameraPoint, cameraPoint + cameraRay.scale(10000.0))
+		result = result[0] if result is not None else None
 	if result is not None:
 		inputHandler = BigWorld.player().inputHandler
 		currentControl = inputHandler.ctrl
