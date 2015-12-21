@@ -52,7 +52,7 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 			if hasattr(self.ctrl, 'XAimingInfo') and self.ctrl.XAimingInfo is not None:
 				self.ctrl.XAimingInfo.window.gui.visible = config3['activated']
 	## HotKeys - Sniper
-	if self.ctrlModeName == 'sniper':
+	elif self.ctrlModeName == 'sniper':
 		config0 = _config_['sniperAS']['aimCorrection']['manualMode']
 		config1 = _config_['sniperAS']['targetLock']['manualMode']
 		config2 = _config_['commonAS']['sniperModeSPG']
@@ -87,7 +87,7 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 			if hasattr(self.ctrl, 'XAimingInfo') and self.ctrl.XAimingInfo is not None:
 				self.ctrl.XAimingInfo.window.gui.visible = config3['activated']
 	## HotKeys - Strategic
-	if self.ctrlModeName == 'strategic':
+	elif self.ctrlModeName == 'strategic':
 		config0 = _config_['strategicAS']['aimCorrection']['manualMode']
 		config1 = _config_['strategicAS']['targetLock']['manualMode']
 		config2 = _config_['strategicAS']['aimCorrection']['relativeMode']
