@@ -83,9 +83,10 @@ if __name__ == '__main__':
 		with open(cfg_file, 'rt') as f:
 			config = json.load(f)
 		application = config["application"]
-		buildPath = config["buildPath"]
-		releasePath = config["releasePath"]
-		zipPath = config["zipPath"]
+		clientVersion = config["clientVersion"]
+		buildPath = config["buildPath"].replace('<client>', clientVersion)
+		releasePath = config["releasePath"].replace('<client>', clientVersion)
+		zipPath = config["zipPath"].replace('<client>', clientVersion)
 		sources = config["sources"]
 		resources = config["resources"]
 		if os.path.isdir(buildPath):
@@ -100,6 +101,6 @@ if __name__ == '__main__':
 			zip_file = getPath(zipPath, '{0}.pyc'.format(application))
 			processScript(getSource(list(sourceIterator(sources))), src_file, bin_file, zip_file, fzip, '{0}.py'.format(application))
 			for src_file, zip_file in resourceIterator(resources):
-				processResource(src_file, zip_file, fzip)
+				processResource(src_file, zip_file.replace('<client>', clientVersion), fzip)
 	except:
 		traceback.print_exc()
