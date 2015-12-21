@@ -6,7 +6,7 @@ def new_ClientArena_collideWithSpaceBB(old_ClientArena_collideWithSpaceBB, self,
 	inputHandler = BigWorld.player().inputHandler
 	controlMode = inputHandler.ctrlModeName
 	currentControl = inputHandler.ctrl
-	if controlMode is 'sniper':
+	if controlMode == 'sniper':
 		cameraRay, cameraPoint = AvatarInputHandler.cameras.getWorldRayAndPoint(*currentControl.getAim().offset())
 		distance = None
 		if hasattr(currentControl, 'XLockedDistance') and currentControl.XLockedDistance is not None:

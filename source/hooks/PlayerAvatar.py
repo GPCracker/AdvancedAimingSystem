@@ -16,7 +16,7 @@ def new_PlayerAvatar_shoot(old_PlayerAvatar_shoot, self, *args, **kwargs):
 		functools.partial(XModLib.Colliders.Colliders.collideVehicles, XModLib.Colliders.Colliders.getVisibleVehicles())
 	))
 	gunTarget = gunTarget[2][1] if gunTarget[2] is not None and len(gunTarget[2]) >= 2 and XModLib.VehicleInfo.VehicleInfo.isVehicle(gunTarget[2][1]) else None
-	if config0['waste']['enabled'] and gunTarget is None and config0['waste']['arcade'] and self.inputHandler.ctrlModeName is 'arcade':
+	if config0['waste']['enabled'] and gunTarget is None and config0['waste']['arcade'] and self.inputHandler.ctrlModeName == 'arcade':
 		reason = 'waste'
 		target = gunTarget
 	elif config0['team']['enabled'] and config0['team']['checkGun'] and gunTarget is not None and gunTarget.isAlive() and gunTarget.publicInfo['team'] is self.team and (config0['team']['blue'] if XModLib.ArenaInfo.ArenaInfo.isTeamKiller(gunTarget.id) else config0['team']['normal']):
@@ -96,13 +96,14 @@ def new_PlayerAvatar_autoAim(old_PlayerAvatar_autoAim, self, target):
 		if XModLib.VehicleInfo.VehicleInfo.isVehicle(target) and target.publicInfo['team'] is not self.team and target.isAlive():
 			if hasattr(self, 'XExpertPerk') and self.XExpertPerk is not None:
 				self.XExpertPerk.request(target.id)
-	if target is None and BigWorld.target() is None and _config_['commonAS']['autoAim']['useXRay'] and self.inputHandler.ctrlModeName is not 'strategic':
-		target = XModLib.XRayScanner.XRayScanner.getTarget()
-	if target is None and BigWorld.target() is None and _config_['commonAS']['autoAim']['useBBox']['enabled'] and self.inputHandler.ctrlModeName is not 'strategic':
-		target = XModLib.BBoxScanner.BBoxScanner.getTarget(
-			scalar=_config_['commonAS']['autoAim']['useBBox']['scalar'],
-			filterVehicle=lambda vehicle: vehicle.publicInfo['team'] is not self.team and vehicle.isAlive()
-		)
+	if self.inputHandler.ctrlModeName in ['arcade', 'sniper']:
+		if target is None and BigWorld.target() is None and _config_['commonAS']['autoAim']['useXRay']:
+			target = XModLib.XRayScanner.XRayScanner.getTarget()
+		if target is None and BigWorld.target() is None and _config_['commonAS']['autoAim']['useBBox']['enabled']:
+			target = XModLib.BBoxScanner.BBoxScanner.getTarget(
+				scalar=_config_['commonAS']['autoAim']['useBBox']['scalar'],
+				filterVehicle=lambda vehicle: vehicle.publicInfo['team'] is not self.team and vehicle.isAlive()
+			)
 	return old_PlayerAvatar_autoAim(self, target)
 
 def new_PlayerAvatar_MSOVDD_getter(self):

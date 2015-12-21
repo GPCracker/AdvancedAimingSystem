@@ -21,7 +21,7 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 			elif not config0['switch']:
 				config0['activated'] = not isDown
 	## HotKeys - Arcade
-	if self.ctrlModeName is 'arcade':
+	if self.ctrlModeName == 'arcade':
 		config0 = _config_['arcadeAS']['aimCorrection']['manualMode']
 		config1 = _config_['arcadeAS']['targetLock']['manualMode']
 		config2 = _config_['commonAS']['sniperModeSPG']
@@ -40,7 +40,7 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 				self.XTargetInfo = TargetInfo(target, None) if target is not None else None
 		## HotKeys - SPG Sniper Mode
 		elif config2['enabled'] and (key, modifiers) == parseSequence(config2['key']):
-			if isDown and XModLib.ArenaInfo.ArenaInfo.getClass(BigWorld.player().playerVehicleID) is 'SPG':
+			if isDown and XModLib.ArenaInfo.ArenaInfo.getClass(BigWorld.player().playerVehicleID) == 'SPG':
 				desiredShotPoint = self.ctrl.camera.aimingSystem.getDesiredShotPoint()
 				self.onControlModeChanged('sniper', preferredPos=desiredShotPoint, aimingMode=self.ctrl.aimingMode, saveZoom=True, equipmentID=None)
 		## HotKeys - AimingInfo
@@ -52,7 +52,7 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 			if hasattr(self.ctrl, 'XAimingInfo') and self.ctrl.XAimingInfo is not None:
 				self.ctrl.XAimingInfo.window.gui.visible = config3['activated']
 	## HotKeys - Sniper
-	if self.ctrlModeName is 'sniper':
+	if self.ctrlModeName == 'sniper':
 		config0 = _config_['sniperAS']['aimCorrection']['manualMode']
 		config1 = _config_['sniperAS']['targetLock']['manualMode']
 		config2 = _config_['commonAS']['sniperModeSPG']
@@ -75,7 +75,7 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 				self.XTargetInfo = TargetInfo(target, None) if target is not None else None
 		## HotKeys - SPG Sniper Mode
 		elif config2['enabled'] and (key, modifiers) == parseSequence(config2['key']):
-			if isDown and XModLib.ArenaInfo.ArenaInfo.getClass(BigWorld.player().playerVehicleID) is 'SPG':
+			if isDown and XModLib.ArenaInfo.ArenaInfo.getClass(BigWorld.player().playerVehicleID) == 'SPG':
 				desiredShotPoint = self.ctrl.camera.aimingSystem.getDesiredShotPoint()
 				self.onControlModeChanged('arcade', preferredPos=desiredShotPoint, turretYaw=self.ctrl.camera.aimingSystem.turretYaw, gunPitch=self.ctrl.camera.aimingSystem.gunPitch, aimingMode=self.ctrl.aimingMode, closesDist=False)
 		## HotKeys - AimingInfo
@@ -87,7 +87,7 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 			if hasattr(self.ctrl, 'XAimingInfo') and self.ctrl.XAimingInfo is not None:
 				self.ctrl.XAimingInfo.window.gui.visible = config3['activated']
 	## HotKeys - Strategic
-	if self.ctrlModeName is 'strategic':
+	if self.ctrlModeName == 'strategic':
 		config0 = _config_['strategicAS']['aimCorrection']['manualMode']
 		config1 = _config_['strategicAS']['targetLock']['manualMode']
 		config2 = _config_['strategicAS']['aimCorrection']['relativeMode']

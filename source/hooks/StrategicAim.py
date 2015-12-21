@@ -7,7 +7,7 @@ def new_StrategicAim_update(self, *args, **kwargs):
 	controlMode = inputHandler.ctrlModeName
 	currentControl = inputHandler.ctrl
 	## Update - Strategic
-	if controlMode is 'strategic':
+	if controlMode == 'strategic':
 		config0 = _config_['strategicAS']['targetLock']['autoMode']
 		## TargetLock - AutoMode - Lock/Update
 		if config0['enabled']:

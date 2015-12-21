@@ -3,7 +3,7 @@
 # *************************
 @XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.AimingSystems.StrategicAimingSystem.StrategicAimingSystem, 'handleMovement', XModLib.HookUtils.HookFunction.CALL_ORIGIN_INSIDE_HOOK)
 def new_StrategicAimingSystem_handleMovement(old_StrategicAimingSystem_handleMovement, self, dx, dy):
-	if BigWorld.player().inputHandler.ctrlModeName is not 'strategic':
+	if BigWorld.player().inputHandler.ctrlModeName != 'strategic':
 		return old_StrategicAimingSystem_handleMovement(self, dx, dy)
 	if not hasattr(self, 'XStrategicSniper') or self.XStrategicSniper is None or not self.XStrategicSniper.isSniperMode:
 		return old_StrategicAimingSystem_handleMovement(self, dx, dy)
@@ -79,7 +79,7 @@ def new_StrategicAimingSystem_handleMovement(old_StrategicAimingSystem_handleMov
 
 @XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.AimingSystems.StrategicAimingSystem.StrategicAimingSystem, 'updateTargetPos', XModLib.HookUtils.HookFunction.CALL_ORIGIN_INSIDE_HOOK)
 def new_StrategicAimingSystem_updateTargetPos(old_StrategicAimingSystem_updateTargetPos, self, targetPos):
-	if BigWorld.player().inputHandler.ctrlModeName is not 'strategic':
+	if BigWorld.player().inputHandler.ctrlModeName != 'strategic':
 		return old_StrategicAimingSystem_updateTargetPos(self, targetPos)
 	if not hasattr(self, 'XStrategicSniper') or self.XStrategicSniper is None or not self.XStrategicSniper.isSniperMode:
 		return old_StrategicAimingSystem_updateTargetPos(self, targetPos)
@@ -106,7 +106,7 @@ def new_StrategicAimingSystem_updateTargetPos(old_StrategicAimingSystem_updateTa
 
 @XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.AimingSystems.StrategicAimingSystem.StrategicAimingSystem, 'getDesiredShotPoint', XModLib.HookUtils.HookFunction.CALL_ORIGIN_INSIDE_HOOK)
 def new_StrategicAimingSystem_getDesiredShotPoint(old_StrategicAimingSystem_getDesiredShotPoint, self, terrainOnlyCheck = False):
-	if BigWorld.player().inputHandler.ctrlModeName is not 'strategic':
+	if BigWorld.player().inputHandler.ctrlModeName != 'strategic':
 		return old_StrategicAimingSystem_getDesiredShotPoint(self, terrainOnlyCheck)
 	if hasattr(self, 'XStrategicSniper') and self.XStrategicSniper is not None and self.XStrategicSniper.isSniperMode:
 		cameraRay, cameraPoint = AvatarInputHandler.cameras.getWorldRayAndPoint(*BigWorld.player().inputHandler.aim.offset())

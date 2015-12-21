@@ -7,7 +7,7 @@ def new_ArcadeAim_update(self, *args, **kwargs):
 	controlMode = inputHandler.ctrlModeName
 	currentControl = inputHandler.ctrl
 	## Update - Arcade
-	if controlMode is 'arcade':
+	if controlMode == 'arcade':
 		config0 = _config_['arcadeAS']['targetLock']['autoMode']
 		## TargetLock - AutoMode - Lock/Update
 		if config0['enabled']:
@@ -46,7 +46,7 @@ def new_ArcadeAim_update(self, *args, **kwargs):
 				text = _globals_['macrosFormatter'](config3['template'].decode('string_escape'), **aimingInfo)
 			currentControl.XAimingInfo.window.gui.label.text = _globals_['umlautDecoder'](text)
 	## Update - Sniper
-	if controlMode is 'sniper':
+	if controlMode == 'sniper':
 		config0 = _config_['sniperAS']['targetLock']['autoMode']
 		## TargetLock - AutoMode - Lock/Update
 		if config0['enabled']:
