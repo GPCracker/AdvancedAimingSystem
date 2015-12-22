@@ -2,7 +2,7 @@ __application__ = ['Advanced Aiming System Mod', 'AdvancedAimingSystem']
 __official_topic__ = 'http://www.koreanrandom.com/forum/topic/16559-/'
 __authors__ = ['GPCracker']
 __version__ = '<version>'
-__client__ = [['ru'], '0.9.12', None]
+__client__ = [['ru'], '0.9.13', None]
 
 if __name__ == '__main__':
 	appInfo = '{appname} ({appshort}) {version} ({client} {clusters}) by {authors}'.format(
