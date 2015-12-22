@@ -26,7 +26,7 @@
 		<!-- Sniper mode for artillery. -->
 		<!-- Снайперский режим для артиллерии. -->
 		<sniperModeSPG>
-			<enabled>True</enabled>
+			<enabled>False</enabled>
 			<key>KEY_E</key>
 		</sniperModeSPG>
 		<!-- Automatic aim settings. -->
@@ -38,7 +38,7 @@
 			<!-- Enables Bounding Box for target locking. Locking by near aiming is available. It takes CPU time. -->
 			<!-- Разрешает использование "Ограничивающей Коробки" для захвата цели. Возможен захват при неточном наведении. Занимает процессорное время. -->
 			<useBBox>
-				<enabled>True</enabled><!-- False -->
+				<enabled>False</enabled>
 				<!-- Bounding Box scale multiplier. -->
 				<!-- Множитель увеличения "Ограничивающей Коробки". -->
 				<scalar>2.0</scalar>
@@ -112,7 +112,7 @@
 			<!-- Waste fire blocking settings. -->
 			<!-- Настройки блокировки стрельбы не по цели. -->
 			<waste>
-				<enabled>True</enabled><!-- False -->
+				<enabled>False</enabled>
 				<!-- Enables blocking in arcade mode. -->
 				<!-- Разрешает блокировку в аркадном режиме. -->
 				<arcade>True</arcade>
@@ -121,9 +121,9 @@
 		<!-- Expert perk settings. -->
 		<!-- Настройки перка "Эксперт". -->
 		<expert>
-			<enabled>True</enabled><!-- False -->
+			<enabled>False</enabled>
 			<cache>True</cache>
-			<queue>True</queue><!-- False -->
+			<queue>False</queue>
 			<reply>5.0</reply>
 			<request>5.0</request>
 		</expert>
@@ -137,7 +137,7 @@
 			<!-- Manual lock mode settings. -->
 			<!-- Настройки ручного режима захвата. -->
 			<manualMode>
-				<enabled>True</enabled><!-- False -->
+				<enabled>False</enabled>
 				<useXRay>True</useXRay>
 				<key>KEY_T</key>
 			</manualMode>
@@ -170,7 +170,7 @@
 		<!-- Aiming info panel settings. -->
 		<!-- Настройки информационной панели сведения. -->
 		<aimingInfo>
-			<enabled>True</enabled><!-- False -->
+			<enabled>False</enabled>
 			<activated>True</activated>
 			<key>KEY_LCONTROL+KEY_A</key>
 			<switch>True</switch>
@@ -219,7 +219,7 @@
 		</aimCorrection>
 		<targetLock>
 			<manualMode>
-				<enabled>True</enabled><!-- False -->
+				<enabled>False</enabled>
 				<useXRay>True</useXRay>
 				<key>KEY_T</key>
 			</manualMode>
@@ -240,7 +240,7 @@
 			</gui>
 		</targetLock>
 		<aimingInfo>
-			<enabled>True</enabled><!-- False -->
+			<enabled>False</enabled>
 			<activated>True</activated>
 			<key>KEY_LCONTROL+KEY_A</key>
 			<switch>True</switch>
@@ -268,15 +268,15 @@
 			<!-- Настройки относительной корректировки высоты. -->
 			<relativeMode>
 				<enabled>True</enabled>
-				<activated>True</activated><!-- False -->
+				<activated>False</activated>
 				<key>KEY_LCONTROL+KEY_H</key>
 				<switch>True</switch>
 				<!-- Enables vehicle ignoring. Shot point will always on the ground. -->
 				<!-- Разрешает игнорировать цель в прицеле. Точка прицеливания всегда будет на земле. -->
-				<ignoreVehicles>True</ignoreVehicles>
+				<ignoreVehicles>False</ignoreVehicles>
 				<!-- Target vehicle height multiplier. Shot point will be raised on this part of vehicle height. -->
 				<!-- Множитель высоты цели. Точка прицеливания будет подниматься над землей на эту часть высоты техники. -->
-				<heightMultiplier>0.35</heightMultiplier><!-- 0.5 -->
+				<heightMultiplier>0.5</heightMultiplier>
 				<onActivate>Учёт высоты цели включен.</onActivate>
 				<onDeactivate>Учёт высоты цели отключен.</onDeactivate>
 			</relativeMode>
@@ -291,7 +291,7 @@
 		</aimCorrection>
 		<targetLock>
 			<manualMode>
-				<enabled>True</enabled><!-- False -->
+				<enabled>False</enabled>
 				<useXRay>True</useXRay>
 				<key>KEY_T</key>
 			</manualMode>
@@ -312,7 +312,7 @@
 			</gui>
 		</targetLock>
 		<aimingInfo>
-			<enabled>True</enabled><!-- False -->
+			<enabled>False</enabled>
 			<activated>True</activated>
 			<key>KEY_LCONTROL+KEY_A</key>
 			<switch>True</switch>
@@ -330,7 +330,7 @@
 		<!-- "Artillery sniper" mode. "Shell view" on the target in artillery . -->
 		<!-- "Артоснайперский" режим. Камера на цель по траектории снаряда. -->
 		<strategicSniper>
-			<enabled>True</enabled><!-- False -->
+			<enabled>False</enabled>
 			<activated>False</activated>
 			<key>KEY_LCONTROL+KEY_S</key>
 			<switch>True</switch>
@@ -339,7 +339,7 @@
 			<controlLevel>-150.0</controlLevel>
 			<!-- Maximum shooting distance overpass correction. Useful for low-level artillery. It takes CPU time. -->
 			<!-- Корректировка превышения максимального расстояния стрельбы. Эффективно для низкоуровневой артиллерии. Занимает процессорное время. -->
-			<correctMaxDistance>True</correctMaxDistance><!-- False -->
+			<correctMaxDistance>False</correctMaxDistance>
 			<!-- Camera base pitch (tilt angle correction). -->
 			<!-- Базовый угол наклона камеры (коррекция угла наклона). -->
 			<basePitch>
