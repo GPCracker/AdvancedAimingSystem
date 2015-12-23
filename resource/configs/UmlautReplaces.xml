@@ -4,38 +4,74 @@
 <!-- *** Editing file in incorrect encoding will cause content damage. Check encoding before saving. *** -->
 <!-- *** It is recommended to use Notepad++, Sublime Text or any other professional text editor for making changes in this file. *** -->
 <root>
-	<umlaut><uml>Ä</uml><rpl>A</rpl></umlaut>
-	<umlaut><uml>ä</uml><rpl>a</rpl></umlaut>
-	<umlaut><uml>Â</uml><rpl>A</rpl></umlaut>
-	<umlaut><uml>â</uml><rpl>a</rpl></umlaut>
+	<umlaut><uml>Š</uml><rpl>S</rpl></umlaut>
+	<umlaut><uml>Œ</uml><rpl>O</rpl></umlaut>
+	<umlaut><uml>Ž</uml><rpl>Z</rpl></umlaut>
+	<umlaut><uml>š</uml><rpl>s</rpl></umlaut>
+	<umlaut><uml>œ</uml><rpl>o</rpl></umlaut>
+	<umlaut><uml>ž</uml><rpl>z</rpl></umlaut>
+	<umlaut><uml>Ÿ</uml><rpl>Y</rpl></umlaut>
+	<umlaut><uml>¥</uml><rpl>Y</rpl></umlaut>
+	<umlaut><uml>µ</uml><rpl>u</rpl></umlaut>
 	<umlaut><uml>À</uml><rpl>A</rpl></umlaut>
-	<umlaut><uml>à</uml><rpl>a</rpl></umlaut>
+	<umlaut><uml>Á</uml><rpl>A</rpl></umlaut>
+	<umlaut><uml>Â</uml><rpl>A</rpl></umlaut>
+	<umlaut><uml>Ã</uml><rpl>A</rpl></umlaut>
+	<umlaut><uml>Ä</uml><rpl>A</rpl></umlaut>
+	<umlaut><uml>Å</uml><rpl>A</rpl></umlaut>
+	<umlaut><uml>Æ</uml><rpl>A</rpl></umlaut>
 	<umlaut><uml>Ç</uml><rpl>C</rpl></umlaut>
-	<umlaut><uml>ç</uml><rpl>c</rpl></umlaut>
-	<umlaut><uml>É</uml><rpl>E</rpl></umlaut>
-	<umlaut><uml>é</uml><rpl>e</rpl></umlaut>
-	<umlaut><uml>Ê</uml><rpl>E</rpl></umlaut>
-	<umlaut><uml>ê</uml><rpl>e</rpl></umlaut>
 	<umlaut><uml>È</uml><rpl>E</rpl></umlaut>
-	<umlaut><uml>è</uml><rpl>e</rpl></umlaut>
+	<umlaut><uml>É</uml><rpl>E</rpl></umlaut>
+	<umlaut><uml>Ê</uml><rpl>E</rpl></umlaut>
 	<umlaut><uml>Ë</uml><rpl>E</rpl></umlaut>
-	<umlaut><uml>ë</uml><rpl>e</rpl></umlaut>
-	<umlaut><uml>Ï</uml><rpl>I</rpl></umlaut>
-	<umlaut><uml>ï</uml><rpl>i</rpl></umlaut>
+	<umlaut><uml>Ì</uml><rpl>I</rpl></umlaut>
+	<umlaut><uml>Í</uml><rpl>I</rpl></umlaut>
 	<umlaut><uml>Î</uml><rpl>I</rpl></umlaut>
-	<umlaut><uml>î</uml><rpl>i</rpl></umlaut>
-	<umlaut><uml>Ö</uml><rpl>O</rpl></umlaut>
-	<umlaut><uml>ö</uml><rpl>o</rpl></umlaut>
+	<umlaut><uml>Ï</uml><rpl>I</rpl></umlaut>
+	<umlaut><uml>Ð</uml><rpl>D</rpl></umlaut>
+	<umlaut><uml>Ñ</uml><rpl>N</rpl></umlaut>
+	<umlaut><uml>Ò</uml><rpl>O</rpl></umlaut>
+	<umlaut><uml>Ó</uml><rpl>O</rpl></umlaut>
 	<umlaut><uml>Ô</uml><rpl>O</rpl></umlaut>
-	<umlaut><uml>ô</uml><rpl>o</rpl></umlaut>
-	<umlaut><uml>ẞ</uml><rpl>SS</rpl></umlaut>
-	<umlaut><uml>ß</uml><rpl>ss</rpl></umlaut>
-	<umlaut><uml>Ü</uml><rpl>U</rpl></umlaut>
-	<umlaut><uml>ü</uml><rpl>u</rpl></umlaut>
-	<umlaut><uml>Û</uml><rpl>U</rpl></umlaut>
-	<umlaut><uml>û</uml><rpl>u</rpl></umlaut>
+	<umlaut><uml>Õ</uml><rpl>O</rpl></umlaut>
+	<umlaut><uml>Ö</uml><rpl>O</rpl></umlaut>
+	<umlaut><uml>Ø</uml><rpl>O</rpl></umlaut>
 	<umlaut><uml>Ù</uml><rpl>U</rpl></umlaut>
+	<umlaut><uml>Ú</uml><rpl>U</rpl></umlaut>
+	<umlaut><uml>Û</uml><rpl>U</rpl></umlaut>
+	<umlaut><uml>Ü</uml><rpl>U</rpl></umlaut>
+	<umlaut><uml>Ý</uml><rpl>Y</rpl></umlaut>
+	<umlaut><uml>ẞ</uml><rpl>S</rpl></umlaut>
+	<umlaut><uml>ß</uml><rpl>s</rpl></umlaut>
+	<umlaut><uml>à</uml><rpl>a</rpl></umlaut>
+	<umlaut><uml>á</uml><rpl>a</rpl></umlaut>
+	<umlaut><uml>â</uml><rpl>a</rpl></umlaut>
+	<umlaut><uml>ã</uml><rpl>a</rpl></umlaut>
+	<umlaut><uml>ä</uml><rpl>a</rpl></umlaut>
+	<umlaut><uml>å</uml><rpl>a</rpl></umlaut>
+	<umlaut><uml>æ</uml><rpl>a</rpl></umlaut>
+	<umlaut><uml>ç</uml><rpl>c</rpl></umlaut>
+	<umlaut><uml>è</uml><rpl>e</rpl></umlaut>
+	<umlaut><uml>é</uml><rpl>e</rpl></umlaut>
+	<umlaut><uml>ê</uml><rpl>e</rpl></umlaut>
+	<umlaut><uml>ë</uml><rpl>e</rpl></umlaut>
+	<umlaut><uml>ì</uml><rpl>i</rpl></umlaut>
+	<umlaut><uml>í</uml><rpl>i</rpl></umlaut>
+	<umlaut><uml>î</uml><rpl>i</rpl></umlaut>
+	<umlaut><uml>ï</uml><rpl>i</rpl></umlaut>
+	<umlaut><uml>ð</uml><rpl>o</rpl></umlaut>
+	<umlaut><uml>ñ</uml><rpl>n</rpl></umlaut>
+	<umlaut><uml>ò</uml><rpl>o</rpl></umlaut>
+	<umlaut><uml>ó</uml><rpl>o</rpl></umlaut>
+	<umlaut><uml>ô</uml><rpl>o</rpl></umlaut>
+	<umlaut><uml>õ</uml><rpl>o</rpl></umlaut>
+	<umlaut><uml>ö</uml><rpl>o</rpl></umlaut>
+	<umlaut><uml>ø</uml><rpl>o</rpl></umlaut>
 	<umlaut><uml>ù</uml><rpl>u</rpl></umlaut>
-	<umlaut><uml>ø</uml><rpl>Y</rpl></umlaut>
+	<umlaut><uml>ú</uml><rpl>u</rpl></umlaut>
+	<umlaut><uml>û</uml><rpl>u</rpl></umlaut>
+	<umlaut><uml>ü</uml><rpl>u</rpl></umlaut>
+	<umlaut><uml>ý</uml><rpl>y</rpl></umlaut>
 	<umlaut><uml>ÿ</uml><rpl>y</rpl></umlaut>
 </root>
