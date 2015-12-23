@@ -6,7 +6,7 @@ def new_StrategicCamera_enable(self, *args, **kwargs):
 	if BigWorld.player().inputHandler.ctrlModeName != 'strategic':
 		return
 	config0 = _config_['strategicAS']['strategicSniper']
-	if config0['enabled'] and not hasattr(self.aimingSystem, 'XStrategicSniper') or self.aimingSystem.XStrategicSniper is None:
+	if config0['enabled'] and (not hasattr(self.aimingSystem, 'XStrategicSniper') or self.aimingSystem.XStrategicSniper is None):
 		self.aimingSystem.XStrategicSniper = StrategicSniper(
 			isSniperMode=False,
 			correctMaxDistance=config0['correctMaxDistance'],
