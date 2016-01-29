@@ -3,23 +3,18 @@
 # *************************
 @XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.AvatarInputHandler, 'handleKeyEvent')
 def new_AvatarInputHandler_handleKeyEvent(self, event):
-	parseSequence = XModLib.KeyBoard.KeyBoard.parseSequence
-	key, isDown, isRepeat, modifiers = XModLib.KeyBoard.KeyBoard.parseEvent(event)
-	if isRepeat:
-		return
+	getShortcut = XModLib.KeyBoard.Shortcut.fromSequence
 	## HotKeys - Common
 	if self.ctrlModeName in ['arcade', 'sniper', 'strategic']:
 		config0 = _config_['commonAS']['safeShot']
 		## HotKeys - SafeShot
-		if config0['enabled'] and (key, modifiers) == parseSequence(config0['key']):
-			if isDown and config0['switch']:
-				config0['activated'] = not config0['activated']
-				if config0['activated']:
-					XModLib.Messages.Messenger.showMessageOnPanel('PlayerMessagesPanel', 0, config0['onActivate'], 'green')
-				else:
-					XModLib.Messages.Messenger.showMessageOnPanel('PlayerMessagesPanel', 0, config0['onDeactivate'], 'red')
-			elif not config0['switch']:
-				config0['activated'] = not isDown
+		shortcutHandle = config0['enabled'] and getShortcut(config0['key'], config0['switch'], config0['invert'])(event)
+		if shortcutHandle and (not shortcutHandle.switch or shortcutHandle.pushed):
+			config0['activated'] = shortcutHandle(config0['activated'])
+			if config0['switch'] and config0['activated']:
+				XModLib.Messages.Messenger.showMessageOnPanel('PlayerMessagesPanel', 0, config0['onActivate'], 'green')
+			elif config0['switch']:
+				XModLib.Messages.Messenger.showMessageOnPanel('PlayerMessagesPanel', 0, config0['onDeactivate'], 'red')
 	## HotKeys - Arcade
 	if self.ctrlModeName == 'arcade':
 		config0 = _config_['arcadeAS']['aimCorrection']['manualMode']
@@ -27,28 +22,29 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 		config2 = _config_['commonAS']['sniperModeSPG']
 		config3 = _config_['arcadeAS']['aimingInfo']
 		## HotKeys - AimCorrection - ManualMode
-		if config0['enabled'] and (key, modifiers) == parseSequence(config0['key']):
-			if isDown:
+		shortcutHandle = config0['enabled'] and getShortcut(config0['key'], False, False)(event)
+		if shortcutHandle:
+			if shortcutHandle.pushed:
 				pass
 		## HotKeys - TargetLock - ManualMode
-		elif config1['enabled'] and (key, modifiers) == parseSequence(config1['key']):
-			if isDown:
+		shortcutHandle = config1['enabled'] and getShortcut(config1['key'], True, False)(event)
+		if shortcutHandle:
+			if shortcutHandle.pushed:
 				target = BigWorld.target()
 				target = target if XModLib.VehicleInfo.VehicleInfo.isVehicle(target) else None
 				if target is None and config1['useXRay']:
 					target = XModLib.XRayScanner.XRayScanner.getTarget()
 				self.XTargetInfo = TargetInfo(target, None) if target is not None else None
 		## HotKeys - SPG Sniper Mode
-		elif config2['enabled'] and (key, modifiers) == parseSequence(config2['key']):
-			if isDown and XModLib.ArenaInfo.ArenaInfo.getClass(BigWorld.player().playerVehicleID) == 'SPG':
+		shortcutHandle = config2['enabled'] and getShortcut(config2['key'], True, False)(event)
+		if shortcutHandle:
+			if shortcutHandle.pushed and XModLib.ArenaInfo.ArenaInfo.getClass(BigWorld.player().playerVehicleID) == 'SPG':
 				desiredShotPoint = self.ctrl.camera.aimingSystem.getDesiredShotPoint()
 				self.onControlModeChanged('sniper', preferredPos=desiredShotPoint, aimingMode=self.ctrl.aimingMode, saveZoom=True, equipmentID=None)
 		## HotKeys - AimingInfo
-		elif config3['enabled'] and (key, modifiers) == parseSequence(config3['key']):
-			if isDown and config3['switch']:
-				config3['activated'] = not config3['activated']
-			elif not config3['switch']:
-				config3['activated'] = isDown
+		shortcutHandle = config3['enabled'] and getShortcut(config3['key'], config3['switch'], config3['invert'])(event)
+		if shortcutHandle and (not shortcutHandle.switch or shortcutHandle.pushed):
+			config3['activated'] = shortcutHandle(config3['activated'])
 			if hasattr(self.ctrl, 'XAimingInfo') and self.ctrl.XAimingInfo is not None:
 				self.ctrl.XAimingInfo.window.gui.visible = config3['activated'] and BigWorld.player().isGuiVisible
 	## HotKeys - Sniper
@@ -58,32 +54,33 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 		config2 = _config_['commonAS']['sniperModeSPG']
 		config3 = _config_['sniperAS']['aimingInfo']
 		## HotKeys - AimCorrection - ManualMode
-		if config0['enabled'] and (key, modifiers) == parseSequence(config0['key']):
+		shortcutHandle = config0['enabled'] and getShortcut(config0['key'], False, False)(event)
+		if shortcutHandle:
 			self.ctrl.XLockedDistance = None
-			if isDown:
+			if shortcutHandle.pushed:
 				cameraRay, cameraPoint = AvatarInputHandler.cameras.getWorldRayAndPoint(*self.ctrl.getAim().offset())
 				shotPoint = self.ctrl.getDesiredShotPoint()
 				if shotPoint is not None:
 					self.ctrl.XLockedDistance = (shotPoint - cameraPoint).length
 		## HotKeys - TargetLock - ManualMode
-		elif config1['enabled'] and (key, modifiers) == parseSequence(config1['key']):
-			if isDown:
+		shortcutHandle = config1['enabled'] and getShortcut(config1['key'], True, False)(event)
+		if shortcutHandle:
+			if shortcutHandle.pushed:
 				target = BigWorld.target()
 				target = target if XModLib.VehicleInfo.VehicleInfo.isVehicle(target) else None
 				if target is None and config1['useXRay']:
 					target = XModLib.XRayScanner.XRayScanner.getTarget()
 				self.XTargetInfo = TargetInfo(target, None) if target is not None else None
 		## HotKeys - SPG Sniper Mode
-		elif config2['enabled'] and (key, modifiers) == parseSequence(config2['key']):
-			if isDown and XModLib.ArenaInfo.ArenaInfo.getClass(BigWorld.player().playerVehicleID) == 'SPG':
+		shortcutHandle = config2['enabled'] and getShortcut(config2['key'], True, False)(event)
+		if shortcutHandle:
+			if shortcutHandle.pushed and XModLib.ArenaInfo.ArenaInfo.getClass(BigWorld.player().playerVehicleID) == 'SPG':
 				desiredShotPoint = self.ctrl.camera.aimingSystem.getDesiredShotPoint()
 				self.onControlModeChanged('arcade', preferredPos=desiredShotPoint, turretYaw=self.ctrl.camera.aimingSystem.turretYaw, gunPitch=self.ctrl.camera.aimingSystem.gunPitch, aimingMode=self.ctrl.aimingMode, closesDist=False)
 		## HotKeys - AimingInfo
-		elif config3['enabled'] and (key, modifiers) == parseSequence(config3['key']):
-			if isDown and config3['switch']:
-				config3['activated'] = not config3['activated']
-			elif not config3['switch']:
-				config3['activated'] = isDown
+		shortcutHandle = config3['enabled'] and getShortcut(config3['key'], config3['switch'], config3['invert'])(event)
+		if shortcutHandle and (not shortcutHandle.switch or shortcutHandle.pushed):
+			config3['activated'] = shortcutHandle(config3['activated'])
 			if hasattr(self.ctrl, 'XAimingInfo') and self.ctrl.XAimingInfo is not None:
 				self.ctrl.XAimingInfo.window.gui.visible = config3['activated'] and BigWorld.player().isGuiVisible
 	## HotKeys - Strategic
@@ -95,55 +92,53 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 		config4 = _config_['strategicAS']['strategicSniper']
 		config5 = _config_['strategicAS']['strategicSniper']['basePitch']['adjustment']
 		## HotKeys - AimCorrection - ManualMode
-		if config0['enabled'] and (key, modifiers) == parseSequence(config0['key']):
+		shortcutHandle = config0['enabled'] and getShortcut(config0['key'], False, False)(event)
+		if shortcutHandle:
 			self.ctrl.XLockedHeight = None
-			if isDown:
+			if shortcutHandle.pushed:
 				shotPoint = self.ctrl.getDesiredShotPoint()
 				if shotPoint is not None:
 					self.ctrl.XLockedHeight = shotPoint.y
 		## HotKeys - TargetLock - ManualMode
-		elif config1['enabled'] and (key, modifiers) == parseSequence(config1['key']):
-			if isDown:
+		shortcutHandle = config1['enabled'] and getShortcut(config1['key'], True, False)(event)
+		if shortcutHandle:
+			if shortcutHandle.pushed:
 				target = BigWorld.target()
 				target = target if XModLib.VehicleInfo.VehicleInfo.isVehicle(target) else None
 				if target is None and config1['useXRay']:
 					target = XModLib.XRayScanner.XRayScanner.getTarget()
 				self.XTargetInfo = TargetInfo(target, None) if target is not None else None
 		## HotKeys - AimCorrection - Relative Mode - Switch
-		elif config2['enabled'] and (key, modifiers) == parseSequence(config2['key']):
-			if isDown and config2['switch']:
-				config2['activated'] = not config2['activated']
-				if config2['activated']:
-					XModLib.Messages.Messenger.showMessageOnPanel('PlayerMessagesPanel', 0, config2['onActivate'], 'green')
-				else:
-					XModLib.Messages.Messenger.showMessageOnPanel('PlayerMessagesPanel', 0, config2['onDeactivate'], 'red')
-			elif not config2['switch']:
-				config2['activated'] = isDown
+		shortcutHandle = config2['enabled'] and getShortcut(config2['key'], config2['switch'], config2['invert'])(event)
+		if shortcutHandle and (not shortcutHandle.switch or shortcutHandle.pushed):
+			config2['activated'] = shortcutHandle(config2['activated'])
+			if config2['switch'] and config2['activated']:
+				XModLib.Messages.Messenger.showMessageOnPanel('PlayerMessagesPanel', 0, config2['onActivate'], 'green')
+			elif config2['switch']:
+				XModLib.Messages.Messenger.showMessageOnPanel('PlayerMessagesPanel', 0, config2['onDeactivate'], 'red')
 		## HotKeys - AimingInfo
-		elif config3['enabled'] and (key, modifiers) == parseSequence(config3['key']):
-			if isDown and config3['switch']:
-				config3['activated'] = not config3['activated']
-			elif not config3['switch']:
-				config3['activated'] = isDown
+		shortcutHandle = config3['enabled'] and getShortcut(config3['key'], config3['switch'], config3['invert'])(event)
+		if shortcutHandle and (not shortcutHandle.switch or shortcutHandle.pushed):
+			config3['activated'] = shortcutHandle(config3['activated'])
 			if hasattr(self.ctrl, 'XAimingInfo') and self.ctrl.XAimingInfo is not None:
 				self.ctrl.XAimingInfo.window.gui.visible = config3['activated'] and BigWorld.player().isGuiVisible
 		## HotKeys - Strategic Sniper - Switch
-		elif config4['enabled'] and (key, modifiers) == parseSequence(config4['key']):
-			if isDown and config4['switch']:
-				config4['activated'] = not config4['activated']
-			elif not config4['switch']:
-				config4['activated'] = isDown
+		shortcutHandle = config4['enabled'] and getShortcut(config4['key'], config4['switch'], config4['invert'])(event)
+		if shortcutHandle and (not shortcutHandle.switch or shortcutHandle.pushed):
+			config4['activated'] = shortcutHandle(config4['activated'])
 			self.ctrl.camera.XSwitchMode(config4['activated'])
 		## HotKeys - Strategic Sniper - Base Pitch - Increase
-		elif config5['enabled'] and (key, modifiers) == parseSequence(config5['increase']):
-			if isDown:
+		shortcutHandle = config5['enabled'] and getShortcut(config5['increase'], True, False)(event)
+		if shortcutHandle:
+			if shortcutHandle.pushed:
 				result = self.ctrl.camera.XIncreaseCameraBasePitch()
 				if result is not None and result[1] and config5['message']['enabled']:
 					message = _globals_['macrosFormatter'](config5['message']['template'], value=result[0], delta=result[1])
 					XModLib.Messages.Messenger.showMessageOnPanel('PlayerMessagesPanel', 0, message, 'green')
 		## HotKeys - Strategic Sniper - Base Pitch - Decrease
-		elif config5['enabled'] and (key, modifiers) == parseSequence(config5['decrease']):
-			if isDown:
+		shortcutHandle = config5['enabled'] and getShortcut(config5['decrease'], True, False)(event)
+		if shortcutHandle:
+			if shortcutHandle.pushed:
 				result = self.ctrl.camera.XDecreaseCameraBasePitch()
 				if result is not None and result[1] and config5['message']['enabled']:
 					message = _globals_['macrosFormatter'](config5['message']['template'], value=result[0], delta=result[1])
