@@ -2,6 +2,7 @@ __application__ = ['Advanced Aiming System Mod', 'AdvancedAimingSystem']
 __official_topic__ = 'http://www.koreanrandom.com/forum/topic/16559-/'
 __authors__ = ['GPCracker']
 __version__ = '<version>'
+__xmodlib__ = [["0.0.2", None]]
 __client__ = [['ru'], '0.9.13', None]
 
 if __name__ == '__main__':
@@ -17,3 +18,7 @@ if __name__ == '__main__':
 	from time import sleep
 	sleep(len(appInfo) * 0.06)
 	exit()
+
+import XModLib
+if not XModLib.isCompatibleLibVersion(__xmodlib__):
+	raise ImportError('XModLib version does not suit this version of application.')
