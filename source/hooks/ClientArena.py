@@ -1,7 +1,7 @@
 # *************************
 # ClientArena Hooks
 # *************************
-@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, ClientArena.ClientArena, 'collideWithSpaceBB', XModLib.HookUtils.HookFunction.CALL_ORIGIN_INSIDE_HOOK)
+@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, ClientArena.ClientArena, 'collideWithSpaceBB', calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_INSIDE_HOOK)
 def new_ClientArena_collideWithSpaceBB(old_ClientArena_collideWithSpaceBB, self, start, end):
 	inputHandler = BigWorld.player().inputHandler
 	controlMode = inputHandler.ctrlModeName
@@ -27,7 +27,7 @@ def new_ClientArena_collideWithSpaceBB(old_ClientArena_collideWithSpaceBB, self,
 				return start + se * (distance - cs.length) / se.length
 	return old_ClientArena_collideWithSpaceBB(self, start, end)
 
-@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, ClientArena.ClientArena, '_ClientArena__onVehicleKilled')
+@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, ClientArena.ClientArena, '_ClientArena__onVehicleKilled', calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_BEFORE_HOOK)
 def new_ClientArena__onVehicleKilled(self, argStr):
 	import cPickle
 	victimID, killerID, equipmentID, reason = cPickle.loads(argStr)

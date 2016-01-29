@@ -1,7 +1,7 @@
 # *************************
 # StrategicCamera Hooks
 # *************************
-@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.DynamicCameras.StrategicCamera.StrategicCamera, 'enable')
+@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.DynamicCameras.StrategicCamera.StrategicCamera, 'enable', calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_BEFORE_HOOK)
 def new_StrategicCamera_enable(self, *args, **kwargs):
 	if BigWorld.player().inputHandler.ctrlModeName != 'strategic':
 		return
@@ -22,7 +22,7 @@ def new_StrategicCamera_enable(self, *args, **kwargs):
 		self.aimingSystem.XStrategicSniper.isSniperMode = False
 	return
 
-@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.DynamicCameras.StrategicCamera.StrategicCamera, 'disable', XModLib.HookUtils.HookFunction.CALL_HOOK_BEFORE_ORIGIN)
+@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.DynamicCameras.StrategicCamera.StrategicCamera, 'disable', calltype=XModLib.HookUtils.HookFunction.CALL_HOOK_BEFORE_ORIGIN)
 def new_StrategicCamera_disable(self, *args, **kwargs):
 	if BigWorld.player().inputHandler.ctrlModeName != 'strategic':
 		return
@@ -32,7 +32,7 @@ def new_StrategicCamera_disable(self, *args, **kwargs):
 		self.aimingSystem.XStrategicSniper.isSniperMode = False
 	return
 
-@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.DynamicCameras.StrategicCamera.StrategicCamera, '_StrategicCamera__cameraUpdate')
+@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.DynamicCameras.StrategicCamera.StrategicCamera, '_StrategicCamera__cameraUpdate', calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_BEFORE_HOOK)
 def new_StrategicCamera_cameraUpdate(self):
 	if BigWorld.player().inputHandler.ctrlModeName != 'strategic':
 		return
@@ -45,6 +45,7 @@ def new_StrategicCamera_cameraUpdate(self):
 			self.camera.source = XModLib.ExtraMath.ExtraMath.rotationMatrix(0, -math.pi * 0.499, 0)
 	return
 
+@XModLib.HookUtils.HookFunction.methodAddOnEvent(_inject_hooks_, AvatarInputHandler.DynamicCameras.StrategicCamera.StrategicCamera, 'XSwitchMode')
 def new_StrategicCamera_XSwitchMode(self, isSniperMode=False, shotPoint=None):
 	if BigWorld.player().inputHandler.ctrlModeName != 'strategic':
 		return
@@ -62,8 +63,7 @@ def new_StrategicCamera_XSwitchMode(self, isSniperMode=False, shotPoint=None):
 		XModLib.AppLoader.AppLoader.getBattleApp().minimap._Minimap__cameraMatrix.source = minimapStrategicCellMP
 	return
 
-_inject_hooks_ += functools.partial(setattr, AvatarInputHandler.DynamicCameras.StrategicCamera.StrategicCamera, 'XSwitchMode', new_StrategicCamera_XSwitchMode)
-
+@XModLib.HookUtils.HookFunction.methodAddOnEvent(_inject_hooks_, AvatarInputHandler.DynamicCameras.StrategicCamera.StrategicCamera, 'XIncreaseCameraBasePitch')
 def new_StrategicCamera_XIncreaseCameraBasePitch(self):
 	if BigWorld.player().inputHandler.ctrlModeName != 'strategic':
 		return None
@@ -74,8 +74,7 @@ def new_StrategicCamera_XIncreaseCameraBasePitch(self):
 		return result
 	return None
 
-_inject_hooks_ += functools.partial(setattr, AvatarInputHandler.DynamicCameras.StrategicCamera.StrategicCamera, 'XIncreaseCameraBasePitch', new_StrategicCamera_XIncreaseCameraBasePitch)
-
+@XModLib.HookUtils.HookFunction.methodAddOnEvent(_inject_hooks_, AvatarInputHandler.DynamicCameras.StrategicCamera.StrategicCamera, 'XDecreaseCameraBasePitch')
 def new_StrategicCamera_XDecreaseCameraBasePitch(self):
 	if BigWorld.player().inputHandler.ctrlModeName != 'strategic':
 		return None
@@ -85,5 +84,3 @@ def new_StrategicCamera_XDecreaseCameraBasePitch(self):
 		self.aimingSystem.updateTargetPos(shotPoint)
 		return result
 	return None
-
-_inject_hooks_ += functools.partial(setattr, AvatarInputHandler.DynamicCameras.StrategicCamera.StrategicCamera, 'XDecreaseCameraBasePitch', new_StrategicCamera_XDecreaseCameraBasePitch)

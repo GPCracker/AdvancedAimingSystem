@@ -1,15 +1,16 @@
 # *************************
 # RadialMenu Hooks
 # *************************
-def new_RadialMenu_currentTarget_getter(self):
-	if not hasattr(self, '_currentTarget'):
-		self._currentTarget = None
-	return self._currentTarget
+@XModLib.HookUtils.HookFunction.propertyHookOnEvent(_inject_hooks_, gui.Scaleform.daapi.view.battle.RadialMenu.RadialMenu, '_RadialMenu__currentTarget', '_currentTarget', action=XModLib.HookUtils.HookFunction.PROPERTY_ACTION_GET, calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_INSIDE_HOOK)
+def new_RadialMenu_currentTarget_getter(old_RadialMenu_currentTarget_getter, self):
+	try:
+		result = old_RadialMenu_currentTarget_getter(self)
+	except AttributeError:
+		result = None
+	return result
 
-def new_RadialMenu_currentTarget_setter(self, target):
+@XModLib.HookUtils.HookFunction.propertyHookOnEvent(_inject_hooks_, gui.Scaleform.daapi.view.battle.RadialMenu.RadialMenu, '_RadialMenu__currentTarget', '_currentTarget', action=XModLib.HookUtils.HookFunction.PROPERTY_ACTION_SET, calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_INSIDE_HOOK)
+def new_RadialMenu_currentTarget_setter(old_RadialMenu_currentTarget_setter, self, target):
 	if target is None and _config_['commonAS']['radialMenu']['useXRay']:
 		target = XModLib.XRayScanner.XRayScanner.getTarget()
-	self._currentTarget = target
-	return
-
-_inject_hooks_ += functools.partial(setattr, gui.Scaleform.daapi.view.battle.RadialMenu.RadialMenu, '_RadialMenu__currentTarget', property(new_RadialMenu_currentTarget_getter, new_RadialMenu_currentTarget_setter))
+	return old_RadialMenu_currentTarget_setter(self, target)

@@ -1,7 +1,7 @@
 # *************************
 # StrategicAim Hooks
 # *************************
-@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.aims.StrategicAim, '_update')
+@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.aims.StrategicAim, '_update', calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_BEFORE_HOOK)
 def new_StrategicAim_update(self, *args, **kwargs):
 	inputHandler = BigWorld.player().inputHandler
 	controlMode = inputHandler.ctrlModeName

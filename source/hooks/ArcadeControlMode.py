@@ -1,7 +1,7 @@
 # *************************
 # ArcadeControlMode Hooks
 # *************************
-@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.control_modes.ArcadeControlMode, 'enable')
+@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.control_modes.ArcadeControlMode, 'enable', calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_BEFORE_HOOK)
 def new_ArcadeControlMode_enable(self, *args, **kwargs):
 	## AimCorrection - ManualMode
 	# Not implemented yet
@@ -27,7 +27,7 @@ def new_ArcadeControlMode_enable(self, *args, **kwargs):
 			self.XAimingInfo.window.gui.visible = config2['activated'] and BigWorld.player().isGuiVisible
 	return
 
-@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.control_modes.ArcadeControlMode, 'disable')
+@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.control_modes.ArcadeControlMode, 'disable', calltype=XModLib.HookUtils.HookFunction.CALL_HOOK_BEFORE_ORIGIN)
 def new_ArcadeControlMode_disable(self, *args, **kwargs):
 	## AimCorrection - ManualMode
 	# Not implemented yet
@@ -47,7 +47,7 @@ def new_ArcadeControlMode_disable(self, *args, **kwargs):
 			self.XAimingInfo.window.gui.visible = False
 	return
 
-@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.control_modes.ArcadeControlMode, 'getDesiredShotPoint', XModLib.HookUtils.HookFunction.CALL_ORIGIN_INSIDE_HOOK)
+@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.control_modes.ArcadeControlMode, 'getDesiredShotPoint', calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_INSIDE_HOOK)
 def new_ArcadeControlMode_getDesiredShotPoint(old_ArcadeControlMode_getDesiredShotPoint, self, *args, **kwargs):
 	result = old_ArcadeControlMode_getDesiredShotPoint(self, *args, **kwargs)
 	## AimCorrection

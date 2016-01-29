@@ -1,7 +1,7 @@
 # *************************
 # ArcadeAim Hooks
 # *************************
-@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.aims.ArcadeAim, '_update')
+@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.aims.ArcadeAim, '_update', calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_BEFORE_HOOK)
 def new_ArcadeAim_update(self, *args, **kwargs):
 	inputHandler = BigWorld.player().inputHandler
 	controlMode = inputHandler.ctrlModeName

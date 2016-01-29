@@ -1,7 +1,7 @@
 # *************************
 # SniperControlMode Hooks
 # *************************
-@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.control_modes.SniperControlMode, 'enable')
+@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.control_modes.SniperControlMode, 'enable', calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_BEFORE_HOOK)
 def new_SniperControlMode_enable(self, *args, **kwargs):
 	## AimCorrection - ManualMode
 	self.XLockedDistance = None
@@ -34,7 +34,7 @@ def new_SniperControlMode_enable(self, *args, **kwargs):
 			self.XAimingInfo.window.gui.visible = config2['activated'] and BigWorld.player().isGuiVisible
 	return
 
-@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.control_modes.SniperControlMode, 'disable')
+@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.control_modes.SniperControlMode, 'disable', calltype=XModLib.HookUtils.HookFunction.CALL_HOOK_BEFORE_ORIGIN)
 def new_SniperControlMode_disable(self, *args, **kwargs):
 	## AimCorrection - ManualMode
 	self.XLockedDistance = None
@@ -58,7 +58,7 @@ def new_SniperControlMode_disable(self, *args, **kwargs):
 			self.XAimingInfo.window.gui.visible = False
 	return
 
-@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.control_modes.SniperControlMode, 'getDesiredShotPoint', XModLib.HookUtils.HookFunction.CALL_ORIGIN_INSIDE_HOOK)
+@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.control_modes.SniperControlMode, 'getDesiredShotPoint', calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_INSIDE_HOOK)
 def new_SniperControlMode_getDesiredShotPoint(old_SniperControlMode_getDesiredShotPoint, self, *args, **kwargs):
 	result = old_SniperControlMode_getDesiredShotPoint(self, *args, **kwargs)
 	## AimCorrection

@@ -1,7 +1,7 @@
 # *************************
 # PlayerAvatar Hooks
 # *************************
-@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, Avatar.PlayerAvatar, 'shoot', XModLib.HookUtils.HookFunction.CALL_ORIGIN_INSIDE_HOOK)
+@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, Avatar.PlayerAvatar, 'shoot', calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_INSIDE_HOOK)
 def new_PlayerAvatar_shoot(old_PlayerAvatar_shoot, self, *args, **kwargs):
 	config0 = _config_['commonAS']['safeShot']
 	if not config0['enabled'] or not config0['activated']:
@@ -45,7 +45,7 @@ def new_PlayerAvatar_shoot(old_PlayerAvatar_shoot, self, *args, **kwargs):
 		self._PlayerAvatar__tryShootCallbackId = BigWorld.callback(0.0, self._PlayerAvatar__tryShootCallback)
 	return
 
-@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, Avatar.PlayerAvatar, 'updateVehicleMiscStatus')
+@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, Avatar.PlayerAvatar, 'updateVehicleMiscStatus', calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_BEFORE_HOOK)
 def new_PlayerAvatar_updateVehicleMiscStatus(self, vehicleID, code, intArg, floatArg):
 	import constants
 	config0 = _config_['commonAS']['expert']
@@ -61,7 +61,7 @@ def new_PlayerAvatar_updateVehicleMiscStatus(self, vehicleID, code, intArg, floa
 			)
 	return
 
-@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, Avatar.PlayerAvatar, 'showOtherVehicleDamagedDevices')
+@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, Avatar.PlayerAvatar, 'showOtherVehicleDamagedDevices', calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_BEFORE_HOOK)
 def new_PlayerAvatar_showOtherVehicleDamagedDevices(self, vehicleID, damagedExtras, destroyedExtras):
 	if _config_['commonAS']['expert']['enabled']:
 		if hasattr(self, 'XExpertPerk') and self.XExpertPerk is not None:
@@ -71,14 +71,14 @@ def new_PlayerAvatar_showOtherVehicleDamagedDevices(self, vehicleID, damagedExtr
 			XModLib.AppLoader.AppLoader.getBattleApp().damageInfoPanel.show(vehicleID, damagedExtras, destroyedExtras)
 	return
 
-@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, Avatar.PlayerAvatar, 'targetBlur')
+@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, Avatar.PlayerAvatar, 'targetBlur', calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_BEFORE_HOOK)
 def new_PlayerAvatar_targetBlur(self, prevEntity):
 	if _config_['commonAS']['expert']['enabled']:
 		if XModLib.VehicleInfo.VehicleInfo.isVehicle(prevEntity) and hasattr(self, 'XMaySeeOtherVehicleDamagedDevices') and self.XMaySeeOtherVehicleDamagedDevices:
 			XModLib.AppLoader.AppLoader.getBattleApp().damageInfoPanel.hide()
 	return
 
-@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, Avatar.PlayerAvatar, 'targetFocus')
+@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, Avatar.PlayerAvatar, 'targetFocus', calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_BEFORE_HOOK)
 def new_PlayerAvatar_targetFocus(self, entity):
 	if _config_['commonAS']['expert']['enabled']:
 		if XModLib.VehicleInfo.VehicleInfo.isVehicle(entity) and entity.publicInfo['team'] is not self.team and entity.isAlive():
@@ -90,7 +90,7 @@ def new_PlayerAvatar_targetFocus(self, entity):
 					XModLib.AppLoader.AppLoader.getBattleApp().damageInfoPanel.show(entity.id, damagedExtras, destroyedExtras)
 	return
 
-@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, Avatar.PlayerAvatar, 'autoAim', XModLib.HookUtils.HookFunction.CALL_ORIGIN_INSIDE_HOOK)
+@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, Avatar.PlayerAvatar, 'autoAim', calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_INSIDE_HOOK)
 def new_PlayerAvatar_autoAim(old_PlayerAvatar_autoAim, self, target):
 	if _config_['commonAS']['expert']['enabled']:
 		if XModLib.VehicleInfo.VehicleInfo.isVehicle(target) and target.publicInfo['team'] is not self.team and target.isAlive():
@@ -125,20 +125,18 @@ def new_PlayerAvatar_setVisibleGUI(self, flag):
 			currentControl.XAimingInfo.window.gui.visible = config0['activated'] and flag
 	return
 
-def new_PlayerAvatar_isGuiVisible_getter(self):
-	if not hasattr(self, '_PlayerAvatar__isGuiVisible'):
-		self._PlayerAvatar__isGuiVisible = True
-	return self._PlayerAvatar__isGuiVisible
+@XModLib.HookUtils.HookFunction.propertyHookOnEvent(_inject_hooks_, Avatar.PlayerAvatar, 'isGuiVisible', '_PlayerAvatar__isGuiVisible', action=XModLib.HookUtils.HookFunction.PROPERTY_ACTION_GET, calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_INSIDE_HOOK)
+def new_PlayerAvatar_isGuiVisible_getter(old_PlayerAvatar_isGuiVisible_getter, self):
+	try:
+		result = old_PlayerAvatar_isGuiVisible_getter(self)
+	except AttributeError:
+		result = True
+	return result
 
-_inject_hooks_ += functools.partial(setattr, Avatar.PlayerAvatar, 'isGuiVisible', property(new_PlayerAvatar_isGuiVisible_getter))
-
-def new_PlayerAvatar_MSOVDD_getter(self):
-	if not hasattr(self, '_maySeeOtherVehicleDamagedDevices'):
-		self._maySeeOtherVehicleDamagedDevices = False
-	return not _config_['commonAS']['expert']['enabled'] and self._maySeeOtherVehicleDamagedDevices
-
-def new_PlayerAvatar_MSOVDD_setter(self, value):
-	self._maySeeOtherVehicleDamagedDevices = value
-	return
-
-_inject_hooks_ += functools.partial(setattr, Avatar.PlayerAvatar, '_PlayerAvatar__maySeeOtherVehicleDamagedDevices', property(new_PlayerAvatar_MSOVDD_getter, new_PlayerAvatar_MSOVDD_setter))
+@XModLib.HookUtils.HookFunction.propertyHookOnEvent(_inject_hooks_, Avatar.PlayerAvatar, '_PlayerAvatar__maySeeOtherVehicleDamagedDevices', '_maySeeOtherVehicleDamagedDevices', action=XModLib.HookUtils.HookFunction.PROPERTY_ACTION_GET, calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_INSIDE_HOOK)
+def new_PlayerAvatar_MSOVDD_getter(old_PlayerAvatar_MSOVDD_getter, self):
+	try:
+		result = old_PlayerAvatar_MSOVDD_getter(self)
+	except AttributeError:
+		result = False
+	return not _config_['commonAS']['expert']['enabled'] and result

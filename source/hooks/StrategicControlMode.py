@@ -1,7 +1,7 @@
 # *************************
 # StrategicControlMode Hooks
 # *************************
-@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.control_modes.StrategicControlMode, 'enable')
+@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.control_modes.StrategicControlMode, 'enable', calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_BEFORE_HOOK)
 def new_StrategicControlMode_enable(self, *args, **kwargs):
 	## AimCorrection - ManualMode
 	self.XLockedHeight = None
@@ -34,7 +34,7 @@ def new_StrategicControlMode_enable(self, *args, **kwargs):
 			self.XAimingInfo.window.gui.visible = config2['activated'] and BigWorld.player().isGuiVisible
 	return
 
-@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.control_modes.StrategicControlMode, 'disable')
+@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.control_modes.StrategicControlMode, 'disable', calltype=XModLib.HookUtils.HookFunction.CALL_HOOK_BEFORE_ORIGIN)
 def new_StrategicControlMode_disable(self, *args, **kwargs):
 	## AimCorrection - ManualMode
 	self.XLockedHeight = None
@@ -58,7 +58,7 @@ def new_StrategicControlMode_disable(self, *args, **kwargs):
 			self.XAimingInfo.window.gui.visible = False
 	return
 
-@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.control_modes.StrategicControlMode, 'getDesiredShotPoint', XModLib.HookUtils.HookFunction.CALL_ORIGIN_INSIDE_HOOK)
+@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.control_modes.StrategicControlMode, 'getDesiredShotPoint', calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_INSIDE_HOOK)
 def new_StrategicControlMode_getDesiredShotPoint(old_StrategicControlMode_getDesiredShotPoint, self, *args, **kwargs):
 	result = old_StrategicControlMode_getDesiredShotPoint(self, *args, **kwargs)
 	## AimCorrection

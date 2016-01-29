@@ -1,7 +1,7 @@
 # *************************
 # StrategicAimingSystem Hooks
 # *************************
-@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.AimingSystems.StrategicAimingSystem.StrategicAimingSystem, 'handleMovement', XModLib.HookUtils.HookFunction.CALL_ORIGIN_INSIDE_HOOK)
+@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.AimingSystems.StrategicAimingSystem.StrategicAimingSystem, 'handleMovement', calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_INSIDE_HOOK)
 def new_StrategicAimingSystem_handleMovement(old_StrategicAimingSystem_handleMovement, self, dx, dy):
 	if BigWorld.player().inputHandler.ctrlModeName != 'strategic':
 		return old_StrategicAimingSystem_handleMovement(self, dx, dy)
@@ -77,7 +77,7 @@ def new_StrategicAimingSystem_handleMovement(old_StrategicAimingSystem_handleMov
 	self.XStrategicSniper.updateCameraPitch(landVector.pitch)
 	return
 
-@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.AimingSystems.StrategicAimingSystem.StrategicAimingSystem, 'updateTargetPos', XModLib.HookUtils.HookFunction.CALL_ORIGIN_INSIDE_HOOK)
+@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.AimingSystems.StrategicAimingSystem.StrategicAimingSystem, 'updateTargetPos', calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_INSIDE_HOOK)
 def new_StrategicAimingSystem_updateTargetPos(old_StrategicAimingSystem_updateTargetPos, self, targetPos):
 	if BigWorld.player().inputHandler.ctrlModeName != 'strategic':
 		return old_StrategicAimingSystem_updateTargetPos(self, targetPos)
@@ -104,7 +104,7 @@ def new_StrategicAimingSystem_updateTargetPos(old_StrategicAimingSystem_updateTa
 	self.XStrategicSniper.updateCameraPitch(landVector.pitch)
 	return
 
-@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.AimingSystems.StrategicAimingSystem.StrategicAimingSystem, 'getDesiredShotPoint', XModLib.HookUtils.HookFunction.CALL_ORIGIN_INSIDE_HOOK)
+@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.AimingSystems.StrategicAimingSystem.StrategicAimingSystem, 'getDesiredShotPoint', calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_INSIDE_HOOK)
 def new_StrategicAimingSystem_getDesiredShotPoint(old_StrategicAimingSystem_getDesiredShotPoint, self, terrainOnlyCheck = False):
 	if BigWorld.player().inputHandler.ctrlModeName != 'strategic':
 		return old_StrategicAimingSystem_getDesiredShotPoint(self, terrainOnlyCheck)
