@@ -13,7 +13,7 @@ def new_PlayerAvatar_shoot(old_PlayerAvatar_shoot, self, *args, **kwargs):
 	gunTarget = XModLib.Colliders.Colliders.computePlayerProjectileTrajectoryEnd((
 		XModLib.Colliders.Colliders.collideStatic,
 		XModLib.Colliders.Colliders.collideSpaceBB,
-		functools.partial(XModLib.Colliders.Colliders.collideVehicles, XModLib.Colliders.Colliders.getVisibleVehicles())
+		functools.partial(XModLib.Colliders.Colliders.collideVehicles, XModLib.Colliders.Colliders.getVisibleVehicles(skipPlayer=True))
 	))
 	gunTarget = gunTarget[2][1] if gunTarget[2] is not None and len(gunTarget[2]) >= 2 and XModLib.VehicleInfo.VehicleInfo.isVehicle(gunTarget[2][1]) else None
 	if config0['waste']['enabled'] and gunTarget is None and config0['waste']['arcade'] and self.inputHandler.ctrlModeName == 'arcade':
