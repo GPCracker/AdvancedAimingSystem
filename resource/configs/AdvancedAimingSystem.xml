@@ -66,6 +66,9 @@
 			<!-- Using switch mode (on press). Otherwise works as button (on hold). -->
 			<!-- Использовать режим переключателя (при нажатии). В противном случае работает как кнопка (при удерживании). -->
 			<switch>False</switch>
+			<!-- Inverts key press state. If activated, press is detected as release and vice versa. -->
+			<!-- Инвертировать нажатие клавиши. При активации нажатие воспринимается как отпускание и наоборот. -->
+			<invert>True</invert>
 			<onActivate>SafeShot включен.</onActivate>
 			<onDeactivate>SafeShot отключен.</onDeactivate>
 			<!-- Vehicle error message template. Displayed just above crosshairs. -->
@@ -174,6 +177,7 @@
 			<activated>True</activated>
 			<key>KEY_LCONTROL+KEY_A</key>
 			<switch>True</switch>
+			<invert>False</invert>
 			<template>Осталось: {{remainingAimingTime:.2f}}с;\nДистанция: {{aimingDistance:.1f}}м;\nРазброс: {{deviation:.2f}}м;\nВремя полета: {{flyTime:.2f}}с;\nУгол падения: {{hitAngleDeg:+.1f}}гр;</template>
 			<!-- BW GUI component settings. Advanced users only. -->
 			<!-- Настройки компонента BW GUI. Для опытных пользователей. -->
@@ -244,6 +248,7 @@
 			<activated>True</activated>
 			<key>KEY_LCONTROL+KEY_A</key>
 			<switch>True</switch>
+			<invert>False</invert>
 			<template>Осталось: {{remainingAimingTime:.2f}}с;\nДистанция: {{aimingDistance:.1f}}м;\nРазброс: {{deviation:.2f}}м;\nВремя полета: {{flyTime:.2f}}с;\nУгол падения: {{hitAngleDeg:+.1f}}гр;</template>
 			<settings>
 				<window>
@@ -271,6 +276,7 @@
 				<activated>False</activated>
 				<key>KEY_LCONTROL+KEY_H</key>
 				<switch>True</switch>
+				<invert>False</invert>
 				<!-- Enables vehicle ignoring. Shot point will always on the ground. -->
 				<!-- Разрешает игнорировать цель в прицеле. Точка прицеливания всегда будет на земле. -->
 				<ignoreVehicles>False</ignoreVehicles>
@@ -316,6 +322,7 @@
 			<activated>True</activated>
 			<key>KEY_LCONTROL+KEY_A</key>
 			<switch>True</switch>
+			<invert>False</invert>
 			<template>Осталось: {{remainingAimingTime:.2f}}с;\nДистанция: {{aimingDistance:.1f}}м;\nРазброс: {{deviation:.2f}}м;\nВремя полета: {{flyTime:.2f}}с;\nУгол падения: {{hitAngleDeg:+.1f}}гр;</template>
 			<settings>
 				<window>
@@ -334,6 +341,7 @@
 			<activated>False</activated>
 			<key>KEY_LCONTROL+KEY_S</key>
 			<switch>True</switch>
+			<invert>False</invert>
 			<!-- Control plane level. This should be less than altitude of any point on any map. Advanced users only. -->
 			<!-- Уровень контрольной плоскости. Она всегда должна быть ниже любой точки на любой карте. Для опытных пользователей. -->
 			<controlLevel>-150.0</controlLevel>

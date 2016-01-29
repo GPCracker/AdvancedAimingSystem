@@ -33,6 +33,7 @@ def defaultConfig():
 				'activated': ('Bool', True),
 				'key': ('String', 'KEY_LALT'),
 				'switch': ('Bool', False),
+				'invert': ('Bool', True),
 				'onActivate': ('WideString', u'SafeShot enabled.'),
 				'onDeactivate': ('WideString', u'SafeShot disabled.'),
 				'template': ('WideString', u'[{{reason}}] Shot has been blocked.'),
@@ -116,6 +117,7 @@ def defaultConfig():
 				'activated': ('Bool', True),
 				'key': ('String', 'KEY_LCONTROL+KEY_A'),
 				'switch': ('Bool', True),
+				'invert': ('Bool', False),
 				'template': ('WideString', u'Remains: {{remainingAimingTime:.2f}}s;\\nDistance: {{aimingDistance:.1f}}m;\\nDeviation: {{deviation:.2f}}m;\\nFly time: {{flyTime:.2f}}s;\\nHit angle: {{hitAngleDeg:+.1f}}deg;'),
 				'settings': {
 					'window': {
@@ -207,6 +209,7 @@ def defaultConfig():
 				'activated': ('Bool', True),
 				'key': ('String', 'KEY_LCONTROL+KEY_A'),
 				'switch': ('Bool', True),
+				'invert': ('Bool', False),
 				'template': ('WideString', u'Remains: {{remainingAimingTime:.2f}}s;\\nDistance: {{aimingDistance:.1f}}m;\\nDeviation: {{deviation:.2f}}m;\\nFly time: {{flyTime:.2f}}s;\\nHit angle: {{hitAngleDeg:+.1f}}deg;'),
 				'settings': {
 					'window': {
@@ -248,6 +251,7 @@ def defaultConfig():
 					'activated': ('Bool', False),
 					'key': ('String', 'KEY_LCONTROL+KEY_H'),
 					'switch': ('Bool', True),
+					'invert': ('Bool', False),
 					'ignoreVehicles': ('Bool', True),
 					'heightMultiplier': ('Float', 0.5),
 					'onActivate': ('WideString', u'Target height accounting enabled.'),
@@ -303,6 +307,7 @@ def defaultConfig():
 				'activated': ('Bool', True),
 				'key': ('String', 'KEY_LCONTROL+KEY_A'),
 				'switch': ('Bool', True),
+				'invert': ('Bool', False),
 				'template': ('WideString', u'Remains: {{remainingAimingTime:.2f}}s;\\nDistance: {{aimingDistance:.1f}}m;\\nDeviation: {{deviation:.2f}}m;\\nFly time: {{flyTime:.2f}}s;\\nHit angle: {{hitAngleDeg:+.1f}}deg;'),
 				'settings': {
 					'window': {
@@ -337,6 +342,7 @@ def defaultConfig():
 				'activated': ('Bool', False),
 				'key': ('String', 'KEY_LCONTROL+KEY_S'),
 				'switch': ('Bool', True),
+				'invert': ('Bool', False),
 				'controlLevel': ('Float', -150.0),
 				'correctMaxDistance': ('Bool', False),
 				'basePitch': {
