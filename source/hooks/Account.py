@@ -1,7 +1,7 @@
 # *************************
 # Account Hooks
 # *************************
-@XModLib.HookUtils.HookFunction.methodHook(Account.Account, 'onBecomePlayer')
+@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_loads_, Account.Account, 'onBecomePlayer')
 def new_Account_onBecomePlayer(self, *args, **kwargs):
 	if _globals_['appResultMessageFlag'] or not _globals_['appResultMessage']:
 		return

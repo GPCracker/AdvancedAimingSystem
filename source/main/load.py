@@ -17,6 +17,7 @@ def loadApplication():
 		_globals_['appResultMessage'] = _config_['appLoadedMessage']
 		print '[{0[1]}] {0[0]} {1}'.format(__application__, 'successfully loaded.')
 		delayedCall(_config_['hookInjectTimeout'], _inject_hooks_, daemon=True)
+	delayedCall(_config_['hookInjectTimeout'], _inject_loads_, daemon=True)
 	return
 
 # *************************
