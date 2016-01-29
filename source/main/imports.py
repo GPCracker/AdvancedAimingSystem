@@ -6,6 +6,7 @@ import math
 import time
 import weakref
 import functools
+import threading
 import HTMLParser
 
 # *************************
