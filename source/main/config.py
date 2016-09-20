@@ -13,136 +13,57 @@ def defaultConfig():
 		'appLoadedMessage': ('LocalizedWideString', u'<a href="event:AdvancedAimingSystem.official_topic"><font color="#0080FF">"Advanced&nbsp;Aiming&nbsp;System"</font></a> <font color="#008000">successfully loaded.</font>'),
 		'appFailedMessage': ('LocalizedWideString', u'<a href="event:AdvancedAimingSystem.official_topic"><font color="#0080FF">"Advanced&nbsp;Aiming&nbsp;System"</font></a> <font color="#E00000">is incompatible with current client version.</font>'),
 		'commonAS': {
+			'targetScanner': {
+				'enabled': ('Bool', True),
+				'scanMode': {
+					'updateInterval': ('Float', 0.04),
+					'useNormalMode': ('Bool', True),
+					'useXRayMode': ('Bool', False),
+					'useBBoxMode': ('Bool', False),
+					'useBEpsMode': ('Bool', False),
+					'maxDistance': ('Float', 720.0),
+					'boundsScalar': ('Float', 1.0),
+					'expiryTime': ('Float', 5.0)
+				},
+				'manualOverride': {
+					'enabled': ('Bool', False),
+					'key': ('String', 'KEY_T')
+				}
+			},
 			'sniperModeSPG': {
 				'enabled': ('Bool', False),
 				'key': ('String', 'KEY_E')
 			},
 			'autoAim': {
-				'useXRay': ('Bool', True),
-				'useBBox': {
-					'enabled': ('Bool', False),
-					'scalar': ('Float', 2.0)
-				}
+				'useTargetInfo': ('Bool', False)
 			},
 			'radialMenu': {
-				'useXRay': ('Bool', True)
+				'useTargetInfo': ('Bool', False)
 			},
-			'safeShot': {
-				'enabled': ('Bool', True),
-				'activated': ('Bool', True),
-				'key': ('String', 'KEY_LALT'),
-				'switch': ('Bool', False),
-				'invert': ('Bool', True),
-				'onActivate': ('WideString', u'SafeShot enabled.'),
-				'onDeactivate': ('WideString', u'SafeShot disabled.'),
-				'template': ('WideString', u'[{{reason}}] Shot has been blocked.'),
-				'reasons': {
-					'team': ('WideString', u'team_shot'),
-					'dead': ('WideString', u'dead_shot'),
-					'waste': ('WideString', u'waste_shot')
-				},
-				'team': {
-					'enabled': ('Bool', True),
-					'normal': ('Bool', True),
-					'blue': ('Bool', True),
-					'checkGun': ('Bool', True),
-					'chat': {
-						'enabled': ('Bool', True),
-						'timeout': ('Float', 5.0),
-						'template': ('WideString', u'{{name}} ({{vehicle}}), you\'re in my line of fire!')
-					}
-				},
-				'dead': {
-					'enabled': ('Bool', True),
-					'timeout': ('Float', 2.0)
-				},
-				'waste': {
-					'enabled': ('Bool', False),
-					'arcade': ('Bool', True)
-				}
-			},
-			'expert': {
+			'expertPerk': {
 				'enabled': ('Bool', False),
-				'cache': ('Bool', True),
-				'queue': ('Bool', False),
-				'reply': ('Float', 5.0),
-				'request': ('Float', 5.0)
+				'cacheExtrasInfo': ('Bool', True),
+				'replyTimeout': ('Float', 5.0),
+				'cacheExpiryTime': ('Float', 60.0),
 			}
 		},
 		'arcadeAS': {
 			'aimCorrection': {
 				'manualMode': {
 					'enabled': ('Bool', False),
-					'key': ('String', 'KEY_LALT'),
+					'key': ('String', 'KEY_LALT')
 				},
 				'targetMode': {
-					'enabled': ('Bool', False)
-				},
-				'gui': {
-					'enabled': ('Bool', False)
-				}
-			},
-			'targetLock': {
-				'manualMode': {
 					'enabled': ('Bool', False),
-					'useXRay': ('Bool', True),
-					'key': ('String', 'KEY_T')
-				},
-				'autoMode': {
-					'enabled': ('Bool', True),
-					'allies': ('Bool', False),
-					'useXRay': ('Bool', True),
-					'timeout': ('Float', 3.0)
-				},
-				'gui': {
-					'enabled': ('Bool', True),
-					'speedMultiplier': ('Float', 1.0),
-					'template': ('WideString', u'Target: "{{targetShortName}}"; Speed: {{targetSpeed:.1f}}m/s.'),
-					'settings': {
-						'font': ('String', 'default_small.font'),
-						'position': ('Vector3', Math.Vector3(0, 0.30, 1.0)),
-						'colour': ('Vector4', Math.Vector4(255, 127, 0, 255)),
-						'widthMode': ('String', 'PIXEL'),
-						'heightMode': ('String', 'PIXEL'),
-						'verticalAnchor': ('String', 'CENTER'),
-						'horizontalAnchor': ('String', 'CENTER'),
-						'verticalPositionMode': ('String', 'CLIP'),
-						'horizontalPositionMode': ('String', 'CLIP')
-					}
-				}
-			},
-			'aimingInfo': {
-				'enabled': ('Bool', False),
-				'activated': ('Bool', True),
-				'key': ('String', 'KEY_LCONTROL+KEY_A'),
-				'switch': ('Bool', True),
-				'invert': ('Bool', False),
-				'template': ('WideString', u'Remains: {{remainingAimingTime:.2f}}s;\\nDistance: {{aimingDistance:.1f}}m;\\nDeviation: {{deviation:.2f}}m;\\nFly time: {{flyTime:.2f}}s;\\nHit angle: {{hitAngleDeg:+.1f}}deg;'),
-				'settings': {
-					'window': {
-						'size': ('Vector2', Math.Vector2(180, 105)),
-						'colour': ('Vector4', Math.Vector4(0, 0, 0, 127)),
-						'position': ('Vector3', Math.Vector3(0.4, -0.1, 1.0)),
-						'textureName': ('String', 'gui/maps/ingame/textures/AdvancedAimingSystem/aimingInfoBG.dds'),
-						'materialFX': ('String', 'BLEND'),
-						'widthMode': ('String', 'PIXEL'),
-						'heightMode': ('String', 'PIXEL'),
-						'verticalAnchor': ('String', 'CENTER'),
-						'horizontalAnchor': ('String', 'CENTER'),
-						'verticalPositionMode': ('String', 'CLIP'),
-						'horizontalPositionMode': ('String', 'CLIP')
+					'activated': ('Bool', True),
+					'shortcut': {
+						'key': ('String', 'KEY_LCONTROL+KEY_T'),
+						'switch': ('Bool', True),
+						'invert': ('Bool', False),
 					},
-					'label': {
-						'multiline': ('Bool', True),
-						'font': ('String', 'default_small.font'),
-						'position': ('Vector3', Math.Vector3(25, 5, 1)),
-						'colour': ('Vector4', Math.Vector4(100, 180, 240, 255)),
-						'widthMode': ('String', 'PIXEL'),
-						'heightMode': ('String', 'PIXEL'),
-						'verticalAnchor': ('String', 'TOP'),
-						'horizontalAnchor': ('String', 'LEFT'),
-						'verticalPositionMode': ('String', 'PIXEL'),
-						'horizontalPositionMode': ('String', 'PIXEL')
+					'message': {
+						'onActivate': ('LocalizedWideString', u'ArcadeAimCorrection:TargetMode ENABLED.'),
+						'onDeactivate': ('LocalizedWideString', u'ArcadeAimCorrection:TargetMode DISABLED.')
 					}
 				}
 			}
@@ -154,87 +75,16 @@ def defaultConfig():
 					'key': ('String', 'KEY_LALT'),
 				},
 				'targetMode': {
-					'enabled': ('Bool', True)
-				},
-				'gui': {
 					'enabled': ('Bool', True),
-					'template': ('WideString', u'Distance locked: {{distance:.1f}}m.'),
-					'affectedColour': ('Vector4', Math.Vector4(0, 255, 0, 255)),
-					'unaffectedColour': ('Vector4', Math.Vector4(255, 0, 0, 255)),
-					'settings': {
-						'font': ('String', 'default_small.font'),
-						'position': ('Vector3', Math.Vector3(0, 0.25, 1.0)),
-						'colour': ('Vector4', Math.Vector4(0, 255, 0, 255)),
-						'widthMode': ('String', 'PIXEL'),
-						'heightMode': ('String', 'PIXEL'),
-						'verticalAnchor': ('String', 'CENTER'),
-						'horizontalAnchor': ('String', 'CENTER'),
-						'verticalPositionMode': ('String', 'CLIP'),
-						'horizontalPositionMode': ('String', 'CLIP')
-					}
-				}
-			},
-			'targetLock': {
-				'manualMode': {
-					'enabled': ('Bool', False),
-					'useXRay': ('Bool', True),
-					'key': ('String', 'KEY_T')
-				},
-				'autoMode': {
-					'enabled': ('Bool', True),
-					'allies': ('Bool', False),
-					'useXRay': ('Bool', True),
-					'timeout': ('Float', 3.0)
-				},
-				'gui': {
-					'enabled': ('Bool', True),
-					'speedMultiplier': ('Float', 1.0),
-					'template': ('WideString', u'Target: "{{targetShortName}}"; Speed: {{targetSpeed:.1f}}m/s.'),
-					'settings': {
-						'font': ('String', 'default_small.font'),
-						'position': ('Vector3', Math.Vector3(0, 0.30, 1.0)),
-						'colour': ('Vector4', Math.Vector4(255, 127, 0, 255)),
-						'widthMode': ('String', 'PIXEL'),
-						'heightMode': ('String', 'PIXEL'),
-						'verticalAnchor': ('String', 'CENTER'),
-						'horizontalAnchor': ('String', 'CENTER'),
-						'verticalPositionMode': ('String', 'CLIP'),
-						'horizontalPositionMode': ('String', 'CLIP')
-					}
-				}
-			},
-			'aimingInfo': {
-				'enabled': ('Bool', False),
-				'activated': ('Bool', True),
-				'key': ('String', 'KEY_LCONTROL+KEY_A'),
-				'switch': ('Bool', True),
-				'invert': ('Bool', False),
-				'template': ('WideString', u'Remains: {{remainingAimingTime:.2f}}s;\\nDistance: {{aimingDistance:.1f}}m;\\nDeviation: {{deviation:.2f}}m;\\nFly time: {{flyTime:.2f}}s;\\nHit angle: {{hitAngleDeg:+.1f}}deg;'),
-				'settings': {
-					'window': {
-						'size': ('Vector2', Math.Vector2(180, 105)),
-						'colour': ('Vector4', Math.Vector4(0, 0, 0, 127)),
-						'position': ('Vector3', Math.Vector3(0.4, -0.25, 1.0)),
-						'textureName': ('String', 'gui/maps/ingame/textures/AdvancedAimingSystem/aimingInfoBG.dds'),
-						'materialFX': ('String', 'BLEND'),
-						'widthMode': ('String', 'PIXEL'),
-						'heightMode': ('String', 'PIXEL'),
-						'verticalAnchor': ('String', 'CENTER'),
-						'horizontalAnchor': ('String', 'CENTER'),
-						'verticalPositionMode': ('String', 'CLIP'),
-						'horizontalPositionMode': ('String', 'CLIP')
+					'activated': ('Bool', True),
+					'shortcut': {
+						'key': ('String', 'KEY_LCONTROL+KEY_T'),
+						'switch': ('Bool', True),
+						'invert': ('Bool', False),
 					},
-					'label': {
-						'multiline': ('Bool', True),
-						'font': ('String', 'default_small.font'),
-						'position': ('Vector3', Math.Vector3(25, 5, 1)),
-						'colour': ('Vector4', Math.Vector4(100, 240, 180, 255)),
-						'widthMode': ('String', 'PIXEL'),
-						'heightMode': ('String', 'PIXEL'),
-						'verticalAnchor': ('String', 'TOP'),
-						'horizontalAnchor': ('String', 'LEFT'),
-						'verticalPositionMode': ('String', 'PIXEL'),
-						'horizontalPositionMode': ('String', 'PIXEL')
+					'message': {
+						'onActivate': ('LocalizedWideString', u'SniperAimCorrection:TargetMode ENABLED.'),
+						'onDeactivate': ('LocalizedWideString', u'SniperAimCorrection:TargetMode DISABLED.')
 					}
 				}
 			}
@@ -245,117 +95,140 @@ def defaultConfig():
 					'enabled': ('Bool', True),
 					'key': ('String', 'KEY_LALT'),
 				},
-				'relativeMode': {
+				'targetMode': {
 					'enabled': ('Bool', True),
 					'activated': ('Bool', False),
-					'key': ('String', 'KEY_LCONTROL+KEY_H'),
-					'switch': ('Bool', True),
-					'invert': ('Bool', False),
-					'ignoreVehicles': ('Bool', True),
-					'heightMultiplier': ('Float', 0.5),
-					'onActivate': ('WideString', u'Target height accounting enabled.'),
-					'onDeactivate': ('WideString', u'Target height accounting disabled.')
-				},
-				'gui': {
-					'enabled': ('Bool', True),
-					'template': ('WideString', u'Altitude locked: {{absoluteHeight:.1f}}m. Relative height: {{relativeHeight:.1f}}m.'),
-					'settings': {
-						'font': ('String', 'default_small.font'),
-						'position': ('Vector3', Math.Vector3(0, 0.25, 1.0)),
-						'colour': ('Vector4', Math.Vector4(0, 255, 0, 255)),
-						'widthMode': ('String', 'PIXEL'),
-						'heightMode': ('String', 'PIXEL'),
-						'verticalAnchor': ('String', 'CENTER'),
-						'horizontalAnchor': ('String', 'CENTER'),
-						'verticalPositionMode': ('String', 'CLIP'),
-						'horizontalPositionMode': ('String', 'CLIP')
-					}
-				}
-			},
-			'targetLock': {
-				'manualMode': {
-					'enabled': ('Bool', False),
-					'useXRay': ('Bool', True),
-					'key': ('String', 'KEY_T')
-				},
-				'autoMode': {
-					'enabled': ('Bool', True),
-					'allies': ('Bool', False),
-					'useXRay': ('Bool', True),
-					'timeout': ('Float', 3.0)
-				},
-				'gui': {
-					'enabled': ('Bool', True),
-					'speedMultiplier': ('Float', 1.0),
-					'template': ('WideString', u'Target: "{{targetShortName}}"; Speed: {{targetSpeed:.1f}}m/s.'),
-					'settings': {
-						'font': ('String', 'default_small.font'),
-						'position': ('Vector3', Math.Vector3(0, 0.30, 1.0)),
-						'colour': ('Vector4', Math.Vector4(255, 127, 0, 255)),
-						'widthMode': ('String', 'PIXEL'),
-						'heightMode': ('String', 'PIXEL'),
-						'verticalAnchor': ('String', 'CENTER'),
-						'horizontalAnchor': ('String', 'CENTER'),
-						'verticalPositionMode': ('String', 'CLIP'),
-						'horizontalPositionMode': ('String', 'CLIP')
-					}
-				}
-			},
-			'aimingInfo': {
-				'enabled': ('Bool', False),
-				'activated': ('Bool', True),
-				'key': ('String', 'KEY_LCONTROL+KEY_A'),
-				'switch': ('Bool', True),
-				'invert': ('Bool', False),
-				'template': ('WideString', u'Remains: {{remainingAimingTime:.2f}}s;\\nDistance: {{aimingDistance:.1f}}m;\\nDeviation: {{deviation:.2f}}m;\\nFly time: {{flyTime:.2f}}s;\\nHit angle: {{hitAngleDeg:+.1f}}deg;'),
-				'settings': {
-					'window': {
-						'size': ('Vector2', Math.Vector2(180, 105)),
-						'colour': ('Vector4', Math.Vector4(0, 0, 0, 127)),
-						'position': ('Vector3', Math.Vector3(-0.3, -0.4, 1.0)),
-						'textureName': ('String', 'gui/maps/ingame/textures/AdvancedAimingSystem/aimingInfoBG.dds'),
-						'materialFX': ('String', 'BLEND'),
-						'widthMode': ('String', 'PIXEL'),
-						'heightMode': ('String', 'PIXEL'),
-						'verticalAnchor': ('String', 'CENTER'),
-						'horizontalAnchor': ('String', 'CENTER'),
-						'verticalPositionMode': ('String', 'CLIP'),
-						'horizontalPositionMode': ('String', 'CLIP')
+					'shortcut': {
+						'key': ('String', 'KEY_LCONTROL+KEY_T'),
+						'switch': ('Bool', True),
+						'invert': ('Bool', False),
 					},
-					'label': {
-						'multiline': ('Bool', True),
-						'font': ('String', 'default_small.font'),
-						'position': ('Vector3', Math.Vector3(25, 5, 1)),
-						'colour': ('Vector4', Math.Vector4(240, 100, 100, 255)),
-						'widthMode': ('String', 'PIXEL'),
-						'heightMode': ('String', 'PIXEL'),
-						'verticalAnchor': ('String', 'TOP'),
-						'horizontalAnchor': ('String', 'LEFT'),
-						'verticalPositionMode': ('String', 'PIXEL'),
-						'horizontalPositionMode': ('String', 'PIXEL')
-					}
-				}
-			},
-			'strategicSniper': {
-				'enabled': ('Bool', False),
-				'activated': ('Bool', False),
-				'key': ('String', 'KEY_LCONTROL+KEY_S'),
-				'switch': ('Bool', True),
-				'invert': ('Bool', False),
-				'controlLevel': ('Float', -150.0),
-				'correctMaxDistance': ('Bool', False),
-				'basePitch': {
-					'value': ('Float', 0.0),
-					'adjustment': {
-						'enabled': ('Bool', True),
-						'delta': ('Float', 0.05),
-						'increase': ('String', 'KEY_LCONTROL+KEY_R'),
-						'decrease': ('String', 'KEY_LCONTROL+KEY_F'),
-						'message': {
-							'enabled': ('Bool', True),
-							'template': ('WideString', u'Camera base pitch >>> {{value:.2f}} ({{delta:+.2f}}).')
-						}
-					}
+					'message': {
+						'onActivate': ('LocalizedWideString', u'StrategicAimCorrection:TargetMode ENABLED.'),
+						'onDeactivate': ('LocalizedWideString', u'StrategicAimCorrection:TargetMode DISABLED.')
+					},
+					'heightMultiplier': ('Float', 0.5)
+				},
+				'ignoreVehicles': ('Bool', False)
+			}
+		},
+		'gui': {
+			'enabled': ('Bool', True),
+			'updateInterval': ('Float', 0.04),
+			'panels': {
+				'AdvancedAimingSystemCorrectionPanel': {
+					'default': {
+						'alpha': ('Float', 1.0),
+						'visible': ('Bool', True),
+						'background': ('String', ''),
+						'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemCorrectionPanel'),
+						'text': ('LocalizedWideString', u'<p align="center"><font color="#00FF00" size="20" face="$UniversCondC">Distance locked: {{manualInfo:.1f}}m.</font></p>'),
+						'position': ('Vector2AsTuple', (458.0, 250.0)),
+						'size': ('Vector2AsTuple', (450.0, 25.0))
+					},
+					'arcade': ('PanelSettings', {
+						'alpha': ('Float', 1.0),
+						'visible': ('Bool', True),
+						'background': ('String', ''),
+						'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemCorrectionPanel'),
+						'text': ('LocalizedWideString', u'<p align="center"><font color="#00FF00" size="20" face="$UniversCondC">Distance locked: {{manualInfo:.1f}}m.</font></p>'),
+						'position': ('Vector2AsTuple', (458.0, 250.0)),
+						'size': ('Vector2AsTuple', (450.0, 25.0))
+					}),
+					'sniper': ('PanelSettings', {
+						'alpha': ('Float', 1.0),
+						'visible': ('Bool', True),
+						'background': ('String', ''),
+						'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemCorrectionPanel'),
+						'text': ('LocalizedWideString', u'<p align="center"><font color="#00FF00" size="20" face="$UniversCondC">Distance locked: {{manualInfo:.1f}}m.</font></p>'),
+						'position': ('Vector2AsTuple', (458.0, 250.0)),
+						'size': ('Vector2AsTuple', (450.0, 25.0))
+					}),
+					'strategic': ('PanelSettings', {
+						'alpha': ('Float', 1.0),
+						'visible': ('Bool', True),
+						'background': ('String', ''),
+						'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemCorrectionPanel'),
+						'text': ('LocalizedWideString', u'<p align="center"><font color="#00FF00" size="20" face="$UniversCondC">Distance locked: {{manualInfo:.1f}}m.</font></p>'),
+						'position': ('Vector2AsTuple', (458.0, 250.0)),
+						'size': ('Vector2AsTuple', (450.0, 25.0))
+					})
+				},
+				'AdvancedAimingSystemTargetPanel': {
+					'default': {
+						'alpha': ('Float', 1.0),
+						'visible': ('Bool', True),
+						'background': ('String', ''),
+						'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemTargetPanel'),
+						'text': ('LocalizedWideString', u'<p align="center"><font color="#FF7F00" size="20" face="$UniversCondC">Target: {{shortName}}; Distance: {{distance:.1f}}m; Speed: {{speedMS:.1f}}m/s.</font></p>'),
+						'position': ('Vector2AsTuple', (458.0, 225.0)),
+						'size': ('Vector2AsTuple', (450.0, 25.0))
+					},
+					'arcade': ('PanelSettings', {
+						'alpha': ('Float', 1.0),
+						'visible': ('Bool', True),
+						'background': ('String', ''),
+						'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemTargetPanel'),
+						'text': ('LocalizedWideString', u'<p align="center"><font color="#FF7F00" size="20" face="$UniversCondC">Target: {{shortName}}; Distance: {{distance:.1f}}m; Speed: {{speedMS:.1f}}m/s.</font></p>'),
+						'position': ('Vector2AsTuple', (458.0, 225.0)),
+						'size': ('Vector2AsTuple', (450.0, 25.0))
+					}),
+					'sniper': ('PanelSettings', {
+						'alpha': ('Float', 1.0),
+						'visible': ('Bool', True),
+						'background': ('String', ''),
+						'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemTargetPanel'),
+						'text': ('LocalizedWideString', u'<p align="center"><font color="#FF7F00" size="20" face="$UniversCondC">Target: {{shortName}}; Distance: {{distance:.1f}}m; Speed: {{speedMS:.1f}}m/s.</font></p>'),
+						'position': ('Vector2AsTuple', (458.0, 225.0)),
+						'size': ('Vector2AsTuple', (450.0, 25.0))
+					}),
+					'strategic': ('PanelSettings', {
+						'alpha': ('Float', 1.0),
+						'visible': ('Bool', True),
+						'background': ('String', ''),
+						'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemTargetPanel'),
+						'text': ('LocalizedWideString', u'<p align="center"><font color="#FF7F00" size="20" face="$UniversCondC">Target: {{shortName}}; Distance: {{distance:.1f}}m; Speed: {{speedMS:.1f}}m/s.</font></p>'),
+						'position': ('Vector2AsTuple', (458.0, 225.0)),
+						'size': ('Vector2AsTuple', (450.0, 25.0))
+					})
+				},
+				'AdvancedAimingSystemAimingPanel': {
+					'default': {
+						'alpha': ('Float', 1.0),
+						'visible': ('Bool', True),
+						'background': ('String', 'img://gui/maps/icons/mods/AdvancedAimingSystem/AimingInfoBGB.png'),
+						'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemAimingPanel'),
+						'text': ('LocalizedWideString', u'<textformat leftmargin="20" rightmargin="20" tabstops="[0,70]"><font color="#64F0B4" size="20" face="$UniversCondC">\tRemains:\t{{remainingAimingTime:.2f}}s;\n\tDistance:\t{{aimingDistance:.1f}}m;\n\tDeviation:\t{{deviation:.2f}}m;\n\tFly time:\t{{flyTime:.2f}}s;\n\tHit angle:\t{{hitAngleDeg:+.1f}}dg;</font></textformat>'),
+						'position': ('Vector2AsTuple', (870.0, 355.0)),
+						'size': ('Vector2AsTuple', (175.0, 130.0))
+					},
+					'arcade': ('PanelSettings', {
+						'alpha': ('Float', 1.0),
+						'visible': ('Bool', True),
+						'background': ('String', 'img://gui/maps/icons/mods/AdvancedAimingSystem/AimingInfoBGB.png'),
+						'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemAimingPanel'),
+						'text': ('LocalizedWideString', u'<textformat leftmargin="20" rightmargin="20" tabstops="[0,70]"><font color="#64F0B4" size="20" face="$UniversCondC">\tRemains:\t{{remainingAimingTime:.2f}}s;\n\tDistance:\t{{aimingDistance:.1f}}m;\n\tDeviation:\t{{deviation:.2f}}m;\n\tFly time:\t{{flyTime:.2f}}s;\n\tHit angle:\t{{hitAngleDeg:+.1f}}dg;</font></textformat>'),
+						'position': ('Vector2AsTuple', (870.0, 355.0)),
+						'size': ('Vector2AsTuple', (175.0, 130.0))
+					}),
+					'sniper': ('PanelSettings', {
+						'alpha': ('Float', 1.0),
+						'visible': ('Bool', True),
+						'background': ('String', 'img://gui/maps/icons/mods/AdvancedAimingSystem/AimingInfoBGB.png'),
+						'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemAimingPanel'),
+						'text': ('LocalizedWideString', u'<textformat leftmargin="20" rightmargin="20" tabstops="[0,70]"><font color="#64B4F0" size="20" face="$UniversCondC">\tRemains:\t{{remainingAimingTime:.2f}}s;\n\tDistance:\t{{aimingDistance:.1f}}m;\n\tDeviation:\t{{deviation:.2f}}m;\n\tFly time:\t{{flyTime:.2f}}s;\n\tHit angle:\t{{hitAngleDeg:+.1f}}dg;</font></textformat>'),
+						'position': ('Vector2AsTuple', (870.0, 415.0)),
+						'size': ('Vector2AsTuple', (175.0, 130.0))
+					}),
+					'strategic': ('PanelSettings', {
+						'alpha': ('Float', 1.0),
+						'visible': ('Bool', True),
+						'background': ('String', 'img://gui/maps/icons/mods/AdvancedAimingSystem/AimingInfoBGB.png'),
+						'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemAimingPanel'),
+						'text': ('LocalizedWideString', u'<textformat leftmargin="20" rightmargin="20" tabstops="[0,70]"><font color="#B46464" size="20" face="$UniversCondC">\tRemains:\t{{remainingAimingTime:.2f}}s;\n\tDistance:\t{{aimingDistance:.1f}}m;\n\tDeviation:\t{{deviation:.2f}}m;\n\tFly time:\t{{flyTime:.2f}}s;\n\tHit angle:\t{{hitAngleDeg:+.1f}}dg;</font></textformat>'),
+						'position': ('Vector2AsTuple', (395.0, 475.0)),
+						'size': ('Vector2AsTuple', (175.0, 130.0))
+					})
 				}
 			}
 		}
@@ -365,7 +238,21 @@ def defaultConfig():
 # Read configuration from file
 # *************************
 def readConfig():
-	configReader = XModLib.XMLConfigReader.XMLConfigReader.new()
+	configReader = XModLib.XMLConfigReader.XMLConfigReader.new({
+		'Vector2AsTuple': XModLib.XMLConfigReader.VectorAsTupleXMLReader.new_class(
+			'Vector2AsTupleXMLReader',
+			VECTOR_TYPE='Vector2'
+		),
+		'LocalizedWideString': XModLib.XMLConfigReader.LocalizedWideStringXMLReader.new_class(
+			'LocalizedWideStringXMLReader',
+			TRANSLATOR=_globals_['i18nFormatter']
+		),
+		'PanelSettings': XModLib.XMLConfigReader.OptionalDictXMLReader.new_class(
+			'PanelSettingsXMLReader',
+			DEFAULT_KEYS=('visible', 'text', 'position'),
+			REQUIRED_KEYS = ('visible', )
+		)
+	})
 	mainSection = configReader.open_section(os.path.splitext(__file__)[0] + '.xml')
 	if mainSection is None:
 		print '[{}] Config file not found.'.format(__application__[1])
