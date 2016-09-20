@@ -7,7 +7,6 @@ import time
 import weakref
 import functools
 import threading
-import HTMLParser
 
 # *************************
 # BigWorld

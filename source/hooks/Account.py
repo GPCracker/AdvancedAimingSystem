@@ -18,7 +18,7 @@ def new_Account_onBecomePlayer(self, *args, **kwargs):
 	XModLib.Messages.SystemMessageActionHandler.factory('ActionHandler', handler).install()
 	XModLib.Messages.LobbyMessenger.pushClientMessage(
 		XModLib.Messages.SystemMessage({
-			'message': HTMLParser.HTMLParser().unescape(_globals_['appResultMessage']),
+			'message': _globals_['appResultMessage'],
 			'timestamp': time.time(),
 			'icon': 'img://gui/maps/icons/library/InformationIcon-1.png',
 		}),
