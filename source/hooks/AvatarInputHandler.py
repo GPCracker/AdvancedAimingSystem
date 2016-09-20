@@ -85,10 +85,8 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 			config['shortcut']['invert']
 		)(event)
 		if shortcutHandle and (not shortcutHandle.switch or shortcutHandle.pushed):
-			print 1488
 			config['activated'] = shortcutHandle(config['activated'])
 			if shortcutHandle.switch and config['activated']:
-				print 228
 				XModLib.Messages.Messenger.showMessageOnPanel(
 					'Player',
 					None,
@@ -96,7 +94,6 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 					'green'
 				)
 			elif shortcutHandle.switch:
-				print 356
 				XModLib.Messages.Messenger.showMessageOnPanel(
 					'Player',
 					None,
