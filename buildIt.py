@@ -20,7 +20,13 @@ def compileSource(source, filename = '<string>', filetime = time.time()):
 	return result
 
 def compileLocalization(src_file, bin_file):
-	return subprocess.call(['tools/gettext/bin/msgfmt.exe', src_file, '-o', bin_file])
+	if os.name == 'posix':
+		msgfmt = 'msgfmt'
+	elif os.name == 'nt':
+		msgfmt = 'tools/gettext/bin/msgfmt.exe'
+	else:
+		raise RuntimeError('Current operation system is not supported.')
+	return subprocess.call([msgfmt, src_file, '-o', bin_file])
 
 def joinPath(*args, **kwargs):
 	return os.path.normpath(os.path.join(*args, **kwargs)).replace(os.sep, '/')
