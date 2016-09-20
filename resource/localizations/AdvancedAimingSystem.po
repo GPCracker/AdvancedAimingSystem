@@ -1,0 +1,60 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Advanced Aiming System Mod (AdvancedAimingSystem)\n"
+"Report-Msgid-Bugs-To: http://www.koreanrandom.com/forum/topic/16559-/\n"
+"Last-Translator: GPCracker <GPCracker@mail.ru>\n"
+"Language: ru_RU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "appLoadedMessage"
+msgstr "<a href='event:AdvancedAimingSystem.official_topic'><font color='#0080FF'>\"Улучшенная&nbsp;система&nbsp;прицеливания\" (AdvancedAimingSystem)</font></a> <font color='#008000'>загружена.</font>"
+
+msgid "appFailedMessage"
+msgstr "<a href='event:AdvancedAimingSystem.official_topic'><font color='#0080FF'>\"Улучшенная&nbsp;система&nbsp;прицеливания\" (AdvancedAimingSystem)</font></a> <font color='#E00000'>несовместима с текущей версией клиента.</font>"
+
+msgid "arcadeAimCorrection/targetMode/onActivate"
+msgstr "Корректировка дальномера в АРКАДНОМ режиме по данным текущей цели АКТИВИРОВАНА."
+
+msgid "arcadeAimCorrection/targetMode/onDeactivate"
+msgstr "Корректировка дальномера в АРКАДНОМ режиме по данным текущей цели ДЕАКТИВИРОВАНА."
+
+msgid "sniperAimCorrection/targetMode/onActivate"
+msgstr "Корректировка дальномера в СНАЙПЕРСКОМ режиме по данным текущей цели АКТИВИРОВАНА."
+
+msgid "sniperAimCorrection/targetMode/onDeactivate"
+msgstr "Корректировка дальномера в СНАЙПЕРСКОМ режиме по данным текущей цели ДЕАКТИВИРОВАНА."
+
+msgid "strategicAimCorrection/targetMode/onActivate"
+msgstr "Корректировка дальномера в СТРАТЕГИЧЕСКОМ режиме по данным текущей цели АКТИВИРОВАНА."
+
+msgid "strategicAimCorrection/targetMode/onDeactivate"
+msgstr "Корректировка дальномера в СТРАТЕГИЧЕСКОМ режиме по данным текущей цели ДЕАКТИВИРОВАНА."
+
+msgid "gui/CorrectionPanel/default/tooltip"
+msgstr "Панель информации корректировщика дальномера."
+
+msgid "gui/CorrectionPanel/default/text"
+msgstr "<p align='center'><font color='#00FF00' size='20' face='$UniversCondC'>Расстояние зафиксировано: {{manualInfo:.1f}}м.</font></p>"
+
+msgid "gui/TargetPanel/default/tooltip"
+msgstr "Панель информации сканера целей."
+
+msgid "gui/TargetPanel/default/text"
+msgstr "<p align='center'><font color='#FF7F00' size='20' face='$UniversCondC'>Цель: {{shortName}}; Расстояние: {{distance:.1f}}м; Скорость: {{speedMS:.1f}}м/с.</font></p>"
+
+msgid "gui/AimingPanel/default/tooltip"
+msgstr "Панель информации о сведении."
+
+msgid "gui/AimingPanel/default/text"
+msgstr "<textformat leftmargin='20' rightmargin='20' tabstops='[0,105]'><font color='#64F0B4' size='20' face='$UniversCondC'>\tОсталось:\t{{remainingAimingTime:.2f}}с;\n\tРасстояние:\t{{aimingDistance:.1f}}м;\n\tРазброс:\t{{deviation:.2f}}м;\n\tВремя полета:\t{{flyTime:.2f}}с;\n\tУгол падения:\t{{hitAngleDeg:+.1f}}°;</font></textformat>"
+
+msgid "gui/AimingPanel/arcade/text"
+msgstr "<textformat leftmargin='20' rightmargin='20' tabstops='[0,105]'><font color='#64F0B4' size='20' face='$UniversCondC'>\tОсталось:\t{{remainingAimingTime:.2f}}с;\n\tРасстояние:\t{{aimingDistance:.1f}}м;\n\tРазброс:\t{{deviation:.2f}}м;\n\tВремя полета:\t{{flyTime:.2f}}с;\n\tУгол падения:\t{{hitAngleDeg:+.1f}}°;</font></textformat>"
+
+msgid "gui/AimingPanel/sniper/text"
+msgstr "<textformat leftmargin='20' rightmargin='20' tabstops='[0,105]'><font color='#64B4F0' size='20' face='$UniversCondC'>\tОсталось:\t{{remainingAimingTime:.2f}}с;\n\tРасстояние:\t{{aimingDistance:.1f}}м;\n\tРазброс:\t{{deviation:.2f}}м;\n\tВремя полета:\t{{flyTime:.2f}}с;\n\tУгол падения:\t{{hitAngleDeg:+.1f}}°;</font></textformat>"
+
+msgid "gui/AimingPanel/strategic/text"
+msgstr "<textformat leftmargin='20' rightmargin='20' tabstops='[0,105]'><font color='#B46464' size='20' face='$UniversCondC'>\tОсталось:\t{{remainingAimingTime:.2f}}с;\n\tРасстояние:\t{{aimingDistance:.1f}}м;\n\tРазброс:\t{{deviation:.2f}}м;\n\tВремя полета:\t{{flyTime:.2f}}с;\n\tУгол падения:\t{{hitAngleDeg:+.1f}}°;</font></textformat>"
