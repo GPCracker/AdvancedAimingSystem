@@ -1,5 +1,2 @@
-# Font files should be handled in binary mode.
-*.font binary
 # Texture files should be handled in binary mode.
-*.dds binary
 *.psd binary
