@@ -23,6 +23,22 @@ import AvatarInputHandler.cameras
 import AvatarInputHandler.AimingSystems
 
 # *************************
+# WoT Client GUI
+# *************************
+import gui.shared
+import gui.shared.events
+import gui.app_loader
+import gui.app_loader.settings
+import gui.Scaleform.framework
+import gui.Scaleform.framework.ViewTypes
+import gui.Scaleform.framework.package_layout
+import gui.Scaleform.framework.ScopeTemplates
+import gui.Scaleform.framework.entities.View
+import gui.Scaleform.genConsts.BATTLE_VIEW_ALIASES
+import gui.Scaleform.daapi.view.meta.BattleDisplayableMeta
+import gui.Scaleform.daapi.settings.views
+
+# *************************
 # WoT Client Hooks
 # *************************
 import Avatar
