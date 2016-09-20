@@ -10,7 +10,7 @@
 	<applicationEnabled>True</applicationEnabled>
 	<!-- Disables client version compability check. Advanced users only. -->
 	<!-- Отключает проверку совместимости версии клиента. Для опытных пользователей. -->
-	<ignoreClientVersion>False</ignoreClientVersion>
+	<ignoreClientVersion>True</ignoreClientVersion>
 	<!-- System message when mod is loaded correctly. HTML partially supported. -->
 	<!-- Системное сообщение при удачной загрузке мода. Частичная поддержка HTML. -->
 	<appLoadedMessage>#AdvancedAimingSystem:appLoadedMessage;</appLoadedMessage>

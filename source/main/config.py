@@ -9,7 +9,7 @@ _config_ = None
 def defaultConfig():
 	return {
 		'applicationEnabled': ('Bool', True),
-		'ignoreClientVersion': ('Bool', False),
+		'ignoreClientVersion': ('Bool', True),
 		'appLoadedMessage': ('LocalizedWideString', u'<a href="event:AdvancedAimingSystem.official_topic"><font color="#0080FF">"Advanced&nbsp;Aiming&nbsp;System"</font></a> <font color="#008000">successfully loaded.</font>'),
 		'appFailedMessage': ('LocalizedWideString', u'<a href="event:AdvancedAimingSystem.official_topic"><font color="#0080FF">"Advanced&nbsp;Aiming&nbsp;System"</font></a> <font color="#E00000">is incompatible with current client version.</font>'),
 		'commonAS': {
