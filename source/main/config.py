@@ -10,9 +10,8 @@ def defaultConfig():
 	return {
 		'applicationEnabled': ('Bool', True),
 		'ignoreClientVersion': ('Bool', False),
-		'hookInjectTimeout': ('Float', 3.0),
-		'appLoadedMessage': ('WideString', u'&lt;a href=&quot;event:AdvancedAimingSystem.official_topic&quot;&gt;&lt;font color=&quot;#0080FF&quot;&gt;&quot;Advanced&amp;nbsp;Aiming&amp;nbsp;System&quot;&lt;/font&gt;&lt;/a&gt; &lt;font color=&quot;#008000&quot;&gt; successfully loaded.&lt;/font&gt;'),
-		'appFailedMessage': ('WideString', u'&lt;a href=&quot;event:AdvancedAimingSystem.official_topic&quot;&gt;&lt;font color=&quot;#0080FF&quot;&gt;&quot;Advanced&amp;nbsp;Aiming&amp;nbsp;System&quot;&lt;/font&gt;&lt;/a&gt; &lt;font color=&quot;#E00000&quot;&gt; is incompatible with current client version.&lt;/font&gt;'),
+		'appLoadedMessage': ('LocalizedWideString', u'<a href="event:AdvancedAimingSystem.official_topic"><font color="#0080FF">"Advanced&nbsp;Aiming&nbsp;System"</font></a> <font color="#008000">successfully loaded.</font>'),
+		'appFailedMessage': ('LocalizedWideString', u'<a href="event:AdvancedAimingSystem.official_topic"><font color="#0080FF">"Advanced&nbsp;Aiming&nbsp;System"</font></a> <font color="#E00000">is incompatible with current client version.</font>'),
 		'commonAS': {
 			'sniperModeSPG': {
 				'enabled': ('Bool', False),
@@ -366,9 +365,10 @@ def defaultConfig():
 # Read configuration from file
 # *************************
 def readConfig():
-	mainSection = ResMgr.openSection(os.path.splitext(__file__)[0] + '.xml')
+	configReader = XModLib.XMLConfigReader.XMLConfigReader.new()
+	mainSection = configReader.open_section(os.path.splitext(__file__)[0] + '.xml')
 	if mainSection is None:
-		print '[{}] Config loading failed.'.format(__application__[1])
+		print '[{}] Config file not found.'.format(__application__[1])
 	else:
-		print '[{}] Config successfully loaded.'.format(__application__[1])
-	return XModLib.ConfigReader.ConfigReader().readSection(mainSection, defaultConfig())
+		print '[{}] Config file found and loaded.'.format(__application__[1])
+	return configReader(mainSection, defaultConfig())

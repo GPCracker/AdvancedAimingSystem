@@ -6,20 +6,21 @@ import math
 import time
 import weakref
 import functools
-import threading
 
 # *************************
 # BigWorld
 # *************************
-import BigWorld
-import ResMgr
 import Math
+import BigWorld
 
 # *************************
 # WoT Client
 # *************************
+import constants
+import gui.battle_control
+import gui.shared.personality
 import AvatarInputHandler.cameras
-import AvatarInputHandler.AimingSystems
+import avatar_helpers.aim_global_binding
 
 # *************************
 # WoT Client GUI
@@ -45,33 +46,30 @@ import Account
 import Vehicle
 import ClientArena
 import AvatarInputHandler
-import AvatarInputHandler.aims
 import AvatarInputHandler.control_modes
-import gui.Scaleform.daapi.view.battle.RadialMenu
 import AvatarInputHandler.DynamicCameras.StrategicCamera
 import AvatarInputHandler.AimingSystems.StrategicAimingSystem
 
 # *************************
+# WoT Client GUI Hooks
+# *************************
+import gui.Scaleform.daapi.view.battle.shared
+
+# *************************
 # X-Mod Code Library
 # *************************
-import XModLib.Macros
-import XModLib.Helpers
 import XModLib.Callback
-import XModLib.Geometry
 import XModLib.KeyBoard
-import XModLib.ArenaInfo
-import XModLib.AppLoader
-import XModLib.BWHelpers
-import XModLib.Colliders
-import XModLib.ExtraMath
-import XModLib.HookUtils
 import XModLib.Messages
+import XModLib.ArenaInfo
+import XModLib.Colliders
+import XModLib.HookUtils
+import XModLib.TextUtils
+import XModLib.AGScanners
 import XModLib.ClientInfo
-import XModLib.GUIWrapper
-import XModLib.BBoxScanner
 import XModLib.VehicleInfo
 import XModLib.VehicleMath
 import XModLib.XRayScanner
-import XModLib.ConfigReader
-import XModLib.UmlautDecoder
+import XModLib.VehicleBounds
 import XModLib.BallisticsMath
+import XModLib.XMLConfigReader
