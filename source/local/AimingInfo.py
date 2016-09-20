@@ -2,39 +2,30 @@
 # AimingInfo Class
 # *************************
 class AimingInfo(object):
-	def __init__(self, windowSettings, labelSettings):
-		self.window = XModLib.GUIWrapper.GUIWrapper.createGUI('Window', windowSettings, True)
-		self.window.gui.label = XModLib.GUIWrapper.GUIWrapper.createGUI('Text', labelSettings, False)
-		return
-
 	@staticmethod
-	def aquireAimingInfo():
-		try:
-			dispersionAngle, aimingStartTime, aimingStartFactor, dispersionFactor, aimingTime = XModLib.BallisticsMath.BallisticsMath.getPlayerAimingInfo()
-			aimingFactor = XModLib.BallisticsMath.BallisticsMath.getAimingFactor(aimingStartTime, aimingStartFactor, dispersionFactor, aimingTime)
-			fullAimingTime = XModLib.BallisticsMath.BallisticsMath.getFullAimingTime(aimingStartFactor, dispersionFactor, aimingTime)
+	def getMacroData():
+		playerAimingInfo = XModLib.BallisticsMath.BallisticsMath.getPlayerAimingInfo()
+		if playerAimingInfo is not None:
+			staticDispersionAngle, aimingStartTime, aimingStartFactor, dispersionFactor, expAimingTime = playerAimingInfo
+			aimingFactor = XModLib.BallisticsMath.BallisticsMath.getAimingFactor(aimingStartTime, aimingStartFactor, dispersionFactor, expAimingTime)
+			fullAimingTime = XModLib.BallisticsMath.BallisticsMath.getFullAimingTime(aimingStartFactor, dispersionFactor, expAimingTime)
 			remainingAimingTime = XModLib.BallisticsMath.BallisticsMath.getRemainingAimingTime(aimingStartTime, fullAimingTime)
-			realDispersionAngle = XModLib.BallisticsMath.BallisticsMath.getDispersionAngle(dispersionAngle, aimingFactor)
+			realDispersionAngle = XModLib.BallisticsMath.BallisticsMath.getDispersionAngle(staticDispersionAngle, aimingFactor)
 			aimingDistance, hitAngleRad, flyTime = XModLib.BallisticsMath.BallisticsMath.getPlayerBallisticsInfo()
 			deviation = XModLib.BallisticsMath.BallisticsMath.getDeviation(aimingDistance, realDispersionAngle)
 			hitAngleDeg = math.degrees(hitAngleRad)
 			return {
-				'staticDispersionAngle': dispersionAngle,
-				'dispersionFactor': dispersionFactor,
-				'expAimingTime': aimingTime,
-				'aimingFactor': aimingFactor,
+				'expAimingTime': expAimingTime,
 				'fullAimingTime': fullAimingTime,
 				'remainingAimingTime': remainingAimingTime,
+				'staticDispersionAngle': staticDispersionAngle,
 				'realDispersionAngle': realDispersionAngle,
-				'deviation': deviation,
+				'dispersionFactor': dispersionFactor,
 				'aimingDistance': aimingDistance,
+				'aimingFactor': aimingFactor,
 				'hitAngleRad': hitAngleRad,
 				'hitAngleDeg': hitAngleDeg,
+				'deviation': deviation,
 				'flyTime': flyTime
 			}
-		except:
-			pass
 		return None
-
-	def __del__(self):
-		return
