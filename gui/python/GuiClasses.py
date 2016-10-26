@@ -135,5 +135,12 @@ class AasGuiGlobalBusinessHandler(AasGuiBaseBusinessHandler):
 		if event.alias in (AasGuiSettings.CORRECTION_PANEL_ALIAS, AasGuiSettings.TARGET_PANEL_ALIAS, AasGuiSettings.AIMING_PANEL_ALIAS):
 			self._setPanelConfig(event.alias, self._panelConfigs.get(event.alias, {}).get('default', {}))
 		elif event.alias == gui.Scaleform.genConsts.BATTLE_VIEW_ALIASES.BATTLE_VIEW_ALIASES.CONSUMABLES_PANEL:
+			self._app.containerManager.onViewAddedToContainer += self._onViewAddedToContainer
 			self.loadViewWithDefName(AasGuiSettings.LOADER_VIEW_ALIAS)
+		return
+
+	def _onViewAddedToContainer(self, container, view):
+		if view.alias == AasGuiSettings.LOADER_VIEW_ALIAS:
+			self._app.containerManager.onViewAddedToContainer -= self._onViewAddedToContainer
+			view.destroy()
 		return
