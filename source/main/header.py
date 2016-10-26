@@ -3,7 +3,7 @@ __official_topic__ = 'http://www.koreanrandom.com/forum/topic/16559-/'
 __authors__ = ['GPCracker']
 __version__ = '<version>'
 __xmodlib__ = [['0.0.3', None]]
-__client__ = [['ru'], '0.9.15.2', None]
+__client__ = [['ru'], '<client>', None]
 
 # *************************
 # Application info
