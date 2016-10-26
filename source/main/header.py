@@ -2,11 +2,14 @@ __application__ = ['Advanced Aiming System Mod', 'AdvancedAimingSystem']
 __official_topic__ = 'http://www.koreanrandom.com/forum/topic/16559-/'
 __authors__ = ['GPCracker']
 __version__ = '<version>'
-__xmodlib__ = [["0.0.3", None]]
+__xmodlib__ = [['0.0.3', None]]
 __client__ = [['ru'], '0.9.15.2', None]
 
+# *************************
+# Application info
+# *************************
 if __name__ == '__main__':
-	appInfo = '{appname} ({appshort}) {version} ({client} {clusters}) by {authors}'.format(
+	applicationInfo = '{appname} ({appshort}) {version} ({client} {clusters}) by {authors}'.format(
 		appname = __application__[0],
 		appshort = __application__[1],
 		version = __version__,
@@ -14,11 +17,13 @@ if __name__ == '__main__':
 		clusters = ', '.join(__client__[0]).upper(),
 		authors = ', '.join(__authors__)
 	)
-	print appInfo
-	from time import sleep
-	sleep(len(appInfo) * 0.06)
+	print applicationInfo
+	__import__('time').sleep(len(applicationInfo) * 0.05)
 	exit()
 
+# *************************
+# X-Mod Code Library
+# *************************
 import XModLib
 if not XModLib.isCompatibleLibVersion(__xmodlib__):
 	raise ImportError('XModLib version does not suit this version of application.')
