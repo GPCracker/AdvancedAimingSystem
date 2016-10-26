@@ -44,7 +44,6 @@ import gui.Scaleform.daapi.settings.views
 import Avatar
 import Account
 import Vehicle
-import ClientArena
 import AvatarInputHandler
 import AvatarInputHandler.control_modes
 import AvatarInputHandler.DynamicCameras.StrategicCamera
