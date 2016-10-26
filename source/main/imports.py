@@ -4,7 +4,9 @@
 import os
 import math
 import time
+import marshal
 import weakref
+import zipfile
 import functools
 
 # *************************
@@ -66,6 +68,7 @@ import XModLib.HookUtils
 import XModLib.TextUtils
 import XModLib.AGScanners
 import XModLib.ClientInfo
+import XModLib.ResMgrUtils
 import XModLib.VehicleInfo
 import XModLib.VehicleMath
 import XModLib.XRayScanner
