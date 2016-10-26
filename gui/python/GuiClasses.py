@@ -9,7 +9,7 @@ class AasGuiLoaderView(GuiLoaderView):
 	)
 
 	def _populate(self):
-		super(GuiLoaderView, self)._populate()
+		super(AasGuiLoaderView, self)._populate()
 		for panelAlias, panelClass, panelIndex in self.INFO_PANELS:
 			self.as_createBattlePageComponentS(panelAlias, panelClass, panelIndex)
 		return
