@@ -8,8 +8,39 @@ import struct
 import marshal
 import zipfile
 import functools
+import itertools
 import traceback
 import subprocess
+
+def detect_flex():
+	if os.getenv('FLEX_HOME') is None:
+		if os.name == 'posix':
+			flex_home = '/opt/apache-flex'
+		elif os.name == 'nt':
+			flex_home = '$LOCALAPPDATA/FlashDevelop/Apps/flexsdk/4.6.0'
+		else:
+			raise RuntimeError('Current operation system is not supported.')
+		os.environ['FLEX_HOME'] = os.path.expandvars(flex_home)
+	return
+
+def compile_flash_project(fdp_filename):
+	args = ['tools/fdbuild/fdbuild.exe', '-notrace', '-compiler:$FLEX_HOME', fdp_filename]
+	if os.name == 'posix':
+		args.insert(0, 'mono')
+	elif os.name != 'nt':
+		raise RuntimeError('Current operation system is not supported.')
+	args = map(os.path.expandvars, args)
+	fdbuild_process = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+	stdout_data, stderr_data = fdbuild_process.communicate()
+	if fdbuild_process.poll():
+		# Output compiler return.
+		print '[FDBuild stdout] >>>'
+		print stdout_data
+		print '--------------------'
+		print stderr_data
+		print '<<< [FDBuild stderr]'
+		raise RuntimeError('An error occured while compiling ActionScript project.')
+	return
 
 def compile_python_string(source, filename='<string>', filetime=time.time()):
 	with io.BytesIO() as dst_bin_buffer:
@@ -71,7 +102,7 @@ def norm_path(path):
 	path = os.path.normpath(path).replace(os.sep, '/')
 	return path + ('/' if os.path.isdir(path) else '')
 
-def get_path_iterator(path_group, home='./'):
+def get_path_group_iterator(path_group, home='./'):
 	_path = join_path(home, path_group)
 	if os.path.isfile(_path):
 		yield norm_path('./')
@@ -84,14 +115,19 @@ def get_path_iterator(path_group, home='./'):
 
 def get_path_groups_iterator(path_groups, home='./'):
 	for path_group in path_groups:
-		for path in get_path_iterator(path_group, home):
+		for path in get_path_group_iterator(path_group, home):
 			yield join_path(path_group, path)
 	return
 
-def get_path_blocks_iterator(path_blocks, home='./'):
-	for path_block in path_blocks:
-		for path in get_path_iterator(path_block[0], home):
-			yield [join_path(base, path) for base in path_block]
+def get_path_group_block_iterator(path_group_block, home='./'):
+	for path in get_path_group_iterator(path_group_block[0], home):
+		yield [join_path(base, path) for base in path_group_block]
+	return
+
+def get_path_group_blocks_iterator(path_group_blocks, home='./'):
+	for path_group_block in path_group_blocks:
+		for path_block in get_path_group_block_iterator(path_group_block, home):
+			yield path_block
 	return
 
 def load_file_data(src_filename):
@@ -118,22 +154,22 @@ def load_source_string(src_filenames, source_encoding='acsii'):
 
 if __name__ == '__main__':
 	try:
-		# Reading configuration.
+		## Reading configuration.
 		cfg_filename = join_path(os.path.splitext(__file__)[0] + '.cfg')
 		with open(cfg_filename, 'rb') as cfg_bin_buffer:
 			g_config = json.loads(cfg_bin_buffer.read())
-		# Printing status.
+		## Printing status.
 		print 'Build config file loaded.'
-		# Reading build version.
+		## Reading build version.
 		vcs_filename = join_path(os.path.dirname(__file__), 'version.cfg')
 		g_version = acquire_version_data(vcs_filename)
-		# Printing status.
+		## Printing status.
 		print 'Acquired new version for build: {}.'.format(g_version)
-		# Loading macros.
+		## Loading macros.
 		g_globalMacros = {macro: format_macros(replace, {'<version>': g_version}) for macro, replace in g_config["globalMacros"].items()}
 		g_pathsMacros = {macro: format_macros(replace, g_globalMacros) for macro, replace in g_config["pathsMacros"].items()}
 		g_allMacros = merge_dicts(g_globalMacros, g_pathsMacros)
-		# Cleanup previous build.
+		## Cleanup previous build.
 		for cleanup in g_config["cleanup"]:
 			cleanup = norm_path(format_macros(cleanup, g_allMacros))
 			# Printing status.
@@ -143,12 +179,37 @@ if __name__ == '__main__':
 				shutil.rmtree(cleanup)
 			# Creating new folder.
 			os.makedirs(cleanup)
+		## ActionScript build commands.
+		# FlashDevelop project build command.
+		def g_actionscriptBuildProject(src_entry, level=0):
+			# Parsing ActionScript entry.
+			prj_filename, asm_filename, bin_filename, zip_filename = src_entry
+			# Formatting macros.
+			prj_filename = norm_path(format_macros(prj_filename, g_allMacros))
+			asm_filename = norm_path(format_macros(asm_filename, g_allMacros))
+			bin_filename = norm_path(format_macros(bin_filename, g_allMacros))
+			zip_filename = norm_path(format_macros(zip_filename, g_allMacros))
+			# Printing status.
+			indent = ' ' * level
+			print indent + 'Building FlashDevelop file: {}.'.format(prj_filename)
+			print indent + ' Assembled binary file: {}.'.format(asm_filename)
+			print indent + ' Resulting binary file: {}.'.format(bin_filename)
+			print indent + ' Target zip archive file: {}.'.format(zip_filename)
+			# Compiling FlashDevelop project.
+			compile_flash_project(prj_filename)
+			# Loading binary file.
+			dst_bin_data = load_file_data(asm_filename)
+			# Saving binary file.
+			save_file_data(bin_filename, dst_bin_data)
+			# Returning archive blocks.
+			return [[zip_filename, dst_bin_data]]
+		## Python build commands.
 		# Loading source encoding.
-		g_sourceEncoding = g_config["sourceEncoding"]
+		g_pythonSourceEncoding = g_config["python"]["sourceEncoding"]
 		# Source group build command.
-		def g_buildSourceGroup(src_group, src_plugins=None, level=0):
+		def g_pythonBuildSourceGroup(src_entry, src_plugins=None, level=0):
 			# Parsing source group.
-			cmp_filename, src_filenames, asm_filename, bin_filename, zip_filename = src_group
+			cmp_filename, src_filenames, asm_filename, bin_filename, zip_filename = src_entry
 			# Formatting macros.
 			cmp_filename = norm_path(format_macros(cmp_filename, g_allMacros))
 			src_filenames = [norm_path(format_macros(src_filename, g_allMacros)) for src_filename in src_filenames]
@@ -165,9 +226,9 @@ if __name__ == '__main__':
 			print indent + ' Target zip archive file: {}.'.format(zip_filename)
 			print indent + ' Building binaries {} plug-ins.'.format('with' if src_plugins is not None else 'without')
 			# Loading source as single block.
-			src_str_data = format_macros(load_source_string(src_filenames, g_sourceEncoding), g_globalMacros)
+			src_str_data = format_macros(load_source_string(src_filenames, g_pythonSourceEncoding), g_globalMacros)
 			# Saving assembled file.
-			save_file_str(asm_filename, src_str_data, g_sourceEncoding)
+			save_file_str(asm_filename, src_str_data, g_pythonSourceEncoding)
 			# Getting parameters for compiler.
 			cmp_filetime = os.path.getmtime(asm_filename)
 			# Compiling source block.
@@ -177,81 +238,113 @@ if __name__ == '__main__':
 				dst_bin_data += src_plugins[cmp_filename]
 			# Saving binary file.
 			save_file_data(bin_filename, dst_bin_data)
-			# Returning archive block.
-			return zip_filename, dst_bin_data
+			# Returning archive blocks.
+			return [[zip_filename, dst_bin_data]]
 		# Plug-in build command.
-		def g_buildPluginAttachGroup(att_group, level=0):
+		def g_pythonBuildPluginAttachGroup(att_entry, level=0):
 			# Parsing resource entry.
-			att_filename, src_groups = att_group
+			att_filename, src_entries = att_entry
 			# Formatting macros.
 			att_filename = norm_path(format_macros(att_filename, g_allMacros))
 			# Printing status.
 			indent = ' ' * level
 			print indent + 'Building plug-in attach group: {}.'.format(att_filename)
 			# Building zip archive attachment.
-			dst_bin_data = compile_zipfile_string([g_buildSourceGroup(src_group, level=level + 1) for src_group in src_groups])
+			dst_bin_data = compile_zipfile_string(itertools.chain.from_iterable(
+				[g_pythonBuildSourceGroup(src_entry, level=level + 1) for src_entry in src_entries]
+			))
 			return att_filename, dst_bin_data
+		## Resource build commands.
 		# Resource build command.
-		def g_buildResourceEntry(src_entry, level=0):
-			# Parsing resource entry.
-			src_bin_filename, dst_zip_filename = src_entry
-			# Formatting macros.
-			src_bin_filename = norm_path(format_macros(src_bin_filename, g_allMacros))
-			dst_zip_filename = norm_path(format_macros(dst_zip_filename, g_allMacros))
-			# Printing status.
-			indent = ' ' * level
-			print indent + 'Building resource file: {}.'.format(src_bin_filename)
-			print indent + ' Target zip archive file: {}.'.format(dst_zip_filename)
-			# Loading binary file.
-			dst_bin_data = load_file_data(src_bin_filename)
-			# Returning archive block.
-			return dst_zip_filename, dst_bin_data
+		def g_resourceBuildEntry(src_entry, level=0):
+			src_entry = [norm_path(format_macros(path, g_allMacros)) for path in src_entry]
+			archive_blocks = list()
+			for src_entry in get_path_group_block_iterator(src_entry):
+				# Parsing resource entry.
+				bin_filename, zip_filename = src_entry
+				# Formatting macros.
+				bin_filename = norm_path(format_macros(bin_filename, g_allMacros))
+				zip_filename = norm_path(format_macros(zip_filename, g_allMacros))
+				# Printing status.
+				indent = ' ' * level
+				print indent + 'Building resource file: {}.'.format(bin_filename)
+				print indent + ' Target zip archive file: {}.'.format(zip_filename)
+				# Loading binary file.
+				dst_bin_data = load_file_data(bin_filename)
+				# Appending archive block.
+				archive_blocks.append([zip_filename, dst_bin_data])
+			return archive_blocks
+		## Localization build commands.
 		# Localization build command.
-		def g_buildLocalizationEntry(src_entry, level=0):
-			# Parsing localization entry.
-			src_filename, bin_filename, zip_filename = src_entry
-			# Formatting macros.
-			src_filename = norm_path(format_macros(src_filename, g_allMacros))
-			bin_filename = norm_path(format_macros(bin_filename, g_allMacros))
-			zip_filename = norm_path(format_macros(zip_filename, g_allMacros))
-			# Printing status.
-			indent = ' ' * level
-			print indent + 'Building localization file: {}.'.format(src_filename)
-			print indent + ' Target binary file: {}.'.format(bin_filename)
-			print indent + ' Target zip archive file: {}.'.format(zip_filename)
-			# Loading portable object file.
-			src_bin_data = load_file_data(src_filename)
-			# Compiling portable object file.
-			dst_bin_data = compile_gettext_string(src_bin_data)
-			# Saving binary file.
-			save_file_data(bin_filename, dst_bin_data)
-			# Returning archive block.
-			return zip_filename, dst_bin_data
+		def g_localizationBuildEntry(src_entry, level=0):
+			src_entry = [norm_path(format_macros(path, g_allMacros)) for path in src_entry]
+			archive_blocks = list()
+			for src_entry in get_path_group_block_iterator(src_entry):
+				# Parsing localization entry.
+				src_filename, bin_filename, zip_filename = src_entry
+				# Formatting macros.
+				src_filename = norm_path(format_macros(src_filename, g_allMacros))
+				bin_filename = norm_path(format_macros(bin_filename, g_allMacros))
+				zip_filename = norm_path(format_macros(zip_filename, g_allMacros))
+				# Printing status.
+				indent = ' ' * level
+				print indent + 'Building localization file: {}.'.format(src_filename)
+				print indent + ' Target binary file: {}.'.format(bin_filename)
+				print indent + ' Target zip archive file: {}.'.format(zip_filename)
+				# Loading portable object file.
+				src_bin_data = load_file_data(src_filename)
+				# Compiling portable object file.
+				dst_bin_data = compile_gettext_string(src_bin_data)
+				# Saving binary file.
+				save_file_data(bin_filename, dst_bin_data)
+				# Appending archive block.
+				archive_blocks.append([zip_filename, dst_bin_data])
+			return archive_blocks
+		## Creating release archive data blocks storage.
+		g_releaseBlocks = list()
+		## Building ActionScript.
+		print '>>> Building ActionScript... <<<'
+		# Detecting flex.
+		detect_flex()
+		# Building projects.
+		g_releaseBlocks.extend(itertools.chain.from_iterable(
+			[g_actionscriptBuildProject(src_entry, level=1) for src_entry in g_config["actionscript"]]
+		))
+		## Building Python.
+		print '>>> Building Python... <<<'
 		# Printing status.
 		print 'Plug-ins build started.'
 		# Building plug-ins.
-		g_sourcePlugins = dict(g_buildPluginAttachGroup(att_group, level=1) for att_group in g_config["plugins"])
-		# Creating release archive data blocks storage.
-		g_releaseBlocks = list()
+		g_pythonSourcePlugins = dict(g_pythonBuildPluginAttachGroup(att_entry, level=1) for att_entry in g_config["python"]["plugins"])
 		# Printing status.
 		print 'Source build started.'
 		# Building and adding sources.
-		g_releaseBlocks.extend([g_buildSourceGroup(src_group, g_sourcePlugins, level=1) for src_group in g_config["sources"]])
+		g_releaseBlocks.extend(itertools.chain.from_iterable(
+			[g_pythonBuildSourceGroup(src_entry, g_pythonSourcePlugins, level=1) for src_entry in g_config["python"]["sources"]]
+		))
+		## Building Resource.
+		print '>>> Building Resource... <<<'
 		# Printing status.
 		print 'Resource build started.'
 		# Adding resources.
-		g_releaseBlocks.extend([g_buildResourceEntry(src_entry, level=1) for src_entry in get_path_blocks_iterator(g_config["resources"])])
+		g_releaseBlocks.extend(itertools.chain.from_iterable(
+			[g_resourceBuildEntry(src_entry, level=1) for src_entry in g_config["resources"]]
+		))
+		## Building Localization.
+		print '>>> Building Localization... <<<'
 		# Printing status.
 		print 'Localization build started.'
 		# Compiling and adding localization.
-		g_releaseBlocks.extend([g_buildLocalizationEntry(src_entry, level=1) for src_entry in get_path_blocks_iterator(g_config["localizations"])])
-		# Loading release archive filename.
+		g_releaseBlocks.extend(itertools.chain.from_iterable(
+			[g_localizationBuildEntry(src_entry, level=1) for src_entry in g_config["localizations"]]
+		))
+		## Loading release archive filename.
 		g_releaseArchive = format_macros(g_config["releaseArchive"], g_allMacros)
-		# Printing status.
+		## Printing status.
 		print 'Saving release archive.'
-		# Saving release archive file.
+		## Saving release archive file.
 		save_file_data(g_releaseArchive, compile_zipfile_string(g_releaseBlocks))
-		# Build finished.
+		## Build finished.
 		print 'Build finished.'
 	except:
 		traceback.print_exc()
