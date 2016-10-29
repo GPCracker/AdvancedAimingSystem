@@ -11,7 +11,7 @@ class AasGuiLoaderView(GuiLoaderView):
 	def _populate(self):
 		super(AasGuiLoaderView, self)._populate()
 		for panelAlias, panelClass, panelIndex in self.INFO_PANELS:
-			self.as_createBattlePageComponentS(panelAlias, panelClass, panelIndex)
+			self.as_createBattlePagePanelS(panelAlias, panelClass, panelIndex)
 		return
 
 class AasGuiCorrectionPanel(GuiTextPanel):

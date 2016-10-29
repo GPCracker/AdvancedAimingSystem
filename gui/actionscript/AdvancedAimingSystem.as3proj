@@ -4,7 +4,7 @@
   <output>
     <movie outputType="Application" />
     <movie input="" />
-    <movie path="bin\AdvancedAimingSystem.swf" />
+    <movie path="bin/AdvancedAimingSystem.swf" />
     <movie fps="60" />
     <movie width="800" />
     <movie height="600" />
@@ -38,7 +38,7 @@
     <option useNetwork="True" />
     <option useResourceBundleMetadata="True" />
     <option warnings="True" />
-    <option verboseStackTraces="False" />
+    <option verboseStackTraces="True" />
     <option linkReport="" />
     <option loadExterns="" />
     <option staticLinkRSL="True" />
@@ -52,11 +52,11 @@
   </includeLibraries>
   <!-- SWC Libraries -->
   <libraryPaths>
-    <!-- example: <element path="..." /> -->
+    <element path="swc/XModLib.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>
-    <element path="swc\wg_battle.swc" />
+    <!-- example: <element path="..." /> -->
   </externalLibraryPaths>
   <!-- Runtime Shared Libraries -->
   <rslPaths>
@@ -72,7 +72,7 @@
   </library>
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>
-    <compile path="src\net\GPCracker\LoaderView.as" />
+    <compile path="src/net/GPCracker/AdvancedAimingSystem/LoaderView.as" />
   </compileTargets>
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>
