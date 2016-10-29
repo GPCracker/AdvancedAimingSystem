@@ -1,6 +1,6 @@
 ## Advanced Aiming System
 
-Advanced Aiming System is a mod for World of Tanks. It is based on X-Mod code library.
+Advanced Aiming System is a mod for World of Tanks. It is based on X-Mod library.
 
 ## Info, Updating, Bugs, Errors, Discussion
 
