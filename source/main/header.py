@@ -22,7 +22,7 @@ if __name__ == '__main__':
 	exit()
 
 # *************************
-# X-Mod Code Library
+# X-Mod Library
 # *************************
 import XModLib
 if not XModLib.isCompatibleLibVersion(__xmodlib__):

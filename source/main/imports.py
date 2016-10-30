@@ -57,7 +57,7 @@ import AvatarInputHandler.AimingSystems.StrategicAimingSystem
 import gui.Scaleform.daapi.view.battle.shared
 
 # *************************
-# X-Mod Code Library
+# X-Mod Library
 # *************************
 import XModLib.Callback
 import XModLib.KeyBoard
