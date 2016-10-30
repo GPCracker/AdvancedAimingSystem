@@ -1,10 +1,10 @@
 # *************************
 # GuiController Class
 # *************************
-class AasGuiController(object):
+class GuiController(object):
 	@staticmethod
 	def dispatchEvent(eventType, ctx=None, scope=gui.shared.EVENT_BUS_SCOPE.BATTLE):
-		gui.shared.g_eventBus.handleEvent(AasGuiEvent(eventType, ctx), scope)
+		gui.shared.g_eventBus.handleEvent(GuiEvent(eventType, ctx), scope)
 		return
 
 	def __init__(self, formatter=None, updateInterval=0.04):
@@ -24,9 +24,9 @@ class AasGuiController(object):
 		return AimingInfo.getMacroData()
 
 	def _update(self):
-		self.dispatchEvent(AasGuiEvent.AAS_CORRECTION_UPDATE, {'formatter': self.formatter, 'macrodata': self.getAimCorrectionMacroData()})
-		self.dispatchEvent(AasGuiEvent.AAS_TARGET_UPDATE, {'formatter': self.formatter, 'macrodata': self.getTargetInfoMacroData()})
-		self.dispatchEvent(AasGuiEvent.AAS_AIMING_UPDATE, {'formatter': self.formatter, 'macrodata': self.getPlayerAimingInfoMacroData()})
+		self.dispatchEvent(GuiEvent.CORRECTION_UPDATE, {'formatter': self.formatter, 'macrodata': self.getAimCorrectionMacroData()})
+		self.dispatchEvent(GuiEvent.TARGET_UPDATE, {'formatter': self.formatter, 'macrodata': self.getTargetInfoMacroData()})
+		self.dispatchEvent(GuiEvent.AIMING_UPDATE, {'formatter': self.formatter, 'macrodata': self.getPlayerAimingInfoMacroData()})
 		return
 
 	@property
@@ -42,11 +42,11 @@ class AasGuiController(object):
 		return
 
 	def handleControlModeEnable(self, ctrlModeName):
-		self.dispatchEvent(AasGuiEvent.AAS_CTRL_MODE_ENABLE, {'ctrlModeName': ctrlModeName})
+		self.dispatchEvent(GuiEvent.CTRL_MODE_ENABLE, {'ctrlModeName': ctrlModeName})
 		return
 
 	def handleControlModeDisable(self, ctrlModeName):
-		self.dispatchEvent(AasGuiEvent.AAS_CTRL_MODE_DISABLE, {'ctrlModeName': ctrlModeName})
+		self.dispatchEvent(GuiEvent.CTRL_MODE_DISABLE, {'ctrlModeName': ctrlModeName})
 		return
 
 	def __del__(self):

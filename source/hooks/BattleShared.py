@@ -5,7 +5,7 @@
 def new_BattleShared_getViewSettings(old_BattleShared_getViewSettings, *args, **kwargs):
 	result = old_BattleShared_getViewSettings(*args, **kwargs)
 	if _config_['gui']['enabled']:
-		result += AasGuiSettings.getViewSettings()
+		result += GuiSettings.getViewSettings()
 	return result
 
 @XModLib.HookUtils.HookFunction.staticMethodHookOnEvent(_inject_hooks_, gui.Scaleform.daapi.view.battle.shared, 'getBusinessHandlers', calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_INSIDE_HOOK)
@@ -14,7 +14,7 @@ def new_BattleShared_getBusinessHandlers(old_BattleShared_getBusinessHandlers, *
 	config = _config_['gui']
 	if config['enabled']:
 		result += (
-			AasGuiBattleBusinessHandler(config['panels']),
-			AasGuiGlobalBusinessHandler(config['panels'])
+			GuiBattleBusinessHandler(config['panels']),
+			GuiGlobalBusinessHandler(config['panels'])
 		)
 	return result

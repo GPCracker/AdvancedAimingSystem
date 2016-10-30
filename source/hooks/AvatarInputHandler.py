@@ -6,7 +6,7 @@ def new_AvatarInputHandler_init(self, *args, **kwargs):
 	config = _config_['commonAS']['targetScanner']
 	self.XTargetScanner = TargetScanner(TargetScanMode(config['scanMode'])) if config['enabled'] else None
 	config = _config_['gui']
-	self.XGuiController = AasGuiController(_globals_['macrosFormatter'], config['updateInterval']) if config['enabled'] else None
+	self.XGuiController = GuiController(_globals_['macrosFormatter'], config['updateInterval']) if config['enabled'] else None
 	return
 
 @XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.AvatarInputHandler, 'handleKeyEvent')

@@ -1,7 +1,7 @@
 # *************************
 # GuiClasses
 # *************************
-class AasGuiLoaderView(GuiLoaderView):
+class GuiLoaderView(XModLib.pygui.battle.views.PanelsLoaderView.PanelsLoaderView):
 	INFO_PANELS = (
 		('AdvancedAimingSystemCorrectionPanel', 'TextPanel', 0),
 		('AdvancedAimingSystemTargetPanel', 'TextPanel', 1),
@@ -9,21 +9,21 @@ class AasGuiLoaderView(GuiLoaderView):
 	)
 
 	def _populate(self):
-		super(AasGuiLoaderView, self)._populate()
+		super(GuiLoaderView, self)._populate()
 		for panelAlias, panelClass, panelIndex in self.INFO_PANELS:
 			self.as_createBattlePagePanelS(panelAlias, panelClass, panelIndex)
 		return
 
-class AasGuiCorrectionPanel(GuiTextPanel):
+class GuiCorrectionPanel(XModLib.pygui.battle.views.components.panels.TextPanel.TextPanel):
 	pass
 
-class AasGuiTargetPanel(GuiTextPanel):
+class GuiTargetPanel(XModLib.pygui.battle.views.components.panels.TextPanel.TextPanel):
 	pass
 
-class AasGuiAimingPanel(GuiTextPanel):
+class GuiAimingPanel(XModLib.pygui.battle.views.components.panels.TextPanel.TextPanel):
 	pass
 
-class AasGuiSettings(GuiSettings):
+class GuiSettings(object):
 	CORRECTION_PANEL_ALIAS = 'AdvancedAimingSystemCorrectionPanel'
 	TARGET_PANEL_ALIAS = 'AdvancedAimingSystemTargetPanel'
 	AIMING_PANEL_ALIAS = 'AdvancedAimingSystemAimingPanel'
@@ -33,20 +33,20 @@ class AasGuiSettings(GuiSettings):
 	@staticmethod
 	def getViewSettings():
 		return (
-			GuiSettings.getComponentSettings(AasGuiSettings.CORRECTION_PANEL_ALIAS, AasGuiCorrectionPanel),
-			GuiSettings.getComponentSettings(AasGuiSettings.TARGET_PANEL_ALIAS, AasGuiTargetPanel),
-			GuiSettings.getComponentSettings(AasGuiSettings.AIMING_PANEL_ALIAS, AasGuiAimingPanel),
-			GuiSettings.getViewSettings(AasGuiSettings.LOADER_VIEW_ALIAS, AasGuiLoaderView, AasGuiSettings.SWF_PATH)
+			GuiCorrectionPanel.getSettings(GuiSettings.CORRECTION_PANEL_ALIAS),
+			GuiTargetPanel.getSettings(GuiSettings.TARGET_PANEL_ALIAS),
+			GuiAimingPanel.getSettings(GuiSettings.AIMING_PANEL_ALIAS),
+			GuiLoaderView.getSettings(GuiSettings.LOADER_VIEW_ALIAS, GuiSettings.SWF_PATH)
 		)
 
-class AasGuiEvent(gui.shared.events.GameEvent):
-	AAS_CORRECTION_UPDATE = 'game/AdvancedAimingSystem/CorrectionPanelUpdate'
-	AAS_TARGET_UPDATE = 'game/AdvancedAimingSystem/TargetPanelUpdate'
-	AAS_AIMING_UPDATE = 'game/AdvancedAimingSystem/AimingPanelUpdate'
-	AAS_CTRL_MODE_ENABLE = 'game/AdvancedAimingSystem/CtrlModeEnable'
-	AAS_CTRL_MODE_DISABLE = 'game/AdvancedAimingSystem/CtrlModeDisable'
+class GuiEvent(gui.shared.events.GameEvent):
+	CORRECTION_UPDATE = 'game/AdvancedAimingSystem/CorrectionPanelUpdate'
+	TARGET_UPDATE = 'game/AdvancedAimingSystem/TargetPanelUpdate'
+	AIMING_UPDATE = 'game/AdvancedAimingSystem/AimingPanelUpdate'
+	CTRL_MODE_ENABLE = 'game/AdvancedAimingSystem/CtrlModeEnable'
+	CTRL_MODE_DISABLE = 'game/AdvancedAimingSystem/CtrlModeDisable'
 
-class AasGuiBaseBusinessHandler(gui.Scaleform.framework.package_layout.PackageBusinessHandler):
+class GuiBaseBusinessHandler(gui.Scaleform.framework.package_layout.PackageBusinessHandler):
 	def _getBattlePage(self):
 		arenaGuiTypeVisitor = gui.battle_control.g_sessionProvider.arenaVisitor.gui
 		if arenaGuiTypeVisitor.isTutorialBattle():
@@ -75,17 +75,17 @@ class AasGuiBaseBusinessHandler(gui.Scaleform.framework.package_layout.PackageBu
 			panel.config = config
 		return
 
-class AasGuiBattleBusinessHandler(AasGuiBaseBusinessHandler):
+class GuiBattleBusinessHandler(GuiBaseBusinessHandler):
 	def __init__(self, panelConfigs):
 		self._panelConfigs = panelConfigs
 		listeners = (
-			(AasGuiEvent.AAS_CORRECTION_UPDATE, self._handleCorrectionPanelUpdateEvent),
-			(AasGuiEvent.AAS_TARGET_UPDATE, self._handleTargetPanelUpdateEvent),
-			(AasGuiEvent.AAS_AIMING_UPDATE, self._handleAimingPanelUpdateEvent),
-			(AasGuiEvent.AAS_CTRL_MODE_ENABLE, self._handleCtrlModeEnableEvent),
-			(AasGuiEvent.AAS_CTRL_MODE_DISABLE, self._handleCtrlModeDisableEvent)
+			(GuiEvent.CORRECTION_UPDATE, self._handleCorrectionPanelUpdateEvent),
+			(GuiEvent.TARGET_UPDATE, self._handleTargetPanelUpdateEvent),
+			(GuiEvent.AIMING_UPDATE, self._handleAimingPanelUpdateEvent),
+			(GuiEvent.CTRL_MODE_ENABLE, self._handleCtrlModeEnableEvent),
+			(GuiEvent.CTRL_MODE_DISABLE, self._handleCtrlModeDisableEvent)
 		)
-		super(AasGuiBattleBusinessHandler, self).__init__(
+		super(GuiBattleBusinessHandler, self).__init__(
 			listeners,
 			gui.app_loader.settings.APP_NAME_SPACE.SF_BATTLE,
 			gui.shared.EVENT_BUS_SCOPE.BATTLE
@@ -93,38 +93,38 @@ class AasGuiBattleBusinessHandler(AasGuiBaseBusinessHandler):
 		return
 
 	def _handleCorrectionPanelUpdateEvent(self, event):
-		self._updatePanelText(AasGuiSettings.CORRECTION_PANEL_ALIAS, event.ctx.get('formatter', None), event.ctx.get('macrodata', None))
+		self._updatePanelText(GuiSettings.CORRECTION_PANEL_ALIAS, event.ctx.get('formatter', None), event.ctx.get('macrodata', None))
 		return
 
 	def _handleTargetPanelUpdateEvent(self, event):
-		self._updatePanelText(AasGuiSettings.TARGET_PANEL_ALIAS, event.ctx.get('formatter', None), event.ctx.get('macrodata', None))
+		self._updatePanelText(GuiSettings.TARGET_PANEL_ALIAS, event.ctx.get('formatter', None), event.ctx.get('macrodata', None))
 		return
 
 	def _handleAimingPanelUpdateEvent(self, event):
-		self._updatePanelText(AasGuiSettings.AIMING_PANEL_ALIAS, event.ctx.get('formatter', None), event.ctx.get('macrodata', None))
+		self._updatePanelText(GuiSettings.AIMING_PANEL_ALIAS, event.ctx.get('formatter', None), event.ctx.get('macrodata', None))
 		return
 
 	def _handleCtrlModeEnableEvent(self, event):
 		ctrlModeName = event.ctx.get('ctrlModeName', None)
 		if ctrlModeName is not None:
-			for alias in (AasGuiSettings.CORRECTION_PANEL_ALIAS, AasGuiSettings.TARGET_PANEL_ALIAS, AasGuiSettings.AIMING_PANEL_ALIAS):
+			for alias in (GuiSettings.CORRECTION_PANEL_ALIAS, GuiSettings.TARGET_PANEL_ALIAS, GuiSettings.AIMING_PANEL_ALIAS):
 				self._setPanelConfig(alias, self._panelConfigs.get(alias, {}).get(ctrlModeName, {}))
 		return
 
 	def _handleCtrlModeDisableEvent(self, event):
 		ctrlModeName = event.ctx.get('ctrlModeName', None)
 		if ctrlModeName is not None:
-			for alias in (AasGuiSettings.CORRECTION_PANEL_ALIAS, AasGuiSettings.TARGET_PANEL_ALIAS, AasGuiSettings.AIMING_PANEL_ALIAS):
+			for alias in (GuiSettings.CORRECTION_PANEL_ALIAS, GuiSettings.TARGET_PANEL_ALIAS, GuiSettings.AIMING_PANEL_ALIAS):
 				self._setPanelConfig(alias, {'visible': False})
 		return
 
-class AasGuiGlobalBusinessHandler(AasGuiBaseBusinessHandler):
+class GuiGlobalBusinessHandler(GuiBaseBusinessHandler):
 	def __init__(self, panelConfigs):
 		self._panelConfigs = panelConfigs
 		listeners = (
 			(gui.shared.events.ComponentEvent.COMPONENT_REGISTERED, self._handleComponentRegistrationEvent),
 		)
-		super(AasGuiGlobalBusinessHandler, self).__init__(
+		super(GuiGlobalBusinessHandler, self).__init__(
 			listeners,
 			gui.app_loader.settings.APP_NAME_SPACE.SF_BATTLE,
 			gui.shared.EVENT_BUS_SCOPE.GLOBAL
@@ -132,15 +132,15 @@ class AasGuiGlobalBusinessHandler(AasGuiBaseBusinessHandler):
 		return
 
 	def _handleComponentRegistrationEvent(self, event):
-		if event.alias in (AasGuiSettings.CORRECTION_PANEL_ALIAS, AasGuiSettings.TARGET_PANEL_ALIAS, AasGuiSettings.AIMING_PANEL_ALIAS):
+		if event.alias in (GuiSettings.CORRECTION_PANEL_ALIAS, GuiSettings.TARGET_PANEL_ALIAS, GuiSettings.AIMING_PANEL_ALIAS):
 			self._setPanelConfig(event.alias, self._panelConfigs.get(event.alias, {}).get('default', {}))
 		elif event.alias == gui.Scaleform.genConsts.BATTLE_VIEW_ALIASES.BATTLE_VIEW_ALIASES.CONSUMABLES_PANEL:
 			self._app.containerManager.onViewAddedToContainer += self._onViewAddedToContainer
-			self.loadViewWithDefName(AasGuiSettings.LOADER_VIEW_ALIAS)
+			self.loadViewWithDefName(GuiSettings.LOADER_VIEW_ALIAS)
 		return
 
 	def _onViewAddedToContainer(self, container, view):
-		if view.alias == AasGuiSettings.LOADER_VIEW_ALIAS:
+		if view.alias == GuiSettings.LOADER_VIEW_ALIAS:
 			self._app.containerManager.onViewAddedToContainer -= self._onViewAddedToContainer
 			view.destroy()
 		return
