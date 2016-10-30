@@ -63,11 +63,12 @@ def compile_gettext_string(src_bin_data):
 		raise RuntimeError('An error occured while compiling localization file.')
 	return dst_bin_data
 
-def compile_zipfile_string(src_data_blocks):
+def compile_zipfile_string(src_data_blocks, src_bin_comment=''):
 	with io.BytesIO() as dst_bin_buffer:
 		with zipfile.ZipFile(dst_bin_buffer, 'w', zipfile.ZIP_DEFLATED) as dst_zip_buffer:
 			for src_block_name, src_block_data in src_data_blocks:
 				dst_zip_buffer.writestr(src_block_name, src_block_data)
+			dst_zip_buffer.comment = src_bin_comment
 		dst_bin_data = dst_bin_buffer.getvalue()
 	return dst_bin_data
 
@@ -206,6 +207,42 @@ if __name__ == '__main__':
 		## Python build commands.
 		# Loading source encoding.
 		g_pythonSourceEncoding = g_config["python"]["sourceEncoding"]
+		# Source module build command.
+		def g_pythonBuildSourceModule(src_entry, level=0):
+			# Formatting macros.
+			src_entry = [norm_path(format_macros(path, g_allMacros)) for path in src_entry]
+			# Getting base path.
+			mod_filename = src_entry[0]
+			# Creating archive data blocks storage.
+			archive_blocks = list()
+			# Processing source entries.
+			for src_entry in get_path_group_block_iterator(src_entry):
+				# Parsing localization entry.
+				src_filename, bin_filename, zip_filename = src_entry
+				# Formatting macros.
+				src_filename = norm_path(format_macros(src_filename, g_allMacros))
+				bin_filename = norm_path(format_macros(bin_filename, g_allMacros))
+				zip_filename = norm_path(format_macros(zip_filename, g_allMacros))
+				# Changing binaries extension.
+				bin_filename = os.path.splitext(bin_filename)[0] + '.pyc'
+				zip_filename = os.path.splitext(zip_filename)[0] + '.pyc'
+				# Printing status.
+				indent = ' ' * level
+				print indent + 'Building module file: {}.'.format(src_filename)
+				print indent + ' Target binary file: {}.'.format(bin_filename)
+				print indent + ' Target zip archive file: {}.'.format(zip_filename)
+				# Loading source block.
+				src_str_data = format_macros(load_file_str(src_filename, g_pythonSourceEncoding), g_globalMacros)
+				# Getting parameters for compiler.
+				cmp_filename = join_path(os.path.basename(mod_filename), os.path.relpath(src_filename, mod_filename))
+				cmp_filetime = time.time()
+				# Compiling source block.
+				dst_bin_data = compile_python_string(src_str_data, cmp_filename, cmp_filetime)
+				# Saving binary file.
+				save_file_data(bin_filename, dst_bin_data)
+				# Appending archive block.
+				archive_blocks.append([zip_filename, dst_bin_data])
+			return archive_blocks
 		# Source group build command.
 		def g_pythonBuildSourceGroup(src_entry, src_plugins=None, level=0):
 			# Parsing source group.
@@ -257,8 +294,11 @@ if __name__ == '__main__':
 		## Resource build commands.
 		# Resource build command.
 		def g_resourceBuildEntry(src_entry, level=0):
+			# Formatting macros.
 			src_entry = [norm_path(format_macros(path, g_allMacros)) for path in src_entry]
+			# Creating archive data blocks storage.
 			archive_blocks = list()
+			# Processing source entries.
 			for src_entry in get_path_group_block_iterator(src_entry):
 				# Parsing resource entry.
 				bin_filename, zip_filename = src_entry
@@ -277,8 +317,11 @@ if __name__ == '__main__':
 		## Localization build commands.
 		# Localization build command.
 		def g_localizationBuildEntry(src_entry, level=0):
+			# Formatting macros.
 			src_entry = [norm_path(format_macros(path, g_allMacros)) for path in src_entry]
+			# Creating archive data blocks storage.
 			archive_blocks = list()
+			# Processing source entries.
 			for src_entry in get_path_group_block_iterator(src_entry):
 				# Parsing localization entry.
 				src_filename, bin_filename, zip_filename = src_entry
@@ -313,6 +356,12 @@ if __name__ == '__main__':
 		## Building Python.
 		print '>>> Building Python... <<<'
 		# Printing status.
+		print 'Modules build started.'
+		# Building modules.
+		g_releaseBlocks.extend(itertools.chain.from_iterable(
+			[g_pythonBuildSourceModule(src_entry, level=1) for src_entry in g_config["python"]["modules"]]
+		))
+		# Printing status.
 		print 'Plug-ins build started.'
 		# Building plug-ins.
 		g_pythonSourcePlugins = dict(g_pythonBuildPluginAttachGroup(att_entry, level=1) for att_entry in g_config["python"]["plugins"])
@@ -340,10 +389,12 @@ if __name__ == '__main__':
 		))
 		## Loading release archive filename.
 		g_releaseArchive = format_macros(g_config["releaseArchive"], g_allMacros)
+		## Loading release archive comment.
+		g_releaseComment = format_macros(g_config["releaseComment"], g_allMacros).encode('ascii')
 		## Printing status.
 		print 'Saving release archive.'
 		## Saving release archive file.
-		save_file_data(g_releaseArchive, compile_zipfile_string(g_releaseBlocks))
+		save_file_data(g_releaseArchive, compile_zipfile_string(g_releaseBlocks, g_releaseComment))
 		## Build finished.
 		print 'Build finished.'
 	except:
