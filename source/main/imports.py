@@ -62,6 +62,7 @@ import XModLib.Messages
 import XModLib.ArenaInfo
 import XModLib.Colliders
 import XModLib.HookUtils
+import XModLib.MathUtils
 import XModLib.TextUtils
 import XModLib.AGScanners
 import XModLib.ClientInfo
