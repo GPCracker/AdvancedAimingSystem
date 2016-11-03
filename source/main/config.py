@@ -126,7 +126,7 @@ def defaultConfig():
 						'position': ('Vector2AsTuple', (458.0, 250.0)),
 						'size': ('Vector2AsTuple', (450.0, 25.0))
 					},
-					'arcade': ('PanelSettings', {
+					'arcade': ('CorrectionPanelSettings', {
 						'alpha': ('Float', 1.0),
 						'visible': ('Bool', True),
 						'background': ('String', ''),
@@ -135,7 +135,7 @@ def defaultConfig():
 						'position': ('Vector2AsTuple', (458.0, 250.0)),
 						'size': ('Vector2AsTuple', (450.0, 25.0))
 					}),
-					'sniper': ('PanelSettings', {
+					'sniper': ('CorrectionPanelSettings', {
 						'alpha': ('Float', 1.0),
 						'visible': ('Bool', True),
 						'background': ('String', ''),
@@ -144,7 +144,7 @@ def defaultConfig():
 						'position': ('Vector2AsTuple', (458.0, 250.0)),
 						'size': ('Vector2AsTuple', (450.0, 25.0))
 					}),
-					'strategic': ('PanelSettings', {
+					'strategic': ('CorrectionPanelSettings', {
 						'alpha': ('Float', 1.0),
 						'visible': ('Bool', True),
 						'background': ('String', ''),
@@ -164,7 +164,7 @@ def defaultConfig():
 						'position': ('Vector2AsTuple', (458.0, 225.0)),
 						'size': ('Vector2AsTuple', (450.0, 25.0))
 					},
-					'arcade': ('PanelSettings', {
+					'arcade': ('TargetPanelSettings', {
 						'alpha': ('Float', 1.0),
 						'visible': ('Bool', True),
 						'background': ('String', ''),
@@ -173,7 +173,7 @@ def defaultConfig():
 						'position': ('Vector2AsTuple', (458.0, 225.0)),
 						'size': ('Vector2AsTuple', (450.0, 25.0))
 					}),
-					'sniper': ('PanelSettings', {
+					'sniper': ('TargetPanelSettings', {
 						'alpha': ('Float', 1.0),
 						'visible': ('Bool', True),
 						'background': ('String', ''),
@@ -182,7 +182,7 @@ def defaultConfig():
 						'position': ('Vector2AsTuple', (458.0, 225.0)),
 						'size': ('Vector2AsTuple', (450.0, 25.0))
 					}),
-					'strategic': ('PanelSettings', {
+					'strategic': ('TargetPanelSettings', {
 						'alpha': ('Float', 1.0),
 						'visible': ('Bool', True),
 						'background': ('String', ''),
@@ -202,7 +202,7 @@ def defaultConfig():
 						'position': ('Vector2AsTuple', (870.0, 355.0)),
 						'size': ('Vector2AsTuple', (175.0, 130.0))
 					},
-					'arcade': ('PanelSettings', {
+					'arcade': ('AimingPanelSettings', {
 						'alpha': ('Float', 1.0),
 						'visible': ('Bool', True),
 						'background': ('String', 'img://gui/maps/icons/mods/AdvancedAimingSystem/AimingInfoBGB.png'),
@@ -211,7 +211,7 @@ def defaultConfig():
 						'position': ('Vector2AsTuple', (870.0, 355.0)),
 						'size': ('Vector2AsTuple', (175.0, 130.0))
 					}),
-					'sniper': ('PanelSettings', {
+					'sniper': ('AimingPanelSettings', {
 						'alpha': ('Float', 1.0),
 						'visible': ('Bool', True),
 						'background': ('String', 'img://gui/maps/icons/mods/AdvancedAimingSystem/AimingInfoBGB.png'),
@@ -220,7 +220,7 @@ def defaultConfig():
 						'position': ('Vector2AsTuple', (870.0, 415.0)),
 						'size': ('Vector2AsTuple', (175.0, 130.0))
 					}),
-					'strategic': ('PanelSettings', {
+					'strategic': ('AimingPanelSettings', {
 						'alpha': ('Float', 1.0),
 						'visible': ('Bool', True),
 						'background': ('String', 'img://gui/maps/icons/mods/AdvancedAimingSystem/AimingInfoBGB.png'),
@@ -247,7 +247,17 @@ def readConfig():
 			'LocalizedWideStringXMLReader',
 			translator=_globals_['i18nFormatter']
 		)),
-		('PanelSettings', XModLib.XMLConfigReader.OptionalDictXMLReaderMeta.construct(
+		('CorrectionPanelSettings', XModLib.XMLConfigReader.OptionalDictXMLReaderMeta.construct(
+			'PanelSettingsXMLReader',
+			required_keys=('visible', ),
+			default_keys=('visible', )
+		)),
+		('TargetPanelSettings', XModLib.XMLConfigReader.OptionalDictXMLReaderMeta.construct(
+			'PanelSettingsXMLReader',
+			required_keys=('visible', ),
+			default_keys=('visible', )
+		)),
+		('AimingPanelSettings', XModLib.XMLConfigReader.OptionalDictXMLReaderMeta.construct(
 			'PanelSettingsXMLReader',
 			required_keys=('visible', ),
 			default_keys=('visible', 'text', 'position')
