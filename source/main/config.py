@@ -238,21 +238,21 @@ def defaultConfig():
 # Read configuration from file
 # *************************
 def readConfig():
-	configReader = XModLib.XMLConfigReader.XMLConfigReader.new({
-		'Vector2AsTuple': XModLib.XMLConfigReader.VectorAsTupleXMLReader.new_class(
+	configReader = XModLib.XMLConfigReader.XMLConfigReader((
+		('Vector2AsTuple', XModLib.XMLConfigReader.VectorAsTupleXMLReaderMeta.construct(
 			'Vector2AsTupleXMLReader',
-			VECTOR_TYPE='Vector2'
-		),
-		'LocalizedWideString': XModLib.XMLConfigReader.LocalizedWideStringXMLReader.new_class(
+			vector_type='Vector2'
+		)),
+		('LocalizedWideString', XModLib.XMLConfigReader.LocalizedWideStringXMLReaderMeta.construct(
 			'LocalizedWideStringXMLReader',
-			TRANSLATOR=_globals_['i18nFormatter']
-		),
-		'PanelSettings': XModLib.XMLConfigReader.OptionalDictXMLReader.new_class(
+			translator=_globals_['i18nFormatter']
+		)),
+		('PanelSettings', XModLib.XMLConfigReader.OptionalDictXMLReaderMeta.construct(
 			'PanelSettingsXMLReader',
-			DEFAULT_KEYS=('visible', 'text', 'position'),
-			REQUIRED_KEYS = ('visible', )
-		)
-	})
+			required_keys=('visible', ),
+			default_keys=('visible', 'text', 'position')
+		))
+	))
 	mainSection = configReader.open_section(os.path.splitext(__file__)[0] + '.xml')
 	if mainSection is None:
 		print '[{}] Config file not found.'.format(__application__[1])
