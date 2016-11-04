@@ -21,7 +21,7 @@
 				<background></background>
 				<tooltip>#AdvancedAimingSystem:gui/CorrectionPanel/default/tooltip;</tooltip>
 				<text>#AdvancedAimingSystem:gui/CorrectionPanel/default/text;</text>
-				<position>458.0 250.0</position>
+				<position>0.0 0.3</position>
 				<size>450.0 25.0</size>
 			</default>
 			<arcade>
@@ -43,7 +43,7 @@
 				<background></background>
 				<tooltip>#AdvancedAimingSystem:gui/TargetPanel/default/tooltip;</tooltip>
 				<text>#AdvancedAimingSystem:gui/TargetPanel/default/text;</text>
-				<position>458.0 225.0</position>
+				<position>0.0 0.4</position>
 				<size>450.0 25.0</size>
 			</default>
 			<arcade>
@@ -65,23 +65,23 @@
 				<background>img://gui/maps/icons/mods/AdvancedAimingSystem/AimingInfoBGB.png</background>
 				<tooltip>#AdvancedAimingSystem:gui/AimingPanel/default/tooltip;</tooltip>
 				<text>#AdvancedAimingSystem:gui/AimingPanel/default/text;</text>
-				<position>855.0 355.0</position>
+				<position>0.4 -0.1</position>
 				<size>200.0 130.0</size>
 			</default>
 			<arcade>
 				<visible>True</visible>
 				<text>#AdvancedAimingSystem:gui/AimingPanel/arcade/text;</text>
-				<position>855.0 355.0</position>
+				<position>0.4 -0.1</position>
 			</arcade>
 			<sniper>
 				<visible>True</visible>
 				<text>#AdvancedAimingSystem:gui/AimingPanel/sniper/text;</text>
-				<position>880.0 415.0</position>
+				<position>0.4 -0.25</position>
 			</sniper>
 			<strategic>
 				<visible>True</visible>
 				<text>#AdvancedAimingSystem:gui/AimingPanel/strategic/text;</text>
-				<position>380.0 475.0</position>
+				<position>-0.3 -0.4</position>
 			</strategic>
 		</AdvancedAimingSystemAimingPanel>
 	</panels>
