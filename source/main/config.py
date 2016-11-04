@@ -263,9 +263,9 @@ def readConfig():
 			default_keys=('visible', 'text', 'position')
 		))
 	))
-	mainSection = configReader.open_section(os.path.splitext(__file__)[0] + '.xml')
+	mainSection = configReader.open_section(os.path.splitext(__file__)[0] + '.xml', skip_test=True)
 	if mainSection is None:
-		print '[{}] Config file not found.'.format(__application__[1])
+		print '[{}] Config file is bad or missing.'.format(__application__[1])
 	else:
 		print '[{}] Config file found and loaded.'.format(__application__[1])
 	return configReader(mainSection, defaultConfig())
