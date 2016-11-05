@@ -3,14 +3,14 @@
 # *************************
 class TargetScanMode(dict):
 	defaults = {
-		'updateInterval': 0.04,
 		'useNormalMode': True,
 		'useXRayMode': False,
 		'useBBoxMode': False,
 		'useBEpsMode': False,
 		'maxDistance': 720.0,
 		'boundsScalar': 1.0,
-		'expiryTime': 10.0,
+		'autoScanInterval': 0.04,
+		'autoScanExpiryTime': 10.0,
 		'filterID': None,
 		'filterVehicle': lambda vehicle: vehicle.isAlive() and vehicle.publicInfo['team'] is not BigWorld.player().team
 	}
@@ -48,10 +48,11 @@ class TargetScanner(object):
 		setattr(BigWorld.player().inputHandler, 'XTargetInfo', value)
 		return
 
-	def __init__(self, targetScanMode=TargetScanMode()):
+	def __init__(self, targetScanMode=TargetScanMode(), autoScanActivated=True):
 		self.targetScanMode = targetScanMode
+		self.autoScanActivated = autoScanActivated
 		self._updateCallbackLoop = XModLib.Callback.CallbackLoop(
-			self.targetScanMode['updateInterval'],
+			self.targetScanMode['autoScanInterval'],
 			XModLib.Callback.Callback.getMethodProxy(self._updateTargetInfo)
 		)
 		return
@@ -95,16 +96,16 @@ class TargetScanner(object):
 		return primaryTarget, secondaryTargets
 
 	def _updateTargetInfo(self):
-		if self.isManualOverrideInEffect:
+		if self.isManualOverrideInEffect or not self.autoScanActivated:
 			return
 		primaryTarget, secondaryTargets = self._performScanningProcedure()
 		if primaryTarget is not None:
 			if self.targetInfo is not None and self.targetInfo.isAutoLocked and primaryTarget.id == self.targetInfo:
 				self.targetInfo.lastLockTime = BigWorld.time()
 			elif self.targetInfo is None or self.targetInfo.isAutoLocked:
-				self.targetInfo = TargetInfo(primaryTarget, BigWorld.time(), self.targetScanMode['expiryTime'])
+				self.targetInfo = TargetInfo(primaryTarget, BigWorld.time(), self.targetScanMode['autoScanExpiryTime'])
 		elif len(secondaryTargets) == 1 and (self.targetInfo is None or self.targetInfo.isExpired):
-			self.targetInfo = TargetInfo(secondaryTargets.pop(), BigWorld.time(), self.targetScanMode['expiryTime'])
+			self.targetInfo = TargetInfo(secondaryTargets.pop(), BigWorld.time(), self.targetScanMode['autoScanExpiryTime'])
 		elif self.targetInfo is not None and self.targetInfo.isAutoLocked and not self.targetInfo.isExpired and self.targetInfo.getVehicle() in secondaryTargets:
 			self.targetInfo.lastLockTime = BigWorld.time()
 		return

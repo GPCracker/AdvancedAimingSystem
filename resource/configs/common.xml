@@ -12,9 +12,6 @@
 		<!-- Target scan mode. -->
 		<!-- Режим сканирования. -->
 		<scanMode>
-			<!-- Target scan update interval. -->
-			<!-- Интервал обновления цели. -->
-			<updateInterval>0.04</updateInterval>
 			<!-- Enables normal target to be accounted. -->
 			<!-- Разрешает использование обычного режима сканирования. -->
 			<useNormalMode>True</useNormalMode>
@@ -33,10 +30,28 @@
 			<!-- Bounds multiplier for Bounding scanners. -->
 			<!-- Множитель размера для Bounding сканеров. -->
 			<boundsScalar>2.0</boundsScalar>
-			<!-- When this time passes since target last time under crosshairs, target is deprecated. -->
-			<!-- Время устаревания цели с момента ее последнего попадания в прицел. -->
-			<expiryTime>5.0</expiryTime>
+			<!-- Target auto scan interval. -->
+			<!-- Интервал автоматического сканирования цели. -->
+			<autoScanInterval>0.04</autoScanInterval>
+			<!-- When this time passes since target last time under crosshairs, target (auto scanned) is deprecated. -->
+			<!-- Время устаревания цели с момента ее последнего попадания в прицел (для автоматического сканера). -->
+			<autoScanExpiryTime>5.0</autoScanExpiryTime>
 		</scanMode>
+		<!-- Automatic scanner settings. -->
+		<!-- Настройки автоматического сканера. -->
+		<autoScan>
+			<enabled>True</enabled>
+			<activated>True</activated>
+			<shortcut>
+				<key>KEY_LCONTROL+KEY_X</key>
+				<switch>True</switch>
+				<invert>False</invert>
+			</shortcut>
+			<message>
+				<onActivate>#AdvancedAimingSystem:targetScanner/autoScan/onActivate;</onActivate>
+				<onDeactivate>#AdvancedAimingSystem:targetScanner/autoScan/onDeactivate;</onDeactivate>
+			</message>
+		</autoScan>
 		<!-- Manual target override. It will never be deprecated and could be changed or dropped only by player. -->
 		<!-- Ручная перегрузка цели. Цель не устаревает и может быть изменена или сброшена только игроком. -->
 		<manualOverride>

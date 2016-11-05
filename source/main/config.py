@@ -16,14 +16,27 @@ def defaultConfig():
 			'targetScanner': {
 				'enabled': ('Bool', True),
 				'scanMode': {
-					'updateInterval': ('Float', 0.04),
 					'useNormalMode': ('Bool', True),
 					'useXRayMode': ('Bool', False),
 					'useBBoxMode': ('Bool', False),
 					'useBEpsMode': ('Bool', False),
 					'maxDistance': ('Float', 720.0),
 					'boundsScalar': ('Float', 1.0),
-					'expiryTime': ('Float', 5.0)
+					'autoScanInterval': ('Float', 0.04),
+					'autoScanExpiryTime': ('Float', 5.0)
+				},
+				'autoScan': {
+					'enabled': ('Bool', True),
+					'activated': ('Bool', True),
+					'shortcut': {
+						'key': ('String', 'KEY_LCONTROL+KEY_X'),
+						'switch': ('Bool', True),
+						'invert': ('Bool', False),
+					},
+					'message': {
+						'onActivate': ('LocalizedWideString', u'TargetScanner:AutoMode ENABLED.'),
+						'onDeactivate': ('LocalizedWideString', u'TargetScanner:AutoMode DISABLED.')
+					}
 				},
 				'manualOverride': {
 					'enabled': ('Bool', False),

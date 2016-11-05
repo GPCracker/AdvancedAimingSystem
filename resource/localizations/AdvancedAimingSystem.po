@@ -14,6 +14,12 @@ msgstr "<a href='event:AdvancedAimingSystem.official_topic'><font color='#0080FF
 msgid "appFailedMessage"
 msgstr "<a href='event:AdvancedAimingSystem.official_topic'><font color='#0080FF'>\"Улучшенная&nbsp;система&nbsp;прицеливания\" (AdvancedAimingSystem)</font></a> <font color='#E00000'>несовместима с текущей версией клиента.</font>"
 
+msgid "targetScanner/autoScan/onActivate"
+msgstr "[СКАНЕР] АВТОРЕЖИМ АКТИВИРОВАН."
+
+msgid "targetScanner/autoScan/onDeactivate"
+msgstr "[СКАНЕР] АВТОРЕЖИМ ДЕАКТИВИРОВАН."
+
 msgid "arcadeAimCorrection/targetMode/onActivate"
 msgstr "[ДАЛЬНОМЕР] АРКАДНЫЙ по цели АКТИВИРОВАН."
 

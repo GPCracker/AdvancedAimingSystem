@@ -4,7 +4,10 @@
 @XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.AvatarInputHandler, '__init__', calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_BEFORE_HOOK)
 def new_AvatarInputHandler_init(self, *args, **kwargs):
 	config = _config_['commonAS']['targetScanner']
-	self.XTargetScanner = TargetScanner(TargetScanMode(config['scanMode'])) if config['enabled'] else None
+	self.XTargetScanner = TargetScanner(
+		TargetScanMode(config['scanMode']),
+		config['autoScan']['enabled'] and config['autoScan']['activated']
+	) if config['enabled'] else None
 	config = _config_['gui']
 	self.XGuiController = GuiController(_globals_['macrosFormatter'], config['updateInterval']) if config['enabled'] else None
 	return
@@ -14,6 +17,32 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 	getShortcut = XModLib.KeyBoard.Shortcut.fromSequence
 	## HotKeys - Common
 	if self.ctrlModeName in ['arcade', 'sniper', 'strategic']:
+		## HotKeys - TargetScanner - AutoScan
+		config = _config_['commonAS']['targetScanner']['autoScan']
+		shortcutHandle = config['enabled'] and getShortcut(
+			config['shortcut']['key'],
+			config['shortcut']['switch'],
+			config['shortcut']['invert']
+		)(event)
+		if shortcutHandle and (not shortcutHandle.switch or shortcutHandle.pushed):
+			config['activated'] = shortcutHandle(config['activated'])
+			if shortcutHandle.switch and config['activated']:
+				XModLib.Messages.Messenger.showMessageOnPanel(
+					'Player',
+					None,
+					config['message']['onActivate'],
+					'green'
+				)
+			elif shortcutHandle.switch:
+				XModLib.Messages.Messenger.showMessageOnPanel(
+					'Player',
+					None,
+					config['message']['onDeactivate'],
+					'red'
+				)
+			targetScanner = getattr(self, 'XTargetScanner', None)
+			if targetScanner is not None:
+				targetScanner.autoScanActivated = config['activated']
 		## HotKeys - TargetScanner - ManualOverride
 		config = _config_['commonAS']['targetScanner']['manualOverride']
 		shortcutHandle = config['enabled'] and getShortcut(config['key'], True, False)(event)
