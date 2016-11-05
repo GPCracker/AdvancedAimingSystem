@@ -15,34 +15,34 @@ msgid "appFailedMessage"
 msgstr "<a href='event:AdvancedAimingSystem.official_topic'><font color='#0080FF'>\"Улучшенная&nbsp;система&nbsp;прицеливания\" (AdvancedAimingSystem)</font></a> <font color='#E00000'>несовместима с текущей версией клиента.</font>"
 
 msgid "arcadeAimCorrection/targetMode/onActivate"
-msgstr "Корректировка дальномера в АРКАДНОМ режиме по данным текущей цели АКТИВИРОВАНА."
+msgstr "[ДАЛЬНОМЕР] АРКАДНЫЙ по цели АКТИВИРОВАН."
 
 msgid "arcadeAimCorrection/targetMode/onDeactivate"
-msgstr "Корректировка дальномера в АРКАДНОМ режиме по данным текущей цели ДЕАКТИВИРОВАНА."
+msgstr "[ДАЛЬНОМЕР] АРКАДНЫЙ по цели ДЕАКТИВИРОВАН."
 
 msgid "sniperAimCorrection/targetMode/onActivate"
-msgstr "Корректировка дальномера в СНАЙПЕРСКОМ режиме по данным текущей цели АКТИВИРОВАНА."
+msgstr "[ДАЛЬНОМЕР] СНАЙПЕРСКИЙ по цели АКТИВИРОВАН."
 
 msgid "sniperAimCorrection/targetMode/onDeactivate"
-msgstr "Корректировка дальномера в СНАЙПЕРСКОМ режиме по данным текущей цели ДЕАКТИВИРОВАНА."
+msgstr "[ДАЛЬНОМЕР] СНАЙПЕРСКИЙ по цели ДЕАКТИВИРОВАН."
 
 msgid "strategicAimCorrection/targetMode/onActivate"
-msgstr "Корректировка дальномера в СТРАТЕГИЧЕСКОМ режиме по данным текущей цели АКТИВИРОВАНА."
+msgstr "[ДАЛЬНОМЕР] СТРАТЕГИЧЕСКИЙ по цели АКТИВИРОВАН."
 
 msgid "strategicAimCorrection/targetMode/onDeactivate"
-msgstr "Корректировка дальномера в СТРАТЕГИЧЕСКОМ режиме по данным текущей цели ДЕАКТИВИРОВАНА."
+msgstr "[ДАЛЬНОМЕР] СТРАТЕГИЧЕСКИЙ по цели ДЕАКТИВИРОВАН."
 
 msgid "gui/CorrectionPanel/default/tooltip"
 msgstr "Панель информации корректировщика дальномера."
 
 msgid "gui/CorrectionPanel/default/text"
-msgstr "<p align='center'><font color='#00FF00' size='20' face='$UniversCondC'>Расстояние зафиксировано: {{manualInfo:.1f}}м.</font></p>"
+msgstr "<p align='center'><font color='#00FF00' size='20' face='$UniversCondC'>Дальномер: {{manualInfo:.1f}}м.</font></p>"
 
 msgid "gui/TargetPanel/default/tooltip"
 msgstr "Панель информации сканера целей."
 
 msgid "gui/TargetPanel/default/text"
-msgstr "<p align='center'><font color='#FF7F00' size='20' face='$UniversCondC'>Цель: {{shortName}}; Расстояние: {{distance:.1f}}м; Скорость: {{speedMS:.1f}}м/с.</font></p>"
+msgstr "<p align='center'><font color='#FF7F00' size='20' face='$UniversCondC'>Цель: {{shortName}}; Дистанция: {{distance:.1f}}м; Скорость: {{speedMS:.1f}}м/с.</font></p>"
 
 msgid "gui/AimingPanel/default/tooltip"
 msgstr "Панель информации о сведении."
