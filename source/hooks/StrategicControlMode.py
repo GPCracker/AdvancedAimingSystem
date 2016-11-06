@@ -15,25 +15,25 @@ def new_StrategicControlMode_init(self, *args, **kwargs):
 @XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.control_modes.StrategicControlMode, 'enable', calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_BEFORE_HOOK)
 def new_StrategicControlMode_enable(self, *args, **kwargs):
 	self.XAimCorrection.handleControlModeEnable()
-	targetScanner = getattr(BigWorld.player().inputHandler, 'XTargetScanner', None)
+	targetScanner = getattr(self._aih, 'XTargetScanner', None)
 	if targetScanner is not None and not targetScanner.isUpdateActive:
 		targetScanner.start()
-	guiController = getattr(BigWorld.player().inputHandler, 'XGuiController', None)
+	guiController = getattr(self._aih, 'XGuiController', None)
 	if guiController is not None and not guiController.isUpdateActive:
 		guiController.start()
-		guiController.handleControlModeEnable(avatar_helpers.aim_global_binding.CTRL_MODE_NAME.STRATEGIC)
+		guiController.handleControlModeEnable('strategic')
 	return
 
 @XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.control_modes.StrategicControlMode, 'disable', calltype=XModLib.HookUtils.HookFunction.CALL_HOOK_BEFORE_ORIGIN)
 def new_StrategicControlMode_disable(self, *args, **kwargs):
 	self.XAimCorrection.handleControlModeDisable()
-	targetScanner = getattr(BigWorld.player().inputHandler, 'XTargetScanner', None)
+	targetScanner = getattr(self._aih, 'XTargetScanner', None)
 	if targetScanner is not None and targetScanner.isUpdateActive:
 		targetScanner.stop()
-	guiController = getattr(BigWorld.player().inputHandler, 'XGuiController', None)
+	guiController = getattr(self._aih, 'XGuiController', None)
 	if guiController is not None and guiController.isUpdateActive:
 		guiController.stop()
-		guiController.handleControlModeDisable(avatar_helpers.aim_global_binding.CTRL_MODE_NAME.STRATEGIC)
+		guiController.handleControlModeDisable('strategic')
 	return
 
 @XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.control_modes.StrategicControlMode, 'getDesiredShotPoint', calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_INSIDE_HOOK)

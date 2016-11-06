@@ -94,10 +94,9 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 		shortcutHandle = config['enabled'] and getShortcut(config['key'], True, False)(event)
 		if shortcutHandle and XModLib.ArenaInfo.ArenaInfo.getClass(BigWorld.player().playerVehicleID) == 'SPG':
 			if shortcutHandle.pushed:
-				desiredShotPoint = self.ctrl.camera.aimingSystem.getDesiredShotPoint()
 				self.onControlModeChanged(
 					'sniper',
-					preferredPos=desiredShotPoint,
+					preferredPos=self.ctrl.camera.aimingSystem.getDesiredShotPoint(),
 					aimingMode=self.ctrl.aimingMode,
 					saveZoom=True,
 					equipmentID=None
@@ -143,10 +142,9 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 		shortcutHandle = config['enabled'] and getShortcut(config['key'], True, False)(event)
 		if shortcutHandle and XModLib.ArenaInfo.ArenaInfo.getClass(BigWorld.player().playerVehicleID) == 'SPG':
 			if shortcutHandle.pushed:
-				desiredShotPoint = self.ctrl.camera.aimingSystem.getDesiredShotPoint()
 				self.onControlModeChanged(
 					'arcade',
-					preferredPos=desiredShotPoint,
+					preferredPos=self.ctrl.camera.aimingSystem.getDesiredShotPoint(),
 					turretYaw=self.ctrl.camera.aimingSystem.turretYaw,
 					gunPitch=self.ctrl.camera.aimingSystem.gunPitch,
 					aimingMode=self.ctrl.aimingMode,
