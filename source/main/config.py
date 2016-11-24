@@ -48,6 +48,7 @@ def defaultConfig():
 				'key': ('String', 'KEY_E')
 			},
 			'autoAim': {
+				'useTargetScan': ('Bool', False),
 				'useTargetInfo': ('Bool', False)
 			},
 			'radialMenu': {

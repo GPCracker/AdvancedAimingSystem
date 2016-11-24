@@ -45,11 +45,6 @@ def new_PlayerAvatar_targetFocus(self, entity):
 
 @XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, Avatar.PlayerAvatar, 'autoAim', calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_INSIDE_HOOK)
 def new_PlayerAvatar_autoAim(old_PlayerAvatar_autoAim, self, target):
-	if target is None and self.inputHandler.ctrlModeName in ['arcade', 'sniper']:
-		if BigWorld.target() is None and _config_['commonAS']['autoAim']['useTargetInfo']:
-			targetInfo = getattr(self.inputHandler, 'XTargetInfo', None)
-			if targetInfo is not None and not targetInfo.isExpired:
-				target = targetInfo.getVehicle()
 	expertPerk = getattr(self, 'XExpertPerk', None)
 	if expertPerk is not None and getattr(self, '_maySeeOtherVehicleDamagedDevices', False):
 		if XModLib.VehicleInfo.VehicleInfo.isVehicle(target) and target.publicInfo['team'] is not self.team and target.isAlive():

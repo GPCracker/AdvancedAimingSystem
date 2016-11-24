@@ -68,8 +68,11 @@
 	<!-- Automatic aim settings. -->
 	<!-- Настройки автоприцела. -->
 	<autoAim>
-		<!-- Enables TargetInfo substitute when lock on empty target. -->
-		<!-- Разрешает подстановку TargetInfo при захвате пустой цели. -->
+		<!-- Enables real time scanning result substitution while locking on target. -->
+		<!-- Разрешает подстановку результата сканирования в реальном времени при захвате цели. -->
+		<useTargetScan>False</useTargetScan>
+		<!-- Enables TargetInfo substitution while locking on target. -->
+		<!-- Разрешает подстановку TargetInfo при захвате цели. -->
 		<useTargetInfo>False</useTargetInfo>
 	</autoAim>
 	<!-- Radial menu settings. -->
