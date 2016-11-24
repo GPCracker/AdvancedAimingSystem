@@ -8,6 +8,7 @@ import marshal
 import weakref
 import zipfile
 import functools
+import collections
 
 # *************************
 # BigWorld

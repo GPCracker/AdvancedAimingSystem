@@ -21,6 +21,26 @@ class TargetScanMode(dict):
 			self.setdefault(key, self.defaults.get(key))
 		return
 
+class TargetScanResult(collections.namedtuple('TargetScanResult', ('result', 'target'))):
+	__slots__ = ()
+
+	NOTHING = 'nothing'
+	PRIMARY = 'primary'
+	SECONDARY = 'secondary'
+	AMBIGUOUS = 'ambiguous'
+
+	@property
+	def isPrimary(self):
+		return self.result == TargetScanResult.PRIMARY
+
+	@property
+	def isSecondary(self):
+		return self.result == TargetScanResult.SECONDARY
+
+	@property
+	def isAmbiguous(self):
+		return self.result == TargetScanResult.AMBIGUOUS
+
 class TargetScanner(object):
 	@staticmethod
 	def _getNormalTarget(filterID=None, filterVehicle=None):
@@ -94,6 +114,16 @@ class TargetScanner(object):
 			) if self.targetScanMode['useBEpsMode'] else []
 		) if primaryTarget is None else set([])
 		return primaryTarget, secondaryTargets
+
+	def scanTarget(self):
+		primaryTarget, secondaryTargets = self._performScanningProcedure()
+		if primaryTarget is not None:
+			return TargetScanResult(TargetScanResult.PRIMARY, primaryTarget)
+		if len(secondaryTargets) == 1:
+			return TargetScanResult(TargetScanResult.SECONDARY, secondaryTargets.pop())
+		if secondaryTargets:
+			return TargetScanResult(TargetScanResult.AMBIGUOUS, None)
+		return TargetScanResult(TargetScanResult.NOTHING, None)
 
 	def _updateTargetInfo(self):
 		if self.isManualOverrideInEffect or not self.autoScanActivated:
