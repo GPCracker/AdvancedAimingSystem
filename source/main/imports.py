@@ -20,10 +20,8 @@ import BigWorld
 # WoT Client
 # *************************
 import constants
-import gui.battle_control
 import gui.shared.personality
 import AvatarInputHandler.cameras
-import avatar_helpers.aim_global_binding
 
 # *************************
 # WoT Client GUI

@@ -21,7 +21,7 @@ def new_PlayerAvatar_showOtherVehicleDamagedDevices(self, vehicleID, damagedExtr
 		expertPerk.onExtrasInfoReceived(vehicleID, (damagedExtras, destroyedExtras))
 		target = BigWorld.target()
 		if XModLib.VehicleInfo.VehicleInfo.isVehicle(target) and target.id == vehicleID:
-			gui.battle_control.g_sessionProvider.shared.feedback.showVehicleDamagedDevices(vehicleID, damagedExtras, destroyedExtras)
+			self.guiSessionProvider.shared.feedback.showVehicleDamagedDevices(vehicleID, damagedExtras, destroyedExtras)
 	return
 
 @XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, Avatar.PlayerAvatar, 'targetBlur', calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_BEFORE_HOOK)
@@ -29,7 +29,7 @@ def new_PlayerAvatar_targetBlur(self, prevEntity):
 	expertPerk = getattr(self, 'XExpertPerk', None)
 	if expertPerk is not None and getattr(self, '_maySeeOtherVehicleDamagedDevices', False):
 		if XModLib.VehicleInfo.VehicleInfo.isVehicle(prevEntity):
-			gui.battle_control.g_sessionProvider.shared.feedback.hideVehicleDamagedDevices()
+			self.guiSessionProvider.shared.feedback.hideVehicleDamagedDevices()
 	return
 
 @XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, Avatar.PlayerAvatar, 'targetFocus', calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_BEFORE_HOOK)
@@ -40,7 +40,7 @@ def new_PlayerAvatar_targetFocus(self, entity):
 			expertPerk.request(entity.id)
 			extrasInfo = expertPerk.extrasInfoCache.get(entity.id, None)
 			if extrasInfo is not None and not extrasInfo.isExpired:
-				gui.battle_control.g_sessionProvider.shared.feedback.showVehicleDamagedDevices(entity.id, *extrasInfo)
+				self.guiSessionProvider.shared.feedback.showVehicleDamagedDevices(entity.id, *extrasInfo)
 	return
 
 @XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, Avatar.PlayerAvatar, 'autoAim', calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_INSIDE_HOOK)

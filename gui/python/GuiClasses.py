@@ -48,7 +48,7 @@ class GuiEvent(gui.shared.events.GameEvent):
 
 class GuiBaseBusinessHandler(gui.Scaleform.framework.package_layout.PackageBusinessHandler):
 	def _getBattlePage(self):
-		arenaGuiTypeVisitor = gui.battle_control.g_sessionProvider.arenaVisitor.gui
+		arenaGuiTypeVisitor = BigWorld.player().guiSessionProvider.arenaVisitor.gui
 		if arenaGuiTypeVisitor.isTutorialBattle():
 			battlePageAlias = gui.Scaleform.daapi.settings.views.VIEW_ALIAS.TUTORIAL_BATTLE_PAGE
 		elif arenaGuiTypeVisitor.isFalloutClassic():
