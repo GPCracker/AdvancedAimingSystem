@@ -4,15 +4,15 @@
 class AimingInfo(object):
 	@staticmethod
 	def getMacroData():
-		playerAimingInfo = XModLib.BallisticsMath.BallisticsMath.getPlayerAimingInfo()
+		playerAimingInfo = XModLib.BallisticsMath.getPlayerAimingInfo()
 		if playerAimingInfo is not None:
 			staticDispersionAngle, aimingStartTime, aimingStartFactor, dispersionFactor, expAimingTime = playerAimingInfo
-			aimingFactor = XModLib.BallisticsMath.BallisticsMath.getAimingFactor(aimingStartTime, aimingStartFactor, dispersionFactor, expAimingTime)
-			fullAimingTime = XModLib.BallisticsMath.BallisticsMath.getFullAimingTime(aimingStartFactor, dispersionFactor, expAimingTime)
-			remainingAimingTime = XModLib.BallisticsMath.BallisticsMath.getRemainingAimingTime(aimingStartTime, fullAimingTime)
-			realDispersionAngle = XModLib.BallisticsMath.BallisticsMath.getDispersionAngle(staticDispersionAngle, aimingFactor)
-			aimingDistance, hitAngleRad, flyTime = XModLib.BallisticsMath.BallisticsMath.getPlayerBallisticsInfo()
-			deviation = XModLib.BallisticsMath.BallisticsMath.getDeviation(aimingDistance, realDispersionAngle)
+			aimingFactor = XModLib.BallisticsMath.getAimingFactor(aimingStartTime, aimingStartFactor, dispersionFactor, expAimingTime)
+			fullAimingTime = XModLib.BallisticsMath.getFullAimingTime(aimingStartFactor, dispersionFactor, expAimingTime)
+			remainingAimingTime = XModLib.BallisticsMath.getRemainingAimingTime(aimingStartTime, fullAimingTime)
+			realDispersionAngle = XModLib.BallisticsMath.getDispersionAngle(staticDispersionAngle, aimingFactor)
+			aimingDistance, hitAngleRad, flyTime = XModLib.BallisticsMath.getPlayerBallisticsInfo()
+			deviation = XModLib.BallisticsMath.getDeviation(aimingDistance, realDispersionAngle)
 			hitAngleDeg = math.degrees(hitAngleRad)
 			return {
 				'expAimingTime': expAimingTime,

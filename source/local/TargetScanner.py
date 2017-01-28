@@ -45,19 +45,19 @@ class TargetScanner(object):
 	@staticmethod
 	def _getNormalTarget(filterID=None, filterVehicle=None):
 		target = BigWorld.target()
-		return target if XModLib.VehicleInfo.VehicleInfo.isVehicle(target) and (filterID is None or filterID(target.id)) and (filterVehicle is None or filterVehicle(target)) else None
+		return target if XModLib.VehicleInfo.isVehicle(target) and (filterID is None or filterID(target.id)) and (filterVehicle is None or filterVehicle(target)) else None
 
 	@staticmethod
 	def _getXRayTarget(filterID=None, filterVehicle=None, maxDistance=720.0, entities=None):
-		return XModLib.XRayScanner.XRayScanner.getTarget(filterID, filterVehicle, maxDistance, entities=entities)
+		return XModLib.TargetScanners.XRayScanner().getTarget(filterID, filterVehicle, maxDistance, entities=entities)
 
 	@staticmethod
 	def _getBBoxTargets(filterID=None, filterVehicle=None, maxDistance=720.0, scalar=1.0, entities=None):
-		return XModLib.AGScanners.BBoxScanner.getTargets(filterID, filterVehicle, maxDistance, scalar, entities=entities)
+		return XModLib.TargetScanners.BBoxScanner().getTargets(filterID, filterVehicle, maxDistance, scalar, entities=entities)
 
 	@staticmethod
 	def _getBEpsTargets(filterID=None, filterVehicle=None, maxDistance=720.0, scalar=1.0, entities=None):
-		return XModLib.AGScanners.BEllipseScanner.getTargets(filterID, filterVehicle, maxDistance, scalar, entities=entities)
+		return XModLib.TargetScanners.BEllipseScanner().getTargets(filterID, filterVehicle, maxDistance, scalar, entities=entities)
 
 	@property
 	def targetInfo(self):
@@ -71,14 +71,14 @@ class TargetScanner(object):
 	def __init__(self, targetScanMode=TargetScanMode(), autoScanActivated=True):
 		self.targetScanMode = targetScanMode
 		self.autoScanActivated = autoScanActivated
-		self._updateCallbackLoop = XModLib.Callback.CallbackLoop(
+		self._updateCallbackLoop = XModLib.CallbackUtils.CallbackLoop(
 			self.targetScanMode['autoScanInterval'],
-			XModLib.Callback.Callback.getMethodProxy(self._updateTargetInfo)
+			XModLib.CallbackUtils.getMethodProxy(self._updateTargetInfo)
 		)
 		return
 
 	def _performScanningProcedure(self):
-		visibleVehicles = XModLib.Colliders.Colliders.getVisibleVehicles(
+		visibleVehicles = XModLib.CollisionUtils.getVisibleVehicles(
 			self.targetScanMode['filterID'],
 			self.targetScanMode['filterVehicle'],
 			skipPlayer=True

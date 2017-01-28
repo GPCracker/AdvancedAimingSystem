@@ -2,7 +2,7 @@
 # Application plug-ins initializer
 # *************************
 def initApplicationPlugins(targetGlobals=globals(), targetLocals=locals()):
-	archiveFile = XModLib.ResMgrUtils.ResMgrUtils.resolve_path(__file__)
+	archiveFile = XModLib.EngineUtils.resolveResMgrPath(__file__)
 	with zipfile.ZipFile(archiveFile, 'r') as fzip:
 		for pluginFile in fzip.namelist():
 			pluginName, pluginExt = os.path.splitext(pluginFile)

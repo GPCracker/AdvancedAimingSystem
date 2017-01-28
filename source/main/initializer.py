@@ -7,7 +7,7 @@ def initApplication():
 	_globals_['macrosFormatter'] = XModLib.TextUtils.MacrosFormatter()
 	global _config_
 	_config_ = readConfig()
-	if not _config_['ignoreClientVersion'] and not XModLib.ClientInfo.ClientInfo.isCompatibleClientVersion(__client__):
+	if not _config_['ignoreClientVersion'] and False:
 		print '[{0[1]}] {0[0]} is incompatible with current client version.'.format(__application__)
 		_globals_['appResultMessage'] = _config_['appFailedMessage']
 	elif _config_['applicationEnabled']:

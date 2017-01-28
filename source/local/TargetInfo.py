@@ -3,15 +3,15 @@
 # *************************
 class TargetInfo(int):
 	def __new__(sclass, target, *args, **kwargs):
-		return super(TargetInfo, sclass).__new__(sclass, target.id) if XModLib.VehicleInfo.VehicleInfo.isVehicle(target) else None
+		return super(TargetInfo, sclass).__new__(sclass, target.id) if XModLib.VehicleInfo.isVehicle(target) else None
 
 	def __init__(self, target, lastLockTime=None, expiryTime=10.0):
 		super(TargetInfo, self).__init__(target.id)
 		self.lastLockTime = lastLockTime
 		self.expiryTime = expiryTime
-		self.shortName = XModLib.ArenaInfo.ArenaInfo.getShortName(target.id)
-		self._height = XModLib.VehicleMath.VehicleMath.getVehicleHeight(target)
-		self._lastHeightVector = XModLib.VehicleMath.VehicleMath.getVehicleHeightVector(target, self._height)
+		self.shortName = XModLib.ArenaInfo.getShortName(target.id)
+		self._height = XModLib.VehicleMath.getVehicleHeight(target)
+		self._lastHeightVector = XModLib.VehicleMath.getVehicleHeightVector(target, self._height)
 		self._lastPosition = target.position
 		return
 
@@ -60,7 +60,7 @@ class TargetInfo(int):
 	def getHeightVector(self, actualOnly=False):
 		vehicle = self.getVehicle()
 		if vehicle is not None:
-			self._lastHeightVector = XModLib.VehicleMath.VehicleMath.getVehicleHeightVector(vehicle, self._height)
+			self._lastHeightVector = XModLib.VehicleMath.getVehicleHeightVector(vehicle, self._height)
 			return self._lastHeightVector
 		return self._lastHeightVector if not actualOnly else None
 

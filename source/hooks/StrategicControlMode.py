@@ -1,7 +1,7 @@
 # *************************
 # StrategicControlMode Hooks
 # *************************
-@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.control_modes.StrategicControlMode, '__init__', calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_BEFORE_HOOK)
+@XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.control_modes.StrategicControlMode, '__init__', invoke=XModLib.HookUtils.HookInvoke.SECONDARY)
 def new_StrategicControlMode_init(self, *args, **kwargs):
 	config = _config_['strategicAS']['aimCorrection']
 	self.XAimCorrection = StrategicAimCorrection(
@@ -12,7 +12,7 @@ def new_StrategicControlMode_init(self, *args, **kwargs):
 	)
 	return
 
-@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.control_modes.StrategicControlMode, 'enable', calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_BEFORE_HOOK)
+@XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.control_modes.StrategicControlMode, 'enable', invoke=XModLib.HookUtils.HookInvoke.SECONDARY)
 def new_StrategicControlMode_enable(self, *args, **kwargs):
 	if self is self._aih.ctrls['strategic']:
 		self.XAimCorrection.handleControlModeEnable()
@@ -25,7 +25,7 @@ def new_StrategicControlMode_enable(self, *args, **kwargs):
 			guiController.handleControlModeEnable('strategic')
 	return
 
-@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.control_modes.StrategicControlMode, 'disable', calltype=XModLib.HookUtils.HookFunction.CALL_HOOK_BEFORE_ORIGIN)
+@XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.control_modes.StrategicControlMode, 'disable', invoke=XModLib.HookUtils.HookInvoke.PRIMARY)
 def new_StrategicControlMode_disable(self, *args, **kwargs):
 	if self is self._aih.ctrls['strategic']:
 		self.XAimCorrection.handleControlModeDisable()
@@ -38,7 +38,7 @@ def new_StrategicControlMode_disable(self, *args, **kwargs):
 			guiController.handleControlModeDisable('strategic')
 	return
 
-@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.control_modes.StrategicControlMode, 'getDesiredShotPoint', calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_INSIDE_HOOK)
+@XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.control_modes.StrategicControlMode, 'getDesiredShotPoint', invoke=XModLib.HookUtils.HookInvoke.MASTER)
 def new_StrategicControlMode_getDesiredShotPoint(old_StrategicControlMode_getDesiredShotPoint, self, *args, **kwargs):
 	shotPoint = old_StrategicControlMode_getDesiredShotPoint(self, *args, **kwargs)
 	if self is self._aih.ctrls['strategic']:

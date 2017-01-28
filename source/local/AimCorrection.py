@@ -189,7 +189,7 @@ class StrategicAimCorrection(BaseAimCorrection):
 	def _getGroundDesiredShotPoint(self, shotPoint):
 		if self.ignoreVehicles and shotPoint is not None:
 			scanRay, scanPoint = self.getScanRayAndPoint()
-			result = XModLib.Colliders.Colliders.collideStatic(scanPoint, scanPoint + scanRay.scale(10000.0))
+			result = XModLib.CollisionUtils.collideStatic(scanPoint, scanPoint + scanRay.scale(10000.0))
 			return result[0] if result is not None else None
 		return None
 

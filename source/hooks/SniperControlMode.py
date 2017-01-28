@@ -1,7 +1,7 @@
 # *************************
 # SniperControlMode Hooks
 # *************************
-@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.control_modes.SniperControlMode, '__init__', calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_BEFORE_HOOK)
+@XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.control_modes.SniperControlMode, '__init__', invoke=XModLib.HookUtils.HookInvoke.SECONDARY)
 def new_SniperControlMode_init(self, *args, **kwargs):
 	config = _config_['sniperAS']['aimCorrection']
 	self.XAimCorrection = SniperAimCorrection(
@@ -10,7 +10,7 @@ def new_SniperControlMode_init(self, *args, **kwargs):
 	)
 	return
 
-@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.control_modes.SniperControlMode, 'enable', calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_BEFORE_HOOK)
+@XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.control_modes.SniperControlMode, 'enable', invoke=XModLib.HookUtils.HookInvoke.SECONDARY)
 def new_SniperControlMode_enable(self, *args, **kwargs):
 	if self is self._aih.ctrls['sniper']:
 		self.XAimCorrection.handleControlModeEnable()
@@ -23,7 +23,7 @@ def new_SniperControlMode_enable(self, *args, **kwargs):
 			guiController.handleControlModeEnable('sniper')
 	return
 
-@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.control_modes.SniperControlMode, 'disable', calltype=XModLib.HookUtils.HookFunction.CALL_HOOK_BEFORE_ORIGIN)
+@XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.control_modes.SniperControlMode, 'disable', invoke=XModLib.HookUtils.HookInvoke.PRIMARY)
 def new_SniperControlMode_disable(self, *args, **kwargs):
 	if self is self._aih.ctrls['sniper']:
 		self.XAimCorrection.handleControlModeDisable()
@@ -36,7 +36,7 @@ def new_SniperControlMode_disable(self, *args, **kwargs):
 			guiController.handleControlModeDisable('sniper')
 	return
 
-@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.control_modes.SniperControlMode, 'getDesiredShotPoint', calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_INSIDE_HOOK)
+@XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.control_modes.SniperControlMode, 'getDesiredShotPoint', invoke=XModLib.HookUtils.HookInvoke.MASTER)
 def new_SniperControlMode_getDesiredShotPoint(old_SniperControlMode_getDesiredShotPoint, self, *args, **kwargs):
 	shotPoint = old_SniperControlMode_getDesiredShotPoint(self, *args, **kwargs)
 	if self is self._aih.ctrls['sniper']:

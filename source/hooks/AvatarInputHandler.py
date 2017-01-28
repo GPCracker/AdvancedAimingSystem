@@ -1,7 +1,7 @@
 # *************************
 # AvatarInputHandler Hooks
 # *************************
-@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.AvatarInputHandler, '__init__', calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_BEFORE_HOOK)
+@XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.AvatarInputHandler, '__init__', invoke=XModLib.HookUtils.HookInvoke.SECONDARY)
 def new_AvatarInputHandler_init(self, *args, **kwargs):
 	config = _config_['commonAS']['targetScanner']
 	self.XTargetScanner = TargetScanner(
@@ -12,9 +12,10 @@ def new_AvatarInputHandler_init(self, *args, **kwargs):
 	self.XGuiController = GuiController(_globals_['macrosFormatter'], config['updateInterval']) if config['enabled'] else None
 	return
 
-@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, AvatarInputHandler.AvatarInputHandler, 'handleKeyEvent')
+@XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.AvatarInputHandler, 'handleKeyEvent')
 def new_AvatarInputHandler_handleKeyEvent(self, event):
-	getShortcut = XModLib.KeyBoard.Shortcut.fromSequence
+	event = XModLib.KeyboardUtils.KeyboardEvent(event)
+	getShortcut = XModLib.KeyboardUtils.Shortcut
 	## HotKeys - Common
 	if self.ctrlModeName in ['arcade', 'sniper', 'strategic']:
 		## HotKeys - TargetScanner
@@ -30,14 +31,14 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 			if shortcutHandle and (not shortcutHandle.switch or shortcutHandle.pushed):
 				config['activated'] = shortcutHandle(config['activated'])
 				if shortcutHandle.switch and config['activated']:
-					XModLib.Messages.Messenger.showMessageOnPanel(
+					XModLib.ClientMessages.showMessageOnPanel(
 						'Player',
 						None,
 						config['message']['onActivate'],
 						'green'
 					)
 				elif shortcutHandle.switch:
-					XModLib.Messages.Messenger.showMessageOnPanel(
+					XModLib.ClientMessages.showMessageOnPanel(
 						'Player',
 						None,
 						config['message']['onDeactivate'],
@@ -75,14 +76,14 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 			if shortcutHandle and (not shortcutHandle.switch or shortcutHandle.pushed):
 				config['activated'] = shortcutHandle(config['activated'])
 				if shortcutHandle.switch and config['activated']:
-					XModLib.Messages.Messenger.showMessageOnPanel(
+					XModLib.ClientMessages.showMessageOnPanel(
 						'Player',
 						None,
 						config['message']['onActivate'],
 						'green'
 					)
 				elif shortcutHandle.switch:
-					XModLib.Messages.Messenger.showMessageOnPanel(
+					XModLib.ClientMessages.showMessageOnPanel(
 						'Player',
 						None,
 						config['message']['onDeactivate'],
@@ -92,7 +93,7 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 		## HotKeys - SPG Sniper Mode
 		config = _config_['commonAS']['sniperModeSPG']
 		shortcutHandle = config['enabled'] and getShortcut(config['key'], True, False)(event)
-		if shortcutHandle and XModLib.ArenaInfo.ArenaInfo.getClass(BigWorld.player().playerVehicleID) == 'SPG':
+		if shortcutHandle and XModLib.ArenaInfo.getClass(BigWorld.player().playerVehicleID) == 'SPG':
 			if shortcutHandle.pushed:
 				self.onControlModeChanged(
 					'sniper',
@@ -123,14 +124,14 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 			if shortcutHandle and (not shortcutHandle.switch or shortcutHandle.pushed):
 				config['activated'] = shortcutHandle(config['activated'])
 				if shortcutHandle.switch and config['activated']:
-					XModLib.Messages.Messenger.showMessageOnPanel(
+					XModLib.ClientMessages.showMessageOnPanel(
 						'Player',
 						None,
 						config['message']['onActivate'],
 						'green'
 					)
 				elif shortcutHandle.switch:
-					XModLib.Messages.Messenger.showMessageOnPanel(
+					XModLib.ClientMessages.showMessageOnPanel(
 						'Player',
 						None,
 						config['message']['onDeactivate'],
@@ -140,7 +141,7 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 		## HotKeys - SPG Sniper Mode
 		config = _config_['commonAS']['sniperModeSPG']
 		shortcutHandle = config['enabled'] and getShortcut(config['key'], True, False)(event)
-		if shortcutHandle and XModLib.ArenaInfo.ArenaInfo.getClass(BigWorld.player().playerVehicleID) == 'SPG':
+		if shortcutHandle and XModLib.ArenaInfo.getClass(BigWorld.player().playerVehicleID) == 'SPG':
 			if shortcutHandle.pushed:
 				self.onControlModeChanged(
 					'arcade',
@@ -172,14 +173,14 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 			if shortcutHandle and (not shortcutHandle.switch or shortcutHandle.pushed):
 				config['activated'] = shortcutHandle(config['activated'])
 				if shortcutHandle.switch and config['activated']:
-					XModLib.Messages.Messenger.showMessageOnPanel(
+					XModLib.ClientMessages.showMessageOnPanel(
 						'Player',
 						None,
 						config['message']['onActivate'],
 						'green'
 					)
 				elif shortcutHandle.switch:
-					XModLib.Messages.Messenger.showMessageOnPanel(
+					XModLib.ClientMessages.showMessageOnPanel(
 						'Player',
 						None,
 						config['message']['onDeactivate'],

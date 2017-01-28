@@ -8,8 +8,9 @@ class GuiController(object):
 		return
 
 	def __init__(self, formatter=None, updateInterval=0.04):
+		super(GuiController, self).__init__()
 		self.formatter = formatter if formatter is not None else lambda string, *args, **kwargs: string
-		self._updateCallbackLoop = XModLib.Callback.CallbackLoop(updateInterval, XModLib.Callback.Callback.getMethodProxy(self._update))
+		self._updateCallbackLoop = XModLib.CallbackUtils.CallbackLoop(updateInterval, XModLib.CallbackUtils.getMethodProxy(self._update))
 		return
 
 	def getAimCorrectionMacroData(self):

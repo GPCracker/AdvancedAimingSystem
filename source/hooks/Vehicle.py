@@ -1,16 +1,16 @@
 # *************************
 # Vehicle Hooks
 # *************************
-@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, Vehicle.Vehicle, 'startVisual', calltype=XModLib.HookUtils.HookFunction.CALL_ORIGIN_BEFORE_HOOK)
+@XModLib.HookUtils.methodHookExt(_inject_hooks_, Vehicle.Vehicle, 'startVisual', invoke=XModLib.HookUtils.HookInvoke.SECONDARY)
 def new_Vehicle_startVisual(self, *args, **kwargs):
 	if not hasattr(self, 'collisionBounds'):
-		setattr(self, 'collisionBounds', XModLib.VehicleBounds.VehicleBounds.getVehicleBoundsMatrixProvider(self))
+		setattr(self, 'collisionBounds', XModLib.VehicleBounds.getVehicleBoundsMatrixProvider(self))
 	expertPerk = getattr(BigWorld.player(), 'XExpertPerk', None)
 	if expertPerk is not None and self.publicInfo['team'] is not BigWorld.player().team:
 		pass
 	return
 
-@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, Vehicle.Vehicle, 'stopVisual', calltype=XModLib.HookUtils.HookFunction.CALL_HOOK_BEFORE_ORIGIN)
+@XModLib.HookUtils.methodHookExt(_inject_hooks_, Vehicle.Vehicle, 'stopVisual', invoke=XModLib.HookUtils.HookInvoke.PRIMARY)
 def new_Vehicle_stopVisual(self, *args, **kwargs):
 	expertPerk = getattr(BigWorld.player(), 'XExpertPerk', None)
 	if expertPerk is not None and self.publicInfo['team'] is not BigWorld.player().team:
@@ -19,7 +19,7 @@ def new_Vehicle_stopVisual(self, *args, **kwargs):
 		delattr(self, 'collisionBounds')
 	return
 
-@XModLib.HookUtils.HookFunction.methodHookOnEvent(_inject_hooks_, Vehicle.Vehicle, '_Vehicle__onVehicleDeath')
+@XModLib.HookUtils.methodHookExt(_inject_hooks_, Vehicle.Vehicle, '_Vehicle__onVehicleDeath')
 def new_Vehicle_onVehicleDeath(self, isDeadStarted=False):
 	expertPerk = getattr(BigWorld.player(), 'XExpertPerk', None)
 	if expertPerk is not None and self.publicInfo['team'] is not BigWorld.player().team:
