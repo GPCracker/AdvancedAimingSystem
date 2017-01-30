@@ -3,7 +3,7 @@
 <!-- *** To use them here you should switch encoding into 'UTF-8 without BOM'! *** -->
 <!-- *** Editing file in incorrect encoding will cause content damage. Check encoding before saving. *** -->
 <!-- *** It is recommended to use Notepad++, Sublime Text or any other professional text editor for making changes in this file. *** -->
-<!-- *** Official topic: http://www.koreanrandom.com/forum/topic/16559-beta-улучшенная-система-прицеливания-advanced-aiming-system/ *** -->
+<!-- *** Official topic: http://www.koreanrandom.com/forum/topic/16559-/ *** -->
 <root>
 	<enabled>True</enabled>
 	<!-- Interface update interval. -->
@@ -15,6 +15,8 @@
 		<!-- Aiming correction GUI settings. -->
 		<!-- Настройки графического интерфейса корректировки прицеливания. -->
 		<AdvancedAimingSystemCorrectionPanel>
+			<!-- Default (all available) parameters of GUI item loaded as default after population. -->
+			<!-- Параметры по умолчанию (все доступные) для графического элемента, загружаемые после отображения элемента. -->
 			<default>
 				<alpha>1.0</alpha>
 				<visible>True</visible>
@@ -24,6 +26,19 @@
 				<position>0.0 0.3</position>
 				<size>450.0 25.0</size>
 			</default>
+			<!-- Parameters are applied over current state when entering appropriate aiming mode. When exiting "visible" is set to False. -->
+			<!-- Warning: All aim mode sections should have same parameter set because they are applied over current parameters. -->
+			<!-- Warning: In case of show-hide algorithm particular qualities "visible" parameter must be specified anyway. -->
+			<!-- Warning: Parameters in "arcade" aim mode section should have same values as in "default" section.  -->
+			<!-- You can add your parameters here, all available parameters are specified in "default" section. -->
+			<!-- Additional information on this parameters is available in official topic. -->
+			<!-- Параметры в данных секциях применяются при входе в соответствующий режим поверх текущего состояния. -->
+			<!-- При выходе из режима параметр "visible" автоматически устанавливается в значение False. -->
+			<!-- Внимание: Все секции режимов прицеливания должны иметь одинаковый набор параметров. -->
+			<!-- Внимание: Параметр "visible" является обязательным и должен быть указан в любом случае. -->
+			<!-- Внимание: Параметры для режима "arcade" должны иметь одинаковые значения с теми, что определены в секции "default". -->
+			<!-- Вы можете добавлять параметры в секции режимов прицеливания, все доступные определены в секции "default". -->
+			<!-- Дополнительная информация по данным параметрам доступна в официальной теме на форуме. -->
 			<arcade>
 				<visible>True</visible>
 			</arcade>
