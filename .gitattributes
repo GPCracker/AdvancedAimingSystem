@@ -1,2 +1,2 @@
 # Texture files should be handled in binary mode.
-*.psd binary
+*.png binary
