@@ -12,7 +12,7 @@
 		<!-- Ручной режим корректировки. -->
 		<manualMode>
 			<enabled>True</enabled>
-			<key>KEY_LALT</key>
+			<shortcut>KEY_LALT</shortcut>
 		</manualMode>
 		<!-- Target correction mode. -->
 		<!-- Режим корректировки по данным цели. -->
@@ -20,7 +20,7 @@
 			<enabled>True</enabled>
 			<activated>True</activated>
 			<shortcut>
-				<key>KEY_LCONTROL+KEY_H</key>
+				<sequence>KEY_LCONTROL+KEY_H</sequence>
 				<switch>True</switch>
 				<invert>False</invert>
 			</shortcut>

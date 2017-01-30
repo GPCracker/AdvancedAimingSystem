@@ -15,7 +15,6 @@ def new_AvatarInputHandler_init(self, *args, **kwargs):
 @XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.AvatarInputHandler, 'handleKeyEvent')
 def new_AvatarInputHandler_handleKeyEvent(self, event):
 	event = XModLib.KeyboardUtils.KeyboardEvent(event)
-	getShortcut = XModLib.KeyboardUtils.Shortcut
 	## HotKeys - Common
 	if self.ctrlModeName in ['arcade', 'sniper', 'strategic']:
 		## HotKeys - TargetScanner
@@ -23,11 +22,7 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 		if config['enabled']:
 			## HotKeys - TargetScanner - AutoScan
 			config = _config_['commonAS']['targetScanner']['autoScan']
-			shortcutHandle = config['enabled'] and getShortcut(
-				config['shortcut']['key'],
-				config['shortcut']['switch'],
-				config['shortcut']['invert']
-			)(event)
+			shortcutHandle = config['enabled'] and config['shortcut'](event)
 			if shortcutHandle and (not shortcutHandle.switch or shortcutHandle.pushed):
 				config['activated'] = shortcutHandle(config['activated'])
 				if shortcutHandle.switch and config['activated']:
@@ -49,7 +44,7 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 					targetScanner.autoScanActivated = config['activated']
 			## HotKeys - TargetScanner - ManualOverride
 			config = _config_['commonAS']['targetScanner']['manualOverride']
-			shortcutHandle = config['enabled'] and getShortcut(config['key'], True, False)(event)
+			shortcutHandle = config['enabled'] and config['shortcut'](event)
 			if shortcutHandle and shortcutHandle.pushed:
 				targetScanner = getattr(self, 'XTargetScanner', None)
 				if targetScanner is not None:
@@ -61,18 +56,14 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 		if True:
 			## HotKeys - AimCorrection - ManualMode
 			config = _config_['arcadeAS']['aimCorrection']['manualMode']
-			shortcutHandle = config['enabled'] and getShortcut(config['key'], False, False)(event)
+			shortcutHandle = config['enabled'] and config['shortcut'](event)
 			if shortcutHandle:
 				self.ctrl.XAimCorrection.resetManualInfo()
 				if shortcutHandle.pushed:
 					self.ctrl.XAimCorrection.setManualInfo()
 			## HotKeys - AimCorrection - Target Mode
 			config = _config_['arcadeAS']['aimCorrection']['targetMode']
-			shortcutHandle = config['enabled'] and getShortcut(
-				config['shortcut']['key'],
-				config['shortcut']['switch'],
-				config['shortcut']['invert']
-			)(event)
+			shortcutHandle = config['enabled'] and config['shortcut'](event)
 			if shortcutHandle and (not shortcutHandle.switch or shortcutHandle.pushed):
 				config['activated'] = shortcutHandle(config['activated'])
 				if shortcutHandle.switch and config['activated']:
@@ -92,7 +83,7 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 				self.ctrl.XAimCorrection.targetEnabled = config['activated']
 		## HotKeys - SPG Sniper Mode
 		config = _config_['commonAS']['sniperModeSPG']
-		shortcutHandle = config['enabled'] and getShortcut(config['key'], True, False)(event)
+		shortcutHandle = config['enabled'] and config['shortcut'](event)
 		if shortcutHandle and XModLib.ArenaInfo.getClass(BigWorld.player().playerVehicleID) == 'SPG':
 			if shortcutHandle.pushed:
 				self.onControlModeChanged(
@@ -109,18 +100,14 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 		if True:
 			## HotKeys - AimCorrection - ManualMode
 			config = _config_['sniperAS']['aimCorrection']['manualMode']
-			shortcutHandle = config['enabled'] and getShortcut(config['key'], False, False)(event)
+			shortcutHandle = config['enabled'] and config['shortcut'](event)
 			if shortcutHandle:
 				self.ctrl.XAimCorrection.resetManualInfo()
 				if shortcutHandle.pushed:
 					self.ctrl.XAimCorrection.setManualInfo()
 			## HotKeys - AimCorrection - Target Mode
 			config = _config_['sniperAS']['aimCorrection']['targetMode']
-			shortcutHandle = config['enabled'] and getShortcut(
-				config['shortcut']['key'],
-				config['shortcut']['switch'],
-				config['shortcut']['invert']
-			)(event)
+			shortcutHandle = config['enabled'] and config['shortcut'](event)
 			if shortcutHandle and (not shortcutHandle.switch or shortcutHandle.pushed):
 				config['activated'] = shortcutHandle(config['activated'])
 				if shortcutHandle.switch and config['activated']:
@@ -140,7 +127,7 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 				self.ctrl.XAimCorrection.targetEnabled = config['activated']
 		## HotKeys - SPG Sniper Mode
 		config = _config_['commonAS']['sniperModeSPG']
-		shortcutHandle = config['enabled'] and getShortcut(config['key'], True, False)(event)
+		shortcutHandle = config['enabled'] and config['shortcut'](event)
 		if shortcutHandle and XModLib.ArenaInfo.getClass(BigWorld.player().playerVehicleID) == 'SPG':
 			if shortcutHandle.pushed:
 				self.onControlModeChanged(
@@ -158,18 +145,14 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 		if True:
 			## HotKeys - AimCorrection - ManualMode
 			config = _config_['strategicAS']['aimCorrection']['manualMode']
-			shortcutHandle = config['enabled'] and getShortcut(config['key'], False, False)(event)
+			shortcutHandle = config['enabled'] and config['shortcut'](event)
 			if shortcutHandle:
 				self.ctrl.XAimCorrection.resetManualInfo()
 				if shortcutHandle.pushed:
 					self.ctrl.XAimCorrection.setManualInfo()
 			## HotKeys - AimCorrection - Target Mode
 			config = _config_['strategicAS']['aimCorrection']['targetMode']
-			shortcutHandle = config['enabled'] and getShortcut(
-				config['shortcut']['key'],
-				config['shortcut']['switch'],
-				config['shortcut']['invert']
-			)(event)
+			shortcutHandle = config['enabled'] and config['shortcut'](event)
 			if shortcutHandle and (not shortcutHandle.switch or shortcutHandle.pushed):
 				config['activated'] = shortcutHandle(config['activated'])
 				if shortcutHandle.switch and config['activated']:

@@ -1,5 +1,5 @@
 # *************************
-# Configuration
+# Application configuration
 # *************************
 _config_ = None
 
@@ -28,11 +28,11 @@ def defaultConfig():
 				'autoScan': {
 					'enabled': ('Bool', True),
 					'activated': ('Bool', True),
-					'shortcut': {
-						'key': ('String', 'KEY_LCONTROL+KEY_X'),
+					'shortcut': ('AdvancedShortcut', {
+						'sequence': ('String', 'KEY_LCONTROL+KEY_X'),
 						'switch': ('Bool', True),
 						'invert': ('Bool', False),
-					},
+					}),
 					'message': {
 						'onActivate': ('LocalizedWideString', u'TargetScanner:AutoMode ENABLED.'),
 						'onDeactivate': ('LocalizedWideString', u'TargetScanner:AutoMode DISABLED.')
@@ -40,12 +40,12 @@ def defaultConfig():
 				},
 				'manualOverride': {
 					'enabled': ('Bool', False),
-					'key': ('String', 'KEY_T')
+					'shortcut': ('SimpleShortcut', 'KEY_T', {'switch': True, 'invert': False})
 				}
 			},
 			'sniperModeSPG': {
 				'enabled': ('Bool', False),
-				'key': ('String', 'KEY_E')
+				'shortcut': ('SimpleShortcut', 'KEY_E', {'switch': True, 'invert': False})
 			},
 			'autoAim': {
 				'useTargetScan': ('Bool', False),
@@ -65,16 +65,16 @@ def defaultConfig():
 			'aimCorrection': {
 				'manualMode': {
 					'enabled': ('Bool', False),
-					'key': ('String', 'KEY_LALT')
+					'shortcut': ('SimpleShortcut', 'KEY_LALT', {'switch': False, 'invert': False})
 				},
 				'targetMode': {
 					'enabled': ('Bool', False),
 					'activated': ('Bool', True),
-					'shortcut': {
-						'key': ('String', 'KEY_LCONTROL+KEY_T'),
+					'shortcut': ('AdvancedShortcut', {
+						'sequence': ('String', 'KEY_LCONTROL+KEY_T'),
 						'switch': ('Bool', True),
 						'invert': ('Bool', False),
-					},
+					}),
 					'message': {
 						'onActivate': ('LocalizedWideString', u'ArcadeAimCorrection:TargetMode ENABLED.'),
 						'onDeactivate': ('LocalizedWideString', u'ArcadeAimCorrection:TargetMode DISABLED.')
@@ -86,16 +86,16 @@ def defaultConfig():
 			'aimCorrection': {
 				'manualMode': {
 					'enabled': ('Bool', True),
-					'key': ('String', 'KEY_LALT'),
+					'shortcut': ('SimpleShortcut', 'KEY_LALT', {'switch': False, 'invert': False}),
 				},
 				'targetMode': {
 					'enabled': ('Bool', True),
 					'activated': ('Bool', True),
-					'shortcut': {
-						'key': ('String', 'KEY_LCONTROL+KEY_T'),
+					'shortcut': ('AdvancedShortcut', {
+						'sequence': ('String', 'KEY_LCONTROL+KEY_T'),
 						'switch': ('Bool', True),
 						'invert': ('Bool', False),
-					},
+					}),
 					'message': {
 						'onActivate': ('LocalizedWideString', u'SniperAimCorrection:TargetMode ENABLED.'),
 						'onDeactivate': ('LocalizedWideString', u'SniperAimCorrection:TargetMode DISABLED.')
@@ -107,16 +107,16 @@ def defaultConfig():
 			'aimCorrection': {
 				'manualMode': {
 					'enabled': ('Bool', True),
-					'key': ('String', 'KEY_LALT'),
+					'shortcut': ('SimpleShortcut', 'KEY_LALT', {'switch': False, 'invert': False}),
 				},
 				'targetMode': {
 					'enabled': ('Bool', True),
 					'activated': ('Bool', False),
-					'shortcut': {
-						'key': ('String', 'KEY_LCONTROL+KEY_T'),
+					'shortcut': ('AdvancedShortcut', {
+						'sequence': ('String', 'KEY_LCONTROL+KEY_T'),
 						'switch': ('Bool', True),
 						'invert': ('Bool', False),
-					},
+					}),
 					'message': {
 						'onActivate': ('LocalizedWideString', u'StrategicAimCorrection:TargetMode ENABLED.'),
 						'onDeactivate': ('LocalizedWideString', u'StrategicAimCorrection:TargetMode DISABLED.')
@@ -253,6 +253,16 @@ def defaultConfig():
 # *************************
 def readConfig():
 	configReader = XModLib.XMLConfigReader.XMLConfigReader((
+		('SimpleShortcut', XModLib.XMLConfigReader.DataObjectXMLReaderMeta.construct(
+			'SimpleShortcutXMLReader',
+			constructor=lambda shortcut, **kwargs: XModLib.KeyboardUtils.Shortcut(shortcut, **kwargs),
+			section_type='String'
+		)),
+		('AdvancedShortcut', XModLib.XMLConfigReader.DataObjectXMLReaderMeta.construct(
+			'AdvancedShortcutXMLReader',
+			constructor=lambda shortcut: XModLib.KeyboardUtils.Shortcut(**shortcut),
+			section_type='Dict'
+		)),
 		('Vector2AsTuple', XModLib.XMLConfigReader.VectorAsTupleXMLReaderMeta.construct(
 			'Vector2AsTupleXMLReader',
 			vector_type='Vector2'
