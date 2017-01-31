@@ -165,7 +165,7 @@ class StrategicAimCorrection(BaseAimCorrection):
 
 	def setManualInfo(self):
 		if self.manualEnabled:
-			shotPoint = sclass.getInputHandlerCtrl().getDesiredShotPoint()
+			shotPoint = self.getInputHandlerCtrl().getDesiredShotPoint()
 			if shotPoint is not None:
 				self.manualInfo = shotPoint.y
 		return
