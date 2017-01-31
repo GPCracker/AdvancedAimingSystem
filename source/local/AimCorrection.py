@@ -2,11 +2,14 @@
 # AimCorrection Class
 # *************************
 class BaseAimCorrection(object):
+	__slots__ = ('__weakref__', 'manualEnabled', 'targetEnabled', 'manualInfo')
+
 	@classmethod
 	def getInputHandlerCtrl(sclass):
 		return BigWorld.player().inputHandler.ctrl
 
 	def __init__(self, manualEnabled=False, targetEnabled=False):
+		super(BaseAimCorrection, self).__init__()
 		self.manualEnabled = manualEnabled
 		self.targetEnabled = targetEnabled
 		self.manualInfo = None
@@ -55,6 +58,8 @@ class BaseAimCorrection(object):
 		return
 
 class ArcadeAimCorrection(BaseAimCorrection):
+	__slots__ = ('minDistance', 'maxDistance')
+
 	@classmethod
 	def getScanRayAndPoint(sclass):
 		aimingSystemMatrix = sclass.getInputHandlerCtrl().camera.aimingSystem.matrix
@@ -111,6 +116,8 @@ class ArcadeAimCorrection(BaseAimCorrection):
 		return None
 
 class SniperAimCorrection(BaseAimCorrection):
+	__slots__ = ('minDistance', 'maxDistance')
+
 	@classmethod
 	def getScanRayAndPoint(sclass):
 		inputHandlerCtrl = sclass.getInputHandlerCtrl()
@@ -165,6 +172,8 @@ class SniperAimCorrection(BaseAimCorrection):
 		return None
 
 class StrategicAimCorrection(BaseAimCorrection):
+	__slots__ = ('ignoreVehicles', 'heightMultiplier')
+
 	@classmethod
 	def getScanRayAndPoint(sclass):
 		inputHandlerCtrl = sclass.getInputHandlerCtrl()

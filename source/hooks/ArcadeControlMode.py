@@ -21,8 +21,8 @@ def new_ArcadeControlMode_enable(self, *args, **kwargs):
 			targetScanner.start()
 		guiController = getattr(self._aih, 'XGuiController', None)
 		if guiController is not None and not guiController.isUpdateActive:
-			guiController.start()
 			guiController.handleControlModeEnable('arcade')
+			guiController.start()
 	return
 
 @XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.control_modes.ArcadeControlMode, 'disable', invoke=XModLib.HookUtils.HookInvoke.PRIMARY)
@@ -34,8 +34,8 @@ def new_ArcadeControlMode_disable(self, *args, **kwargs):
 			targetScanner.stop()
 		guiController = getattr(self._aih, 'XGuiController', None)
 		if guiController is not None and guiController.isUpdateActive:
-			guiController.stop()
 			guiController.handleControlModeDisable('arcade')
+			guiController.stop()
 	return
 
 @XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.control_modes.ArcadeControlMode, 'getDesiredShotPoint', invoke=XModLib.HookUtils.HookInvoke.MASTER)

@@ -2,6 +2,8 @@
 # ExpertPerk Class
 # *************************
 class ExpertRequest(int):
+	__slots__ = ('replyTimeout', '_requestTime', '_cancelTime', '_replyTime')
+
 	def __new__(sclass, vehicleID, *args, **kwargs):
 		return super(ExpertRequest, sclass).__new__(sclass, vehicleID)
 
@@ -61,32 +63,26 @@ class ExpertRequest(int):
 			raise RuntimeError('Request is about to be removed in active state.')
 		return
 
-class ExtrasInfoCacheEntry(tuple):
-	def __new__(sclass, extrasInfo, *args, **kwargs):
-		return super(ExtrasInfoCacheEntry, sclass).__new__(sclass, extrasInfo)
+class ExtrasInfoCacheEntry(collections.namedtuple('ExtrasInfoCacheEntry', ('extrasInfo', 'receiptTime', 'expiryTime'))):
+	__slots__ = ()
 
-	def __init__(self, extrasInfo, receiptTime=None, expiryTime=60.0):
-		super(ExtrasInfoCacheEntry, self).__init__(extrasInfo)
-		self.receiptTime = receiptTime if receiptTime is not None else BigWorld.time()
-		self.expiryTime = expiryTime
-		return
+	def __new__(sclass, extrasInfo, receiptTime=None, expiryTime=60.0):
+		if receiptTime is None:
+			receiptTime = BigWorld.time()
+		return super(ExtrasInfoCacheEntry, sclass).__new__(sclass, extrasInfo, receiptTime, expiryTime)
 
 	@property
 	def isExpired(self):
 		return self.receiptTime + self.expiryTime <= BigWorld.time()
 
-	def __repr__(self):
-		return 'ExtrasInfoCacheEntry(extrasInfo={}, receiptTime={!r}, expiryTime={!r})'.format(
-			super(ExtrasInfoCacheEntry, self).__repr__(),
-			self.receiptTime,
-			self.expiryTime
-		)
-
 class ExtrasInfoCache(dict):
-	pass
+	__slots__ = ()
 
 class ExpertPerk(object):
+	__slots__ = ('__weakref__', 'statusFunction', 'cacheExtrasInfo', 'replyTimeout', 'cacheExpiryTime', 'extrasInfoCache', '_activeRequest')
+
 	def __init__(self, statusFunction=None, cacheExtrasInfo=False, replyTimeout=5.0, cacheExpiryTime=60.0):
+		super(ExpertPerk, self).__init__()
 		self.statusFunction = statusFunction
 		self.cacheExtrasInfo = cacheExtrasInfo
 		self.replyTimeout = replyTimeout

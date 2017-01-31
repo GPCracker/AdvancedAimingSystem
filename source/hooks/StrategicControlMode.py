@@ -21,8 +21,8 @@ def new_StrategicControlMode_enable(self, *args, **kwargs):
 			targetScanner.start()
 		guiController = getattr(self._aih, 'XGuiController', None)
 		if guiController is not None and not guiController.isUpdateActive:
-			guiController.start()
 			guiController.handleControlModeEnable('strategic')
+			guiController.start()
 	return
 
 @XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.control_modes.StrategicControlMode, 'disable', invoke=XModLib.HookUtils.HookInvoke.PRIMARY)
@@ -34,8 +34,8 @@ def new_StrategicControlMode_disable(self, *args, **kwargs):
 			targetScanner.stop()
 		guiController = getattr(self._aih, 'XGuiController', None)
 		if guiController is not None and guiController.isUpdateActive:
-			guiController.stop()
 			guiController.handleControlModeDisable('strategic')
+			guiController.stop()
 	return
 
 @XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.control_modes.StrategicControlMode, 'getDesiredShotPoint', invoke=XModLib.HookUtils.HookInvoke.MASTER)

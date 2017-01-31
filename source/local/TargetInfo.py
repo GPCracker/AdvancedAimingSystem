@@ -2,6 +2,8 @@
 # TargetInfo Class
 # *************************
 class TargetInfo(int):
+	__slots__ = ('lastLockTime', 'expiryTime', 'shortName', '_height', '_lastHeightVector', '_lastPosition')
+
 	def __new__(sclass, target, *args, **kwargs):
 		return super(TargetInfo, sclass).__new__(sclass, target.id) if XModLib.VehicleInfo.isVehicle(target) else None
 

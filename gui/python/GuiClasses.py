@@ -48,16 +48,7 @@ class GuiEvent(gui.shared.events.GameEvent):
 
 class GuiBaseBusinessHandler(gui.Scaleform.framework.package_layout.PackageBusinessHandler):
 	def _getBattlePage(self):
-		arenaGuiTypeVisitor = BigWorld.player().guiSessionProvider.arenaVisitor.gui
-		if arenaGuiTypeVisitor.isTutorialBattle():
-			battlePageAlias = gui.Scaleform.daapi.settings.views.VIEW_ALIAS.TUTORIAL_BATTLE_PAGE
-		elif arenaGuiTypeVisitor.isFalloutClassic():
-			battlePageAlias = gui.Scaleform.daapi.settings.views.VIEW_ALIAS.FALLOUT_CLASSIC_PAGE
-		elif arenaGuiTypeVisitor.isFalloutMultiTeam():
-			battlePageAlias = gui.Scaleform.daapi.settings.views.VIEW_ALIAS.FALLOUT_MULTITEAM_PAGE
-		else:
-			battlePageAlias = gui.Scaleform.daapi.settings.views.VIEW_ALIAS.CLASSIC_BATTLE_PAGE
-		return self.findViewByAlias(gui.Scaleform.framework.ViewTypes.VIEW, battlePageAlias)
+		return self._app.containerManager.getContainer(gui.Scaleform.framework.ViewTypes.DEFAULT).getView()
 
 	def _getBattlePageComponent(self, alias):
 		battlePage = self._getBattlePage()

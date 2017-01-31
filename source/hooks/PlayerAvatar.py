@@ -38,9 +38,9 @@ def new_PlayerAvatar_targetFocus(self, entity):
 	if expertPerk is not None and getattr(self, '_maySeeOtherVehicleDamagedDevices', False):
 		if XModLib.VehicleInfo.isVehicle(entity) and entity.publicInfo['team'] is not self.team and entity.isAlive():
 			expertPerk.request(entity.id)
-			extrasInfo = expertPerk.extrasInfoCache.get(entity.id, None)
-			if extrasInfo is not None and not extrasInfo.isExpired:
-				self.guiSessionProvider.shared.feedback.showVehicleDamagedDevices(entity.id, *extrasInfo)
+			cacheEntry = expertPerk.extrasInfoCache.get(entity.id, None)
+			if cacheEntry is not None and not cacheEntry.isExpired:
+				self.guiSessionProvider.shared.feedback.showVehicleDamagedDevices(entity.id, *cacheEntry.extrasInfo)
 	return
 
 @XModLib.HookUtils.methodHookExt(_inject_hooks_, Avatar.PlayerAvatar, 'autoAim')

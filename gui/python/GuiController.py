@@ -2,6 +2,8 @@
 # GuiController Class
 # *************************
 class GuiController(object):
+	__slots__ = ('__weakref__', 'formatter', '_updateCallbackLoop')
+
 	@staticmethod
 	def dispatchEvent(eventType, ctx=None, scope=gui.shared.EVENT_BUS_SCOPE.BATTLE):
 		gui.shared.g_eventBus.handleEvent(GuiEvent(eventType, ctx), scope)

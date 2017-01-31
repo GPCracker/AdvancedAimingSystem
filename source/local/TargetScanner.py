@@ -2,6 +2,8 @@
 # TargetScanner Class
 # *************************
 class TargetScanMode(dict):
+	__slots__ = ()
+
 	defaults = {
 		'useNormalMode': True,
 		'useXRayMode': False,
@@ -42,6 +44,8 @@ class TargetScanResult(collections.namedtuple('TargetScanResult', ('result', 'ta
 		return self.result == TargetScanResult.AMBIGUOUS
 
 class TargetScanner(object):
+	__slots__ = ('__weakref__', 'targetScanMode', 'autoScanActivated', '_updateCallbackLoop')
+
 	@staticmethod
 	def _getNormalTarget(filterID=None, filterVehicle=None):
 		target = BigWorld.target()
@@ -69,6 +73,7 @@ class TargetScanner(object):
 		return
 
 	def __init__(self, targetScanMode=TargetScanMode(), autoScanActivated=True):
+		super(TargetScanner, self).__init__()
 		self.targetScanMode = targetScanMode
 		self.autoScanActivated = autoScanActivated
 		self._updateCallbackLoop = XModLib.CallbackUtils.CallbackLoop(
