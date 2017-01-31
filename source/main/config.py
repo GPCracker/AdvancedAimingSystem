@@ -1,13 +1,43 @@
 # *************************
 # Application configuration
 # *************************
-_config_ = None
-
-# *************************
-# Default configuration
-# *************************
-def defaultConfig():
-	return {
+def loadConfiguration():
+	configReader = XModLib.XMLConfigReader.XMLConfigReader((
+		('SimpleShortcut', XModLib.XMLConfigReader.DataObjectXMLReaderMeta.construct(
+			'SimpleShortcutXMLReader',
+			constructor=lambda shortcut, **kwargs: XModLib.KeyboardUtils.Shortcut(shortcut, **kwargs),
+			section_type='String'
+		)),
+		('AdvancedShortcut', XModLib.XMLConfigReader.DataObjectXMLReaderMeta.construct(
+			'AdvancedShortcutXMLReader',
+			constructor=lambda shortcut: XModLib.KeyboardUtils.Shortcut(**shortcut),
+			section_type='Dict'
+		)),
+		('Vector2AsTuple', XModLib.XMLConfigReader.VectorAsTupleXMLReaderMeta.construct(
+			'Vector2AsTupleXMLReader',
+			vector_type='Vector2'
+		)),
+		('LocalizedWideString', XModLib.XMLConfigReader.LocalizedWideStringXMLReaderMeta.construct(
+			'LocalizedWideStringXMLReader',
+			translator=_globals_['i18nFormatter']
+		)),
+		('CorrectionPanelSettings', XModLib.XMLConfigReader.OptionalDictXMLReaderMeta.construct(
+			'PanelSettingsXMLReader',
+			required_keys=('visible', ),
+			default_keys=('visible', )
+		)),
+		('TargetPanelSettings', XModLib.XMLConfigReader.OptionalDictXMLReaderMeta.construct(
+			'PanelSettingsXMLReader',
+			required_keys=('visible', ),
+			default_keys=('visible', )
+		)),
+		('AimingPanelSettings', XModLib.XMLConfigReader.OptionalDictXMLReaderMeta.construct(
+			'PanelSettingsXMLReader',
+			required_keys=('visible', ),
+			default_keys=('visible', 'text', 'position')
+		))
+	))
+	defaultConfig = {
 		'applicationEnabled': ('Bool', True),
 		'ignoreClientVersion': ('Bool', True),
 		'appLoadedMessage': ('LocalizedWideString', u'<a href="event:AdvancedAimingSystem.official_topic"><font color="#0080FF">"Advanced&nbsp;Aiming&nbsp;System"</font></a> <font color="#008000">successfully loaded.</font>'),
@@ -249,49 +279,14 @@ def defaultConfig():
 			}
 		}
 	}
-
-# *************************
-# Read configuration from file
-# *************************
-def readConfig():
-	configReader = XModLib.XMLConfigReader.XMLConfigReader((
-		('SimpleShortcut', XModLib.XMLConfigReader.DataObjectXMLReaderMeta.construct(
-			'SimpleShortcutXMLReader',
-			constructor=lambda shortcut, **kwargs: XModLib.KeyboardUtils.Shortcut(shortcut, **kwargs),
-			section_type='String'
-		)),
-		('AdvancedShortcut', XModLib.XMLConfigReader.DataObjectXMLReaderMeta.construct(
-			'AdvancedShortcutXMLReader',
-			constructor=lambda shortcut: XModLib.KeyboardUtils.Shortcut(**shortcut),
-			section_type='Dict'
-		)),
-		('Vector2AsTuple', XModLib.XMLConfigReader.VectorAsTupleXMLReaderMeta.construct(
-			'Vector2AsTupleXMLReader',
-			vector_type='Vector2'
-		)),
-		('LocalizedWideString', XModLib.XMLConfigReader.LocalizedWideStringXMLReaderMeta.construct(
-			'LocalizedWideStringXMLReader',
-			translator=_globals_['i18nFormatter']
-		)),
-		('CorrectionPanelSettings', XModLib.XMLConfigReader.OptionalDictXMLReaderMeta.construct(
-			'PanelSettingsXMLReader',
-			required_keys=('visible', ),
-			default_keys=('visible', )
-		)),
-		('TargetPanelSettings', XModLib.XMLConfigReader.OptionalDictXMLReaderMeta.construct(
-			'PanelSettingsXMLReader',
-			required_keys=('visible', ),
-			default_keys=('visible', )
-		)),
-		('AimingPanelSettings', XModLib.XMLConfigReader.OptionalDictXMLReaderMeta.construct(
-			'PanelSettingsXMLReader',
-			required_keys=('visible', ),
-			default_keys=('visible', 'text', 'position')
-		))
-	))
 	mainSection = configReader.open_section(os.path.splitext(__file__)[0] + '.xml')
 	if mainSection is None:
 		print '[{}] Config file is missing. Loading defaults.'.format(__application__[1])
 	else:
 		print '[{}] Config file was found. Trying to load it.'.format(__application__[1])
-	return configReader(mainSection, defaultConfig())
+	return configReader(mainSection, defaultConfig)
+
+# *************************
+# Configuration init
+# *************************
+_config_ = loadConfiguration()

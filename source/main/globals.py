@@ -4,7 +4,6 @@
 _globals_ = {
 	'appResultMessage': None,
 	'appResultMessageFlag': False,
-	'i18nCache': None,
-	'i18nFormatter': None,
-	'macrosFormatter': None
+	'i18nFormatter': XModLib.TextUtils.TranslatorFormatter(XModLib.TextUtils.TranslatorsCache()),
+	'macrosFormatter': XModLib.TextUtils.MacrosFormatter()
 }

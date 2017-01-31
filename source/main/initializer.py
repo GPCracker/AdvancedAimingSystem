@@ -2,11 +2,6 @@
 # Application initializer
 # *************************
 def initApplication():
-	_globals_['i18nCache'] = XModLib.TextUtils.TranslatorsCache()
-	_globals_['i18nFormatter'] = XModLib.TextUtils.TranslatorFormatter(_globals_['i18nCache'])
-	_globals_['macrosFormatter'] = XModLib.TextUtils.MacrosFormatter()
-	global _config_
-	_config_ = readConfig()
 	global _inject_chain_
 	_inject_chain_ += _inject_loads_
 	if not _config_['ignoreClientVersion'] and False:
