@@ -28,6 +28,9 @@
 				<onActivate>#AdvancedAimingSystem:sniperAimCorrection/targetMode/onActivate;</onActivate>
 				<onDeactivate>#AdvancedAimingSystem:sniperAimCorrection/targetMode/onDeactivate;</onDeactivate>
 			</message>
+			<!-- Distance to the target range where correction can be applied. -->
+			<!-- Диапазон расстояния до цели (зона применимости корректировки). -->
+			<distance>10.0 720.0</distance>
 		</targetMode>
 	</aimCorrection>
 </root>

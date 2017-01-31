@@ -64,6 +64,12 @@ class ArcadeAimCorrection(BaseAimCorrection):
 	def getPositionAboveVehicle(sclass):
 		return sclass.getInputHandlerCtrl().camera.aimingSystem.positionAboveVehicleProv.value[0:3]
 
+	def __init__(self, manualEnabled=False, targetEnabled=False, minDistance=50.0, maxDistance=720.0):
+		super(ArcadeAimCorrection, self).__init__(manualEnabled, targetEnabled)
+		self.minDistance = minDistance
+		self.maxDistance = maxDistance
+		return
+
 	def setManualInfo(self):
 		if self.manualEnabled:
 			shotPoint = self.getInputHandlerCtrl().getDesiredShotPoint()
@@ -86,9 +92,10 @@ class ArcadeAimCorrection(BaseAimCorrection):
 				target = BigWorld.target()
 				if target is None or target.id != self.targetInfo:
 					scanRay, scanPoint = self.getScanRayAndPoint()
-					flatDistance = scanPoint.flatDistTo(self.targetInfo.getPosition())
-					flatScanRayLength = scanRay.flatDistTo(Math.Vector3(0.0, 0.0, 0.0))
-					return scanPoint + scanRay.scale(flatDistance / flatScanRayLength)
+					if self.minDistance <= self.targetInfo.getDistance() <= self.maxDistance:
+						flatDistance = scanPoint.flatDistTo(self.targetInfo.getPosition())
+						flatScanRayLength = scanRay.flatDistTo(Math.Vector3(0.0, 0.0, 0.0))
+						return scanPoint + scanRay.scale(flatDistance / flatScanRayLength)
 		return None
 
 	def getGunMarkerCollisionPoint(self, start, end):
@@ -109,6 +116,12 @@ class SniperAimCorrection(BaseAimCorrection):
 		inputHandlerCtrl = sclass.getInputHandlerCtrl()
 		aimingSystemMatrix = inputHandlerCtrl.camera.aimingSystem.matrix
 		return aimingSystemMatrix.applyToAxis(2), aimingSystemMatrix.applyToOrigin()
+
+	def __init__(self, manualEnabled=False, targetEnabled=False, minDistance=10.0, maxDistance=720.0):
+		super(SniperAimCorrection, self).__init__(manualEnabled, targetEnabled)
+		self.minDistance = minDistance
+		self.maxDistance = maxDistance
+		return
 
 	def setManualInfo(self):
 		if self.manualEnabled:
@@ -131,7 +144,8 @@ class SniperAimCorrection(BaseAimCorrection):
 				target = BigWorld.target()
 				if target is None or target.id != self.targetInfo:
 					scanRay, scanPoint = self.getScanRayAndPoint()
-					return scanPoint + scanRay.scale((self.targetInfo.getPosition() - scanPoint).length)
+					if self.minDistance <= self.targetInfo.getDistance() <= self.maxDistance:
+						return scanPoint + scanRay.scale(scanPoint.distTo(self.targetInfo.getPosition()))
 		return None
 
 	def getGunMarkerCollisionPoint(self, start, end):

@@ -6,7 +6,9 @@ def new_SniperControlMode_init(self, *args, **kwargs):
 	config = _config_['sniperAS']['aimCorrection']
 	self.XAimCorrection = SniperAimCorrection(
 		config['manualMode']['enabled'],
-		config['targetMode']['enabled'] and config['targetMode']['activated']
+		config['targetMode']['enabled'] and config['targetMode']['activated'],
+		config['targetMode']['distance'][0],
+		config['targetMode']['distance'][1]
 	)
 	return
 

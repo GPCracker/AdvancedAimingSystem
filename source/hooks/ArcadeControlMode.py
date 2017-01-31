@@ -6,7 +6,9 @@ def new_ArcadeControlMode_init(self, *args, **kwargs):
 	config = _config_['arcadeAS']['aimCorrection']
 	self.XAimCorrection = ArcadeAimCorrection(
 		config['manualMode']['enabled'],
-		config['targetMode']['enabled'] and config['targetMode']['activated']
+		config['targetMode']['enabled'] and config['targetMode']['activated'],
+		config['targetMode']['distance'][0],
+		config['targetMode']['distance'][1]
 	)
 	return
 

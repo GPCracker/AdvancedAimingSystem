@@ -78,7 +78,8 @@ def defaultConfig():
 					'message': {
 						'onActivate': ('LocalizedWideString', u'ArcadeAimCorrection:TargetMode ENABLED.'),
 						'onDeactivate': ('LocalizedWideString', u'ArcadeAimCorrection:TargetMode DISABLED.')
-					}
+					},
+					'distance': ('Vector2AsTuple', (50.0, 720.0))
 				}
 			}
 		},
@@ -99,7 +100,8 @@ def defaultConfig():
 					'message': {
 						'onActivate': ('LocalizedWideString', u'SniperAimCorrection:TargetMode ENABLED.'),
 						'onDeactivate': ('LocalizedWideString', u'SniperAimCorrection:TargetMode DISABLED.')
-					}
+					},
+					'distance': ('Vector2AsTuple', (10.0, 720.0))
 				}
 			}
 		},
