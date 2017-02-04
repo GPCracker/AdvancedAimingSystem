@@ -12,6 +12,13 @@ class GuiLoaderView(XModLib.pygui.battle.views.PanelsLoaderView.PanelsLoaderView
 		super(GuiLoaderView, self)._populate()
 		for panelAlias, panelClass, panelIndex in self.INFO_PANELS:
 			self.as_createBattlePagePanelS(panelAlias, panelClass, panelIndex)
+		self.app.containerManager.onViewAddedToContainer += self._onViewAddedToContainer
+		return
+
+	def _onViewAddedToContainer(self, container, view):
+		if view.alias == self.alias:
+			self.app.containerManager.onViewAddedToContainer -= self._onViewAddedToContainer
+			self.destroy()
 		return
 
 class GuiCorrectionPanel(XModLib.pygui.battle.views.components.panels.TextPanel.TextPanel):
@@ -125,13 +132,4 @@ class GuiGlobalBusinessHandler(GuiBaseBusinessHandler):
 	def _handleComponentRegistrationEvent(self, event):
 		if event.alias in (GuiSettings.CORRECTION_PANEL_ALIAS, GuiSettings.TARGET_PANEL_ALIAS, GuiSettings.AIMING_PANEL_ALIAS):
 			self._setPanelConfig(event.alias, self._panelConfigs.get(event.alias, {}).get('default', {}))
-		elif event.alias == gui.Scaleform.genConsts.BATTLE_VIEW_ALIASES.BATTLE_VIEW_ALIASES.CONSUMABLES_PANEL:
-			self._app.containerManager.onViewAddedToContainer += self._onViewAddedToContainer
-			self.loadViewWithDefName(GuiSettings.LOADER_VIEW_ALIAS)
-		return
-
-	def _onViewAddedToContainer(self, container, view):
-		if view.alias == GuiSettings.LOADER_VIEW_ALIAS:
-			self._app.containerManager.onViewAddedToContainer -= self._onViewAddedToContainer
-			view.destroy()
 		return
