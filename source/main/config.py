@@ -82,6 +82,7 @@ def loadConfiguration():
 				'useTargetInfo': ('Bool', False)
 			},
 			'radialMenu': {
+				'useTargetScan': ('Bool', False),
 				'useTargetInfo': ('Bool', False)
 			},
 			'expertPerk': {

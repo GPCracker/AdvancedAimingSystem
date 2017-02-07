@@ -78,6 +78,9 @@
 	<!-- Radial menu settings. -->
 	<!-- Настройки радиального меню. -->
 	<radialMenu>
+		<!-- Enables real time scanning result substitution while entering radial menu. -->
+		<!-- Разрешает подстановку результата сканирования в реальном времени при входе радиальном меню. -->
+		<useTargetScan>False</useTargetScan>
 		<!-- Enables TargetInfo substitution while entering radial menu. -->
 		<!-- Разрешает подстановку TargetInfo при входе радиальном меню. -->
 		<useTargetInfo>False</useTargetInfo>
