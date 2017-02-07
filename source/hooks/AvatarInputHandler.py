@@ -16,7 +16,7 @@ def new_AvatarInputHandler_init(self, *args, **kwargs):
 def new_AvatarInputHandler_handleKeyEvent(self, event):
 	event = XModLib.KeyboardUtils.KeyboardEvent(event)
 	## HotKeys - Common
-	if self.ctrlModeName in ['arcade', 'sniper', 'strategic']:
+	if self.ctrlModeName in ('arcade', 'sniper', 'strategic'):
 		## HotKeys - TargetScanner
 		config = _config_['commonAS']['targetScanner']
 		if config['enabled']:
