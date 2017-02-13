@@ -12,12 +12,12 @@ class GuiLoaderView(XModLib.pygui.battle.views.PanelsLoaderView.PanelsLoaderView
 		super(GuiLoaderView, self)._populate()
 		for panelAlias, panelClass, panelIndex in self.INFO_PANELS:
 			self.as_createBattlePagePanelS(panelAlias, panelClass, panelIndex)
-		self.app.containerManager.onViewAddedToContainer += self._onViewAddedToContainer
+		self.app.containerManager.onViewAddedToContainer += self.__onViewAddedToContainer
 		return
 
-	def _onViewAddedToContainer(self, container, view):
+	def __onViewAddedToContainer(self, container, view):
 		if view.alias == self.alias:
-			self.app.containerManager.onViewAddedToContainer -= self._onViewAddedToContainer
+			self.app.containerManager.onViewAddedToContainer -= self.__onViewAddedToContainer
 			self.destroy()
 		return
 
@@ -76,15 +76,14 @@ class GuiBaseBusinessHandler(gui.Scaleform.framework.package_layout.PackageBusin
 class GuiBattleBusinessHandler(GuiBaseBusinessHandler):
 	def __init__(self, panelConfigs):
 		self._panelConfigs = panelConfigs
-		listeners = (
-			(GuiEvent.CORRECTION_UPDATE, self._handleCorrectionPanelUpdateEvent),
-			(GuiEvent.TARGET_UPDATE, self._handleTargetPanelUpdateEvent),
-			(GuiEvent.AIMING_UPDATE, self._handleAimingPanelUpdateEvent),
-			(GuiEvent.CTRL_MODE_ENABLE, self._handleCtrlModeEnableEvent),
-			(GuiEvent.CTRL_MODE_DISABLE, self._handleCtrlModeDisableEvent)
-		)
 		super(GuiBattleBusinessHandler, self).__init__(
-			listeners,
+			(
+				(GuiEvent.CORRECTION_UPDATE, self._handleCorrectionPanelUpdateEvent),
+				(GuiEvent.TARGET_UPDATE, self._handleTargetPanelUpdateEvent),
+				(GuiEvent.AIMING_UPDATE, self._handleAimingPanelUpdateEvent),
+				(GuiEvent.CTRL_MODE_ENABLE, self._handleCtrlModeEnableEvent),
+				(GuiEvent.CTRL_MODE_DISABLE, self._handleCtrlModeDisableEvent)
+			),
 			gui.app_loader.settings.APP_NAME_SPACE.SF_BATTLE,
 			gui.shared.EVENT_BUS_SCOPE.BATTLE
 		)
@@ -119,11 +118,10 @@ class GuiBattleBusinessHandler(GuiBaseBusinessHandler):
 class GuiGlobalBusinessHandler(GuiBaseBusinessHandler):
 	def __init__(self, panelConfigs):
 		self._panelConfigs = panelConfigs
-		listeners = (
-			(gui.shared.events.ComponentEvent.COMPONENT_REGISTERED, self._handleComponentRegistrationEvent),
-		)
 		super(GuiGlobalBusinessHandler, self).__init__(
-			listeners,
+			(
+				(gui.shared.events.ComponentEvent.COMPONENT_REGISTERED, self._handleComponentRegistrationEvent),
+			),
 			gui.app_loader.settings.APP_NAME_SPACE.SF_BATTLE,
 			gui.shared.EVENT_BUS_SCOPE.GLOBAL
 		)

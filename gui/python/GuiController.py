@@ -11,7 +11,7 @@ class GuiController(object):
 
 	def __init__(self, formatter=None, updateInterval=0.04):
 		super(GuiController, self).__init__()
-		self.formatter = formatter if formatter is not None else lambda string, *args, **kwargs: string
+		self.formatter = formatter if callable(formatter) else lambda string, *args, **kwargs: string
 		self._updateCallbackLoop = XModLib.CallbackUtils.CallbackLoop(updateInterval, XModLib.CallbackUtils.getMethodProxy(self._update))
 		return
 
