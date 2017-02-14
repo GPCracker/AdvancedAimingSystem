@@ -14,8 +14,8 @@ def new_BattleShared_getBusinessHandlers(old_BattleShared_getBusinessHandlers, *
 	config = _config_['gui']
 	if config['enabled']:
 		result += (
-			GuiBattleBusinessHandler(config['panels']),
-			GuiGlobalBusinessHandler(config['panels'])
+			GuiBattleBusinessHandler(config['panels']['static'], config['panels']['ingame']),
+			GuiGlobalBusinessHandler(config['panels']['static'], config['panels']['ingame'])
 		)
 	return result
 

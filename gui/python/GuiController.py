@@ -26,10 +26,14 @@ class GuiController(object):
 	def getPlayerAimingInfoMacroData(self):
 		return AimingInfo.getMacroData()
 
+	def _updateInfoPanelMacroData(self, alias, macrodata):
+		self.dispatchEvent(GuiEvent.INFO_PANEL_UPDATE, {'alias': alias, 'formatter': self.formatter, 'macrodata': macrodata})
+		return
+
 	def _update(self):
-		self.dispatchEvent(GuiEvent.CORRECTION_UPDATE, {'formatter': self.formatter, 'macrodata': self.getAimCorrectionMacroData()})
-		self.dispatchEvent(GuiEvent.TARGET_UPDATE, {'formatter': self.formatter, 'macrodata': self.getTargetInfoMacroData()})
-		self.dispatchEvent(GuiEvent.AIMING_UPDATE, {'formatter': self.formatter, 'macrodata': self.getPlayerAimingInfoMacroData()})
+		self._updateInfoPanelMacroData(GuiSettings.CORRECTION_PANEL_ALIAS, self.getAimCorrectionMacroData())
+		self._updateInfoPanelMacroData(GuiSettings.TARGET_PANEL_ALIAS, self.getTargetInfoMacroData())
+		self._updateInfoPanelMacroData(GuiSettings.AIMING_PANEL_ALIAS, self.getPlayerAimingInfoMacroData())
 		return
 
 	@property

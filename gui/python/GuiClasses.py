@@ -21,13 +21,69 @@ class GuiLoaderView(XModLib.pygui.battle.views.PanelsLoaderView.PanelsLoaderView
 			self.destroy()
 		return
 
-class GuiCorrectionPanel(XModLib.pygui.battle.views.components.panels.TextPanel.TextPanel):
+class GuiInfoPanel(XModLib.pygui.battle.views.components.panels.TextPanel.TextPanel):
+	def __init__(self, *args, **kwargs):
+		super(GuiInfoPanel, self).__init__(*args, **kwargs)
+		self.__alias = None
+		self.__config = {
+			'template': ''
+		}
+		return
+
+	def py_onPanelDrag(self, x, y):
+		super(GuiInfoPanel, self).py_onPanelDrag(x, y)
+		self.fireEvent(GuiEvent(GuiEvent.INFO_PANEL_DRAG, {'alias': self.__alias, 'position': (x, y)}), gui.shared.EVENT_BUS_SCOPE.BATTLE)
+		return
+
+	def py_onPanelDrop(self, x, y):
+		super(GuiInfoPanel, self).py_onPanelDrop(x, y)
+		self.fireEvent(GuiEvent(GuiEvent.INFO_PANEL_DROP, {'alias': self.__alias, 'position': (x, y)}), gui.shared.EVENT_BUS_SCOPE.BATTLE)
+		return
+
+	def _populate(self):
+		super(GuiInfoPanel, self)._populate()
+		self.__alias = self.flashObject.name if self._isDAAPIInited() else None
+		self.addListener(GuiEvent.INFO_PANEL_CONFIG, self._handlePanelConfigEvent, gui.shared.EVENT_BUS_SCOPE.BATTLE)
+		self.addListener(GuiEvent.INFO_PANEL_UPDATE, self._handlePanelUpdateEvent, gui.shared.EVENT_BUS_SCOPE.BATTLE)
+		return
+
+	def _dispose(self):
+		self.removeListener(GuiEvent.INFO_PANEL_CONFIG, self._handlePanelConfigEvent, gui.shared.EVENT_BUS_SCOPE.BATTLE)
+		self.removeListener(GuiEvent.INFO_PANEL_UPDATE, self._handlePanelUpdateEvent, gui.shared.EVENT_BUS_SCOPE.BATTLE)
+		super(GuiInfoPanel, self)._dispose()
+		return
+
+	def _handlePanelConfigEvent(self, event):
+		if event.ctx['alias'] == self.__alias:
+			self.updateConfig(event.ctx['config'])
+		return
+
+	def _handlePanelUpdateEvent(self, event):
+		if event.ctx['alias'] == self.__alias:
+			self.updateMacroData(event.ctx['formatter'], event.ctx['macrodata'])
+		return
+
+	def getConfig(self):
+		config = super(GuiInfoPanel, self).getConfig()
+		config.update(self.__config)
+		return config
+
+	def updateConfig(self, config):
+		super(GuiInfoPanel, self).updateConfig(config)
+		self.__config.update(self._computeConfigPatch(config, self.__config))
+		return
+
+	def updateMacroData(self, formatter, macrodata):
+		self.updateText(formatter(self.__config['template'], **macrodata) if macrodata is not None else '')
+		return
+
+class GuiCorrectionPanel(GuiInfoPanel):
 	pass
 
-class GuiTargetPanel(XModLib.pygui.battle.views.components.panels.TextPanel.TextPanel):
+class GuiTargetPanel(GuiInfoPanel):
 	pass
 
-class GuiAimingPanel(XModLib.pygui.battle.views.components.panels.TextPanel.TextPanel):
+class GuiAimingPanel(GuiInfoPanel):
 	pass
 
 class GuiSettings(object):
@@ -47,40 +103,28 @@ class GuiSettings(object):
 		)
 
 class GuiEvent(gui.shared.events.GameEvent):
-	CORRECTION_UPDATE = 'game/AdvancedAimingSystem/CorrectionPanelUpdate'
-	TARGET_UPDATE = 'game/AdvancedAimingSystem/TargetPanelUpdate'
-	AIMING_UPDATE = 'game/AdvancedAimingSystem/AimingPanelUpdate'
+	INFO_PANEL_CONFIG = 'game/AdvancedAimingSystem/InfoPanelConfig'
+	INFO_PANEL_UPDATE = 'game/AdvancedAimingSystem/InfoPanelUpdate'
+	INFO_PANEL_DRAG = 'game/AdvancedAimingSystem/InfoPanelDrag'
+	INFO_PANEL_DROP = 'game/AdvancedAimingSystem/InfoPanelDrop'
 	CTRL_MODE_ENABLE = 'game/AdvancedAimingSystem/CtrlModeEnable'
 	CTRL_MODE_DISABLE = 'game/AdvancedAimingSystem/CtrlModeDisable'
 
 class GuiBaseBusinessHandler(gui.Scaleform.framework.package_layout.PackageBusinessHandler):
-	def _getBattlePage(self):
-		return self._app.containerManager.getContainer(gui.Scaleform.framework.ViewTypes.DEFAULT).getView()
-
-	def _getBattlePageComponent(self, alias):
-		battlePage = self._getBattlePage()
-		return battlePage.components.get(alias, None) if battlePage is not None else None
-
-	def _updatePanelText(self, alias, formatter, macrodata):
-		panel = self._getBattlePageComponent(alias)
-		if panel is not None:
-			panel.updateText(formatter(panel.config['text'], **macrodata) if formatter and macrodata is not None else '')
-		return
-
-	def _setPanelConfig(self, alias, config):
-		panel = self._getBattlePageComponent(alias)
-		if panel is not None:
-			panel.config = config
+	@staticmethod
+	def _updatePanelConfig(alias, config):
+		gui.shared.g_eventBus.handleEvent(GuiEvent(GuiEvent.INFO_PANEL_CONFIG, {'alias': alias, 'config': config}), gui.shared.EVENT_BUS_SCOPE.BATTLE)
 		return
 
 class GuiBattleBusinessHandler(GuiBaseBusinessHandler):
-	def __init__(self, panelConfigs):
-		self._panelConfigs = panelConfigs
+	def __init__(self, staticConfigs, ingameConfigs):
+		self._ctrlModeName = None
+		self._staticConfigs = staticConfigs
+		self._ingameConfigs = ingameConfigs
 		super(GuiBattleBusinessHandler, self).__init__(
 			(
-				(GuiEvent.CORRECTION_UPDATE, self._handleCorrectionPanelUpdateEvent),
-				(GuiEvent.TARGET_UPDATE, self._handleTargetPanelUpdateEvent),
-				(GuiEvent.AIMING_UPDATE, self._handleAimingPanelUpdateEvent),
+				(GuiEvent.INFO_PANEL_DRAG, self._handleInfoPanelDragEvent),
+				(GuiEvent.INFO_PANEL_DROP, self._handleInfoPanelDropEvent),
 				(GuiEvent.CTRL_MODE_ENABLE, self._handleCtrlModeEnableEvent),
 				(GuiEvent.CTRL_MODE_DISABLE, self._handleCtrlModeDisableEvent)
 			),
@@ -89,35 +133,36 @@ class GuiBattleBusinessHandler(GuiBaseBusinessHandler):
 		)
 		return
 
-	def _handleCorrectionPanelUpdateEvent(self, event):
-		self._updatePanelText(GuiSettings.CORRECTION_PANEL_ALIAS, event.ctx.get('formatter', None), event.ctx.get('macrodata', None))
+	def _handleInfoPanelDragEvent(self, event):
+		if self._ctrlModeName is not None:
+			self._ingameConfigs.setdefault(event.ctx['alias'], {}).setdefault(self._ctrlModeName, {})['position'] = event.ctx['position']
 		return
 
-	def _handleTargetPanelUpdateEvent(self, event):
-		self._updatePanelText(GuiSettings.TARGET_PANEL_ALIAS, event.ctx.get('formatter', None), event.ctx.get('macrodata', None))
-		return
-
-	def _handleAimingPanelUpdateEvent(self, event):
-		self._updatePanelText(GuiSettings.AIMING_PANEL_ALIAS, event.ctx.get('formatter', None), event.ctx.get('macrodata', None))
+	def _handleInfoPanelDropEvent(self, event):
+		if self._ctrlModeName is not None:
+			self._ingameConfigs.setdefault(event.ctx['alias'], {}).setdefault(self._ctrlModeName, {})['position'] = event.ctx['position']
 		return
 
 	def _handleCtrlModeEnableEvent(self, event):
-		ctrlModeName = event.ctx.get('ctrlModeName', None)
-		if ctrlModeName is not None:
-			for alias in (GuiSettings.CORRECTION_PANEL_ALIAS, GuiSettings.TARGET_PANEL_ALIAS, GuiSettings.AIMING_PANEL_ALIAS):
-				self._setPanelConfig(alias, self._panelConfigs.get(alias, {}).get(ctrlModeName, {}))
+		ctrlModeName = event.ctx['ctrlModeName']
+		for alias in (GuiSettings.CORRECTION_PANEL_ALIAS, GuiSettings.TARGET_PANEL_ALIAS, GuiSettings.AIMING_PANEL_ALIAS):
+			config = self._staticConfigs.get(alias, {}).get(ctrlModeName, {}).copy()
+			config.update(self._ingameConfigs.get(alias, {}).get(ctrlModeName, {}))
+			self._updatePanelConfig(alias, config)
+		self._ctrlModeName = ctrlModeName
 		return
 
 	def _handleCtrlModeDisableEvent(self, event):
-		ctrlModeName = event.ctx.get('ctrlModeName', None)
-		if ctrlModeName is not None:
-			for alias in (GuiSettings.CORRECTION_PANEL_ALIAS, GuiSettings.TARGET_PANEL_ALIAS, GuiSettings.AIMING_PANEL_ALIAS):
-				self._setPanelConfig(alias, {'visible': False})
+		ctrlModeName = event.ctx['ctrlModeName']
+		for alias in (GuiSettings.CORRECTION_PANEL_ALIAS, GuiSettings.TARGET_PANEL_ALIAS, GuiSettings.AIMING_PANEL_ALIAS):
+			self._updatePanelConfig(alias, {'visible': False})
+		self._ctrlModeName = None
 		return
 
 class GuiGlobalBusinessHandler(GuiBaseBusinessHandler):
-	def __init__(self, panelConfigs):
-		self._panelConfigs = panelConfigs
+	def __init__(self, staticConfigs, ingameConfigs):
+		self._staticConfigs = staticConfigs
+		self._ingameConfigs = ingameConfigs
 		super(GuiGlobalBusinessHandler, self).__init__(
 			(
 				(gui.shared.events.ComponentEvent.COMPONENT_REGISTERED, self._handleComponentRegistrationEvent),
@@ -129,5 +174,5 @@ class GuiGlobalBusinessHandler(GuiBaseBusinessHandler):
 
 	def _handleComponentRegistrationEvent(self, event):
 		if event.alias in (GuiSettings.CORRECTION_PANEL_ALIAS, GuiSettings.TARGET_PANEL_ALIAS, GuiSettings.AIMING_PANEL_ALIAS):
-			self._setPanelConfig(event.alias, self._panelConfigs.get(event.alias, {}).get('default', {}))
+			self._updatePanelConfig(event.alias, self._staticConfigs.get(event.alias, {}).get('default', {}))
 		return

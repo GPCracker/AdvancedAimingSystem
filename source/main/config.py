@@ -34,7 +34,7 @@ def loadConfiguration():
 		('AimingPanelSettings', XModLib.XMLConfigReader.OptionalDictXMLReaderMeta.construct(
 			'PanelSettingsXMLReader',
 			required_keys=('visible', ),
-			default_keys=('visible', 'text', 'position')
+			default_keys=('visible', 'template', 'position')
 		))
 	))
 	defaultConfig = {
@@ -163,120 +163,123 @@ def loadConfiguration():
 			'enabled': ('Bool', True),
 			'updateInterval': ('Float', 0.04),
 			'panels': {
-				'AdvancedAimingSystemCorrectionPanel': {
-					'default': {
-						'alpha': ('Float', 1.0),
-						'visible': ('Bool', True),
-						'background': ('String', ''),
-						'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemCorrectionPanel'),
-						'text': ('LocalizedWideString', u'<p align="center"><font color="#00FF00" size="20" face="$UniversCondC">Distance locked: {{manualInfo:.1f}}m.</font></p>'),
-						'position': ('Vector2AsTuple', (0.0, 0.3)),
-						'size': ('Vector2AsTuple', (450.0, 25.0))
+				'static': {
+					'AdvancedAimingSystemCorrectionPanel': {
+						'default': {
+							'alpha': ('Float', 1.0),
+							'visible': ('Bool', True),
+							'background': ('String', ''),
+							'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemCorrectionPanel'),
+							'template': ('LocalizedWideString', u'<p align="center"><font color="#00FF00" size="20" face="$UniversCondC">Distance locked: {{manualInfo:.1f}}m.</font></p>'),
+							'position': ('Vector2AsTuple', (0.0, 0.3)),
+							'size': ('Vector2AsTuple', (450.0, 25.0))
+						},
+						'arcade': ('CorrectionPanelSettings', {
+							'alpha': ('Float', 1.0),
+							'visible': ('Bool', True),
+							'background': ('String', ''),
+							'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemCorrectionPanel'),
+							'template': ('LocalizedWideString', u'<p align="center"><font color="#00FF00" size="20" face="$UniversCondC">Distance locked: {{manualInfo:.1f}}m.</font></p>'),
+							'position': ('Vector2AsTuple', (0.0, 0.3)),
+							'size': ('Vector2AsTuple', (450.0, 25.0))
+						}),
+						'sniper': ('CorrectionPanelSettings', {
+							'alpha': ('Float', 1.0),
+							'visible': ('Bool', True),
+							'background': ('String', ''),
+							'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemCorrectionPanel'),
+							'template': ('LocalizedWideString', u'<p align="center"><font color="#00FF00" size="20" face="$UniversCondC">Distance locked: {{manualInfo:.1f}}m.</font></p>'),
+							'position': ('Vector2AsTuple', (0.0, 0.3)),
+							'size': ('Vector2AsTuple', (450.0, 25.0))
+						}),
+						'strategic': ('CorrectionPanelSettings', {
+							'alpha': ('Float', 1.0),
+							'visible': ('Bool', True),
+							'background': ('String', ''),
+							'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemCorrectionPanel'),
+							'template': ('LocalizedWideString', u'<p align="center"><font color="#00FF00" size="20" face="$UniversCondC">Distance locked: {{manualInfo:.1f}}m.</font></p>'),
+							'position': ('Vector2AsTuple', (0.0, 0.3)),
+							'size': ('Vector2AsTuple', (450.0, 25.0))
+						})
 					},
-					'arcade': ('CorrectionPanelSettings', {
-						'alpha': ('Float', 1.0),
-						'visible': ('Bool', True),
-						'background': ('String', ''),
-						'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemCorrectionPanel'),
-						'text': ('LocalizedWideString', u'<p align="center"><font color="#00FF00" size="20" face="$UniversCondC">Distance locked: {{manualInfo:.1f}}m.</font></p>'),
-						'position': ('Vector2AsTuple', (0.0, 0.3)),
-						'size': ('Vector2AsTuple', (450.0, 25.0))
-					}),
-					'sniper': ('CorrectionPanelSettings', {
-						'alpha': ('Float', 1.0),
-						'visible': ('Bool', True),
-						'background': ('String', ''),
-						'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemCorrectionPanel'),
-						'text': ('LocalizedWideString', u'<p align="center"><font color="#00FF00" size="20" face="$UniversCondC">Distance locked: {{manualInfo:.1f}}m.</font></p>'),
-						'position': ('Vector2AsTuple', (0.0, 0.3)),
-						'size': ('Vector2AsTuple', (450.0, 25.0))
-					}),
-					'strategic': ('CorrectionPanelSettings', {
-						'alpha': ('Float', 1.0),
-						'visible': ('Bool', True),
-						'background': ('String', ''),
-						'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemCorrectionPanel'),
-						'text': ('LocalizedWideString', u'<p align="center"><font color="#00FF00" size="20" face="$UniversCondC">Distance locked: {{manualInfo:.1f}}m.</font></p>'),
-						'position': ('Vector2AsTuple', (0.0, 0.3)),
-						'size': ('Vector2AsTuple', (450.0, 25.0))
-					})
+					'AdvancedAimingSystemTargetPanel': {
+						'default': {
+							'alpha': ('Float', 1.0),
+							'visible': ('Bool', True),
+							'background': ('String', ''),
+							'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemTargetPanel'),
+							'template': ('LocalizedWideString', u'<p align="center"><font color="#FF7F00" size="20" face="$UniversCondC">Target: {{shortName}}; Distance: {{distance:.1f}}m; Speed: {{speedMS:.1f}}m/s.</font></p>'),
+							'position': ('Vector2AsTuple', (0.0, 0.4)),
+							'size': ('Vector2AsTuple', (450.0, 25.0))
+						},
+						'arcade': ('TargetPanelSettings', {
+							'alpha': ('Float', 1.0),
+							'visible': ('Bool', True),
+							'background': ('String', ''),
+							'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemTargetPanel'),
+							'template': ('LocalizedWideString', u'<p align="center"><font color="#FF7F00" size="20" face="$UniversCondC">Target: {{shortName}}; Distance: {{distance:.1f}}m; Speed: {{speedMS:.1f}}m/s.</font></p>'),
+							'position': ('Vector2AsTuple', (0.0, 0.4)),
+							'size': ('Vector2AsTuple', (450.0, 25.0))
+						}),
+						'sniper': ('TargetPanelSettings', {
+							'alpha': ('Float', 1.0),
+							'visible': ('Bool', True),
+							'background': ('String', ''),
+							'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemTargetPanel'),
+							'template': ('LocalizedWideString', u'<p align="center"><font color="#FF7F00" size="20" face="$UniversCondC">Target: {{shortName}}; Distance: {{distance:.1f}}m; Speed: {{speedMS:.1f}}m/s.</font></p>'),
+							'position': ('Vector2AsTuple', (0.0, 0.4)),
+							'size': ('Vector2AsTuple', (450.0, 25.0))
+						}),
+						'strategic': ('TargetPanelSettings', {
+							'alpha': ('Float', 1.0),
+							'visible': ('Bool', True),
+							'background': ('String', ''),
+							'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemTargetPanel'),
+							'template': ('LocalizedWideString', u'<p align="center"><font color="#FF7F00" size="20" face="$UniversCondC">Target: {{shortName}}; Distance: {{distance:.1f}}m; Speed: {{speedMS:.1f}}m/s.</font></p>'),
+							'position': ('Vector2AsTuple', (0.0, 0.4)),
+							'size': ('Vector2AsTuple', (450.0, 25.0))
+						})
+					},
+					'AdvancedAimingSystemAimingPanel': {
+						'default': {
+							'alpha': ('Float', 1.0),
+							'visible': ('Bool', True),
+							'background': ('String', 'img://gui/maps/icons/mods/AdvancedAimingSystem/AimingInfoBackground.png'),
+							'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemAimingPanel'),
+							'template': ('LocalizedWideString', u'<textformat leftmargin="20" rightmargin="20" tabstops="[0,70]"><font color="#64F0B4" size="20" face="$UniversCondC">\tRemains:\t{{remainingAimingTime:.2f}}s;\n\tDistance:\t{{aimingDistance:.1f}}m;\n\tDeviation:\t{{deviation:.2f}}m;\n\tFly time:\t{{flyTime:.2f}}s;\n\tHit angle:\t{{hitAngleDeg:+.1f}}dg;</font></textformat>'),
+							'position': ('Vector2AsTuple', (0.4, -0.1)),
+							'size': ('Vector2AsTuple', (175.0, 130.0))
+						},
+						'arcade': ('AimingPanelSettings', {
+							'alpha': ('Float', 1.0),
+							'visible': ('Bool', True),
+							'background': ('String', 'img://gui/maps/icons/mods/AdvancedAimingSystem/AimingInfoBackground.png'),
+							'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemAimingPanel'),
+							'template': ('LocalizedWideString', u'<textformat leftmargin="20" rightmargin="20" tabstops="[0,70]"><font color="#64F0B4" size="20" face="$UniversCondC">\tRemains:\t{{remainingAimingTime:.2f}}s;\n\tDistance:\t{{aimingDistance:.1f}}m;\n\tDeviation:\t{{deviation:.2f}}m;\n\tFly time:\t{{flyTime:.2f}}s;\n\tHit angle:\t{{hitAngleDeg:+.1f}}dg;</font></textformat>'),
+							'position': ('Vector2AsTuple', (0.4, -0.1)),
+							'size': ('Vector2AsTuple', (175.0, 130.0))
+						}),
+						'sniper': ('AimingPanelSettings', {
+							'alpha': ('Float', 1.0),
+							'visible': ('Bool', True),
+							'background': ('String', 'img://gui/maps/icons/mods/AdvancedAimingSystem/AimingInfoBackground.png'),
+							'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemAimingPanel'),
+							'template': ('LocalizedWideString', u'<textformat leftmargin="20" rightmargin="20" tabstops="[0,70]"><font color="#64B4F0" size="20" face="$UniversCondC">\tRemains:\t{{remainingAimingTime:.2f}}s;\n\tDistance:\t{{aimingDistance:.1f}}m;\n\tDeviation:\t{{deviation:.2f}}m;\n\tFly time:\t{{flyTime:.2f}}s;\n\tHit angle:\t{{hitAngleDeg:+.1f}}dg;</font></textformat>'),
+							'position': ('Vector2AsTuple', (0.4, -0.25)),
+							'size': ('Vector2AsTuple', (175.0, 130.0))
+						}),
+						'strategic': ('AimingPanelSettings', {
+							'alpha': ('Float', 1.0),
+							'visible': ('Bool', True),
+							'background': ('String', 'img://gui/maps/icons/mods/AdvancedAimingSystem/AimingInfoBackground.png'),
+							'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemAimingPanel'),
+							'template': ('LocalizedWideString', u'<textformat leftmargin="20" rightmargin="20" tabstops="[0,70]"><font color="#B46464" size="20" face="$UniversCondC">\tRemains:\t{{remainingAimingTime:.2f}}s;\n\tDistance:\t{{aimingDistance:.1f}}m;\n\tDeviation:\t{{deviation:.2f}}m;\n\tFly time:\t{{flyTime:.2f}}s;\n\tHit angle:\t{{hitAngleDeg:+.1f}}dg;</font></textformat>'),
+							'position': ('Vector2AsTuple', (-0.3, -0.4)),
+							'size': ('Vector2AsTuple', (175.0, 130.0))
+						})
+					}
 				},
-				'AdvancedAimingSystemTargetPanel': {
-					'default': {
-						'alpha': ('Float', 1.0),
-						'visible': ('Bool', True),
-						'background': ('String', ''),
-						'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemTargetPanel'),
-						'text': ('LocalizedWideString', u'<p align="center"><font color="#FF7F00" size="20" face="$UniversCondC">Target: {{shortName}}; Distance: {{distance:.1f}}m; Speed: {{speedMS:.1f}}m/s.</font></p>'),
-						'position': ('Vector2AsTuple', (0.0, 0.4)),
-						'size': ('Vector2AsTuple', (450.0, 25.0))
-					},
-					'arcade': ('TargetPanelSettings', {
-						'alpha': ('Float', 1.0),
-						'visible': ('Bool', True),
-						'background': ('String', ''),
-						'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemTargetPanel'),
-						'text': ('LocalizedWideString', u'<p align="center"><font color="#FF7F00" size="20" face="$UniversCondC">Target: {{shortName}}; Distance: {{distance:.1f}}m; Speed: {{speedMS:.1f}}m/s.</font></p>'),
-						'position': ('Vector2AsTuple', (0.0, 0.4)),
-						'size': ('Vector2AsTuple', (450.0, 25.0))
-					}),
-					'sniper': ('TargetPanelSettings', {
-						'alpha': ('Float', 1.0),
-						'visible': ('Bool', True),
-						'background': ('String', ''),
-						'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemTargetPanel'),
-						'text': ('LocalizedWideString', u'<p align="center"><font color="#FF7F00" size="20" face="$UniversCondC">Target: {{shortName}}; Distance: {{distance:.1f}}m; Speed: {{speedMS:.1f}}m/s.</font></p>'),
-						'position': ('Vector2AsTuple', (0.0, 0.4)),
-						'size': ('Vector2AsTuple', (450.0, 25.0))
-					}),
-					'strategic': ('TargetPanelSettings', {
-						'alpha': ('Float', 1.0),
-						'visible': ('Bool', True),
-						'background': ('String', ''),
-						'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemTargetPanel'),
-						'text': ('LocalizedWideString', u'<p align="center"><font color="#FF7F00" size="20" face="$UniversCondC">Target: {{shortName}}; Distance: {{distance:.1f}}m; Speed: {{speedMS:.1f}}m/s.</font></p>'),
-						'position': ('Vector2AsTuple', (0.0, 0.4)),
-						'size': ('Vector2AsTuple', (450.0, 25.0))
-					})
-				},
-				'AdvancedAimingSystemAimingPanel': {
-					'default': {
-						'alpha': ('Float', 1.0),
-						'visible': ('Bool', True),
-						'background': ('String', 'img://gui/maps/icons/mods/AdvancedAimingSystem/AimingInfoBackground.png'),
-						'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemAimingPanel'),
-						'text': ('LocalizedWideString', u'<textformat leftmargin="20" rightmargin="20" tabstops="[0,70]"><font color="#64F0B4" size="20" face="$UniversCondC">\tRemains:\t{{remainingAimingTime:.2f}}s;\n\tDistance:\t{{aimingDistance:.1f}}m;\n\tDeviation:\t{{deviation:.2f}}m;\n\tFly time:\t{{flyTime:.2f}}s;\n\tHit angle:\t{{hitAngleDeg:+.1f}}dg;</font></textformat>'),
-						'position': ('Vector2AsTuple', (0.4, -0.1)),
-						'size': ('Vector2AsTuple', (175.0, 130.0))
-					},
-					'arcade': ('AimingPanelSettings', {
-						'alpha': ('Float', 1.0),
-						'visible': ('Bool', True),
-						'background': ('String', 'img://gui/maps/icons/mods/AdvancedAimingSystem/AimingInfoBackground.png'),
-						'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemAimingPanel'),
-						'text': ('LocalizedWideString', u'<textformat leftmargin="20" rightmargin="20" tabstops="[0,70]"><font color="#64F0B4" size="20" face="$UniversCondC">\tRemains:\t{{remainingAimingTime:.2f}}s;\n\tDistance:\t{{aimingDistance:.1f}}m;\n\tDeviation:\t{{deviation:.2f}}m;\n\tFly time:\t{{flyTime:.2f}}s;\n\tHit angle:\t{{hitAngleDeg:+.1f}}dg;</font></textformat>'),
-						'position': ('Vector2AsTuple', (0.4, -0.1)),
-						'size': ('Vector2AsTuple', (175.0, 130.0))
-					}),
-					'sniper': ('AimingPanelSettings', {
-						'alpha': ('Float', 1.0),
-						'visible': ('Bool', True),
-						'background': ('String', 'img://gui/maps/icons/mods/AdvancedAimingSystem/AimingInfoBackground.png'),
-						'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemAimingPanel'),
-						'text': ('LocalizedWideString', u'<textformat leftmargin="20" rightmargin="20" tabstops="[0,70]"><font color="#64B4F0" size="20" face="$UniversCondC">\tRemains:\t{{remainingAimingTime:.2f}}s;\n\tDistance:\t{{aimingDistance:.1f}}m;\n\tDeviation:\t{{deviation:.2f}}m;\n\tFly time:\t{{flyTime:.2f}}s;\n\tHit angle:\t{{hitAngleDeg:+.1f}}dg;</font></textformat>'),
-						'position': ('Vector2AsTuple', (0.4, -0.25)),
-						'size': ('Vector2AsTuple', (175.0, 130.0))
-					}),
-					'strategic': ('AimingPanelSettings', {
-						'alpha': ('Float', 1.0),
-						'visible': ('Bool', True),
-						'background': ('String', 'img://gui/maps/icons/mods/AdvancedAimingSystem/AimingInfoBackground.png'),
-						'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemAimingPanel'),
-						'text': ('LocalizedWideString', u'<textformat leftmargin="20" rightmargin="20" tabstops="[0,70]"><font color="#B46464" size="20" face="$UniversCondC">\tRemains:\t{{remainingAimingTime:.2f}}s;\n\tDistance:\t{{aimingDistance:.1f}}m;\n\tDeviation:\t{{deviation:.2f}}m;\n\tFly time:\t{{flyTime:.2f}}s;\n\tHit angle:\t{{hitAngleDeg:+.1f}}dg;</font></textformat>'),
-						'position': ('Vector2AsTuple', (-0.3, -0.4)),
-						'size': ('Vector2AsTuple', (175.0, 130.0))
-					})
-				}
+				'ingame': ('Dict', {})
 			}
 		}
 	}
