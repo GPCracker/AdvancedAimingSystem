@@ -7,6 +7,7 @@ import shutil
 import struct
 import marshal
 import zipfile
+import operator
 import functools
 import itertools
 import traceback
@@ -82,12 +83,23 @@ def compile_atlas(dst_atlas, src_wildcards, src_basepath, ext_args=None):
 		raise RuntimeError('An error occured while assembling atlas.')
 	return
 
-def compile_zipfile_string(src_data_blocks, src_bin_comment=''):
+def compile_zipfile_string(src_data_blocks, dst_bin_comment='', compress=False):
+	def get_parent_dirs(path):
+		def get_parent_dirs_inv(path):
+			while path:
+				path = os.path.dirname(path)
+				yield path + '/'
+			return
+		return reversed(tuple(get_parent_dirs_inv(path))[:-1])
 	with io.BytesIO() as dst_bin_buffer:
-		with zipfile.ZipFile(dst_bin_buffer, 'w', zipfile.ZIP_DEFLATED) as dst_zip_buffer:
-			for src_block_name, src_block_data in src_data_blocks:
+		with zipfile.ZipFile(dst_bin_buffer, 'w', zipfile.ZIP_DEFLATED if compress else zipfile.ZIP_STORED) as dst_zip_buffer:
+			for src_block_name, src_block_data in sorted(src_data_blocks, key=operator.itemgetter(0)):
+				dst_zip_namelist = dst_zip_buffer.namelist()
+				for src_block_parent_dir in get_parent_dirs(src_block_name):
+					if src_block_parent_dir not in dst_zip_namelist:
+						dst_zip_buffer.writestr(src_block_parent_dir, b'')
 				dst_zip_buffer.writestr(src_block_name, src_block_data)
-			dst_zip_buffer.comment = src_bin_comment
+			dst_zip_buffer.comment = dst_bin_comment
 		dst_bin_data = dst_bin_buffer.getvalue()
 	return dst_bin_data
 
@@ -125,6 +137,7 @@ def norm_path(path):
 	return path + ('/' if os.path.isdir(path) else '')
 
 def get_path_group_iterator(path_group, home='./'):
+	# Resolves path group. If path group is a folder, returns list of files inside, or dot otherwise.
 	_path = join_path(home, path_group)
 	if os.path.isfile(_path):
 		yield norm_path('./')
@@ -136,17 +149,20 @@ def get_path_group_iterator(path_group, home='./'):
 	return
 
 def get_path_groups_iterator(path_groups, home='./'):
+	# Resolves a list of path groups.
 	for path_group in path_groups:
 		for path in get_path_group_iterator(path_group, home):
 			yield join_path(path_group, path)
 	return
 
 def get_path_group_block_iterator(path_group_block, home='./'):
+	# Resolves first path group, others used as path prefixes.
 	for path in get_path_group_iterator(path_group_block[0], home):
 		yield [join_path(base, path) for base in path_group_block]
 	return
 
 def get_path_group_blocks_iterator(path_group_blocks, home='./'):
+	# Resolves a list of path group blocks.
 	for path_group_block in path_group_blocks:
 		for path_block in get_path_group_block_iterator(path_group_block, home):
 			yield path_block
@@ -200,7 +216,7 @@ if __name__ == '__main__':
 				shutil.rmtree(cleanup)
 			# Creating new folder.
 			os.makedirs(cleanup)
-		## ActionScript build commands.
+		## Build commands.
 		# FlashDevelop project build command.
 		def g_actionscriptBuildProject(src_entry, level=0):
 			# Parsing ActionScript entry.
@@ -213,9 +229,9 @@ if __name__ == '__main__':
 			# Printing status.
 			indent = ' ' * level
 			print indent + 'Building FlashDevelop file: {}.'.format(prj_filename)
-			print indent + ' Assembled binary file: {}.'.format(asm_filename)
-			print indent + ' Resulting binary file: {}.'.format(bin_filename)
-			print indent + ' Target zip archive file: {}.'.format(zip_filename)
+			print indent + ' Build result file: {}.'.format(asm_filename)
+			print indent + ' Target binary file: {}.'.format(bin_filename)
+			print indent + ' Target package file: {}.'.format(zip_filename)
 			# Compiling FlashDevelop project.
 			compile_flash_project(prj_filename)
 			# Loading binary file.
@@ -224,10 +240,9 @@ if __name__ == '__main__':
 			save_file_data(bin_filename, dst_bin_data)
 			# Returning archive blocks.
 			return [[zip_filename, dst_bin_data]]
-		## Python build commands.
 		# Loading source encoding.
 		g_pythonSourceEncoding = g_config["python"]["sourceEncoding"]
-		# Source module build command.
+		# Python source module build command.
 		def g_pythonBuildSourceModule(src_entry, level=0):
 			# Formatting macros.
 			src_entry = [norm_path(format_macros(path, g_allMacros)) for path in src_entry]
@@ -250,7 +265,7 @@ if __name__ == '__main__':
 				indent = ' ' * level
 				print indent + 'Building module file: {}.'.format(src_filename)
 				print indent + ' Target binary file: {}.'.format(bin_filename)
-				print indent + ' Target zip archive file: {}.'.format(zip_filename)
+				print indent + ' Target package file: {}.'.format(zip_filename)
 				# Loading source block.
 				src_str_data = format_macros(load_file_str(src_filename, g_pythonSourceEncoding), g_globalMacros)
 				# Getting parameters for compiler.
@@ -263,7 +278,7 @@ if __name__ == '__main__':
 				# Appending archive block.
 				archive_blocks.append([zip_filename, dst_bin_data])
 			return archive_blocks
-		# Source group build command.
+		# Python source group build command.
 		def g_pythonBuildSourceGroup(src_entry, src_plugins=None, level=0):
 			# Parsing source group.
 			cmp_filename, src_filenames, asm_filename, bin_filename, zip_filename = src_entry
@@ -277,10 +292,10 @@ if __name__ == '__main__':
 			indent = ' ' * level
 			print indent + 'Building source group to single file: {}.'.format(cmp_filename)
 			for src_filename in get_path_groups_iterator(src_filenames):
-				print indent + ' Source file: {}.'.format(src_filename)
-			print indent + ' Target assembled file: {}.'.format(asm_filename)
+				print indent + '  Chunk file: {}.'.format(src_filename)
+			print indent + ' Target source file: {}.'.format(asm_filename)
 			print indent + ' Target binary file: {}.'.format(bin_filename)
-			print indent + ' Target zip archive file: {}.'.format(zip_filename)
+			print indent + ' Target package file: {}.'.format(zip_filename)
 			print indent + ' Building binaries {} plug-ins.'.format('with' if src_plugins is not None else 'without')
 			# Loading source as single block.
 			src_str_data = format_macros(load_source_string(src_filenames, g_pythonSourceEncoding), g_globalMacros)
@@ -312,7 +327,6 @@ if __name__ == '__main__':
 				[g_pythonBuildSourceGroup(src_entry, level=level + 1) for src_entry in src_entries]
 			), att_comment)
 			return att_filename, dst_bin_data
-		## Resource build commands.
 		# Resource build command.
 		def g_resourceBuildEntry(src_entry, level=0):
 			# Formatting macros.
@@ -329,13 +343,12 @@ if __name__ == '__main__':
 				# Printing status.
 				indent = ' ' * level
 				print indent + 'Building resource file: {}.'.format(bin_filename)
-				print indent + ' Target zip archive file: {}.'.format(zip_filename)
+				print indent + ' Target package file: {}.'.format(zip_filename)
 				# Loading binary file.
 				dst_bin_data = load_file_data(bin_filename)
 				# Appending archive block.
 				archive_blocks.append([zip_filename, dst_bin_data])
 			return archive_blocks
-		## Localization build commands.
 		# Localization build command.
 		def g_localizationBuildEntry(src_entry, level=0):
 			# Formatting macros.
@@ -354,7 +367,7 @@ if __name__ == '__main__':
 				indent = ' ' * level
 				print indent + 'Building localization file: {}.'.format(src_filename)
 				print indent + ' Target binary file: {}.'.format(bin_filename)
-				print indent + ' Target zip archive file: {}.'.format(zip_filename)
+				print indent + ' Target package file: {}.'.format(zip_filename)
 				# Loading portable object file.
 				src_bin_data = load_file_data(src_filename)
 				# Compiling portable object file.
@@ -364,7 +377,6 @@ if __name__ == '__main__':
 				# Appending archive block.
 				archive_blocks.append([zip_filename, dst_bin_data])
 			return archive_blocks
-		## Atlas build commands.
 		# Atlas build command.
 		def g_atlasBuildEntry(src_entry, level=0):
 			# Parsing atlas entry.
@@ -380,7 +392,7 @@ if __name__ == '__main__':
 			# Assembling atlas.
 			compile_atlas(dst_atlas, src_wildcards, src_basepath, ext_args)
 			# Returning archive blocks.
-			return list(itertools.chain.from_iterable(g_resourceBuildEntry(atl_entry, level) for atl_entry in atl_entries))
+			return list(itertools.chain.from_iterable(g_resourceBuildEntry(atl_entry, level + 1) for atl_entry in atl_entries))
 		## Creating release archive data blocks storage.
 		g_releaseBlocks = list()
 		## Building ActionScript.
@@ -434,14 +446,13 @@ if __name__ == '__main__':
 			[g_atlasBuildEntry(src_entry, level=1) for src_entry in g_config["atlases"]]
 		))
 		## Loading release archive filename.
-		g_releaseArchive = format_macros(g_config["releaseArchive"], g_allMacros)
+		g_releaseArchive = norm_path(format_macros(g_config["releaseArchive"], g_allMacros))
 		## Loading release archive comment.
 		g_releaseComment = format_macros(g_config["releaseComment"], g_allMacros).encode('ascii')
-		## Printing status.
-		print 'Saving release archive.'
 		## Saving release archive file.
-		save_file_data(g_releaseArchive, compile_zipfile_string(g_releaseBlocks, g_releaseComment))
+		print '>>> Saving archive... <<<'
+		save_file_data(g_releaseArchive, compile_zipfile_string(g_releaseBlocks, g_releaseComment, compress=True))
 		## Build finished.
-		print 'Build finished.'
+		print '>>> Build finished. <<<'
 	except:
 		traceback.print_exc()

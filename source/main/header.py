@@ -1,4 +1,4 @@
-__application__ = ('Advanced Aiming System Mod', 'AdvancedAimingSystem')
+__application__ = ('Advanced Aiming System Mod', 'AdvancedAimingSystem', 'GPCracker.AdvancedAimingSystem')
 __official_topic__ = 'http://www.koreanrandom.com/forum/topic/16559-/'
 __authors__ = ('GPCracker', )
 __version__ = '<version>'
