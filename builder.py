@@ -114,7 +114,7 @@ def acquire_version_data():
 	git_process = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 	vcs_str_data = git_process.communicate()[0].strip()
 	if git_process.poll():
-		vcs_str_data = '<unknown>'
+		vcs_str_data = 'custom-build'
 	return vcs_str_data
 
 def merge_dicts(base, *args, **kwargs):
@@ -124,7 +124,7 @@ def merge_dicts(base, *args, **kwargs):
 	return result
 
 def format_macros(string, macros):
-	for macro, replace in macros.items():
+	for macro, replace in macros.viewitems():
 		string = string.replace(macro, replace)
 	return string
 
@@ -203,8 +203,8 @@ if __name__ == '__main__':
 		## Printing status.
 		print 'Acquired version for build: {}.'.format(g_version)
 		## Loading macros.
-		g_globalMacros = {macro: format_macros(replace, {'<version>': g_version}) for macro, replace in g_config["globalMacros"].items()}
-		g_pathsMacros = {macro: format_macros(replace, g_globalMacros) for macro, replace in g_config["pathsMacros"].items()}
+		g_globalMacros = {macro: format_macros(replace, {'<version>': g_version}) for macro, replace in g_config["globalMacros"].viewitems()}
+		g_pathsMacros = {macro: format_macros(replace, g_globalMacros) for macro, replace in g_config["pathsMacros"].viewitems()}
 		g_allMacros = merge_dicts(g_globalMacros, g_pathsMacros)
 		## Cleanup previous build.
 		for cleanup in g_config["cleanup"]:
@@ -240,10 +240,8 @@ if __name__ == '__main__':
 			save_file_data(bin_filename, dst_bin_data)
 			# Returning archive blocks.
 			return [[zip_filename, dst_bin_data]]
-		# Loading source encoding.
-		g_pythonSourceEncoding = g_config["python"]["sourceEncoding"]
 		# Python source module build command.
-		def g_pythonBuildSourceModule(src_entry, level=0):
+		def g_pythonBuildSourceModule(src_entry, src_encoding, level=0):
 			# Formatting macros.
 			src_entry = [norm_path(format_macros(path, g_allMacros)) for path in src_entry]
 			# Getting base path.
@@ -267,7 +265,7 @@ if __name__ == '__main__':
 				print indent + ' Target binary file: {}.'.format(bin_filename)
 				print indent + ' Target package file: {}.'.format(zip_filename)
 				# Loading source block.
-				src_str_data = format_macros(load_file_str(src_filename, g_pythonSourceEncoding), g_globalMacros)
+				src_str_data = format_macros(load_file_str(src_filename, src_encoding), g_globalMacros)
 				# Getting parameters for compiler.
 				cmp_filename = join_path(os.path.basename(mod_filename), os.path.relpath(src_filename, mod_filename))
 				cmp_filetime = time.time()
@@ -279,7 +277,7 @@ if __name__ == '__main__':
 				archive_blocks.append([zip_filename, dst_bin_data])
 			return archive_blocks
 		# Python source group build command.
-		def g_pythonBuildSourceGroup(src_entry, src_plugins=None, level=0):
+		def g_pythonBuildSourceGroup(src_entry, src_encoding, level=0):
 			# Parsing source group.
 			cmp_filename, src_filenames, asm_filename, bin_filename, zip_filename = src_entry
 			# Formatting macros.
@@ -296,37 +294,18 @@ if __name__ == '__main__':
 			print indent + ' Target source file: {}.'.format(asm_filename)
 			print indent + ' Target binary file: {}.'.format(bin_filename)
 			print indent + ' Target package file: {}.'.format(zip_filename)
-			print indent + ' Building binaries {} plug-ins.'.format('with' if src_plugins is not None else 'without')
 			# Loading source as single block.
-			src_str_data = format_macros(load_source_string(src_filenames, g_pythonSourceEncoding), g_globalMacros)
+			src_str_data = format_macros(load_source_string(src_filenames, src_encoding), g_globalMacros)
 			# Saving assembled file.
-			save_file_str(asm_filename, src_str_data, g_pythonSourceEncoding)
+			save_file_str(asm_filename, src_str_data, src_encoding)
 			# Getting parameters for compiler.
 			cmp_filetime = os.path.getmtime(asm_filename)
 			# Compiling source block.
 			dst_bin_data = compile_python_string(src_str_data, cmp_filename, cmp_filetime)
-			# Attaching plug-in.
-			if src_plugins is not None and cmp_filename in src_plugins:
-				dst_bin_data += src_plugins[cmp_filename]
 			# Saving binary file.
 			save_file_data(bin_filename, dst_bin_data)
 			# Returning archive blocks.
 			return [[zip_filename, dst_bin_data]]
-		# Plug-in build command.
-		def g_pythonBuildPluginAttachGroup(att_entry, level=0):
-			# Parsing resource entry.
-			att_filename, att_comment, src_entries = att_entry
-			# Formatting macros.
-			att_filename = norm_path(format_macros(att_filename, g_allMacros))
-			att_comment = format_macros(att_comment, g_allMacros).encode('ascii')
-			# Printing status.
-			indent = ' ' * level
-			print indent + 'Building plug-in attach group: {}.'.format(att_filename)
-			# Building zip archive attachment.
-			dst_bin_data = compile_zipfile_string(itertools.chain.from_iterable(
-				[g_pythonBuildSourceGroup(src_entry, level=level + 1) for src_entry in src_entries]
-			), att_comment)
-			return att_filename, dst_bin_data
 		# Resource build command.
 		def g_resourceBuildEntry(src_entry, level=0):
 			# Formatting macros.
@@ -393,57 +372,82 @@ if __name__ == '__main__':
 			compile_atlas(dst_atlas, src_wildcards, src_basepath, ext_args)
 			# Returning archive blocks.
 			return list(itertools.chain.from_iterable(g_resourceBuildEntry(atl_entry, level + 1) for atl_entry in atl_entries))
+		# Package build command.
+		def g_packageBuildEntry(src_entry, level=0):
+			# Parsing package entry.
+			entry_parser = operator.itemgetter('name', 'build', 'release', 'actionscript', 'python', 'resources', 'localizations', 'atlases')
+			pkg_name, pkg_build, pkg_release, pkg_actionscript, pkg_python, pkg_resources, pkg_localizations, pkg_atlases = entry_parser(src_entry)
+			# Formatting macros.
+			pkg_name = norm_path(format_macros(pkg_name, g_allMacros))
+			pkg_build = norm_path(format_macros(pkg_build, g_allMacros))
+			pkg_release = norm_path(format_macros(pkg_release, g_allMacros))
+			# Printing status.
+			indent = ' ' * level
+			print indent + 'Building package: {}.'.format(pkg_name)
+			print indent + ' Target binary file: {}.'.format(pkg_build)
+			print indent + ' Target package file: {}.'.format(pkg_release)
+			# Creating package data blocks storage.
+			package_blocks = list()
+			#>> Building package ActionScript.
+			print indent + ' >> Building package ActionScript... <<'
+			# Detecting flex.
+			detect_flex()
+			# Building projects.
+			package_blocks.extend(itertools.chain.from_iterable(
+				[g_actionscriptBuildProject(src_entry, level + 2) for src_entry in pkg_actionscript]
+			))
+			#>> Building package Python.
+			print indent + ' >> Building package Python... <<'
+			#> Loading Python source encoding.
+			python_encoding = pkg_python["encoding"]
+			#> Building package Python modules.
+			print indent + '  > Building package Python modules... <'
+			# Building modules.
+			package_blocks.extend(itertools.chain.from_iterable(
+				[g_pythonBuildSourceModule(src_entry, python_encoding, level + 3) for src_entry in pkg_python["modules"]]
+			))
+			#> Building package Python sources.
+			print indent + '  > Building package Python sources... <'
+			# Building sources.
+			package_blocks.extend(itertools.chain.from_iterable(
+				[g_pythonBuildSourceGroup(src_entry, python_encoding, level + 3) for src_entry in pkg_python["sources"]]
+			))
+			#>> Building package resources.
+			print indent + ' >> Building package resources... <<'
+			# Building resources.
+			package_blocks.extend(itertools.chain.from_iterable(
+				[g_resourceBuildEntry(src_entry, level + 2) for src_entry in pkg_resources]
+			))
+			#>> Building package localizations.
+			print indent + ' >> Building package localizations... <<'
+			# Building localizations.
+			package_blocks.extend(itertools.chain.from_iterable(
+				[g_localizationBuildEntry(src_entry, level + 2) for src_entry in pkg_localizations]
+			))
+			#>> Building package atlases.
+			print indent + ' >> Building package atlases... <<'
+			# Building atlases.
+			package_blocks.extend(itertools.chain.from_iterable(
+				[g_atlasBuildEntry(src_entry, level + 2) for src_entry in pkg_atlases]
+			))
+			#>> Assembling package.
+			dst_bin_data = compile_zipfile_string(package_blocks, compress=False)
+			#>> Saving binary file.
+			save_file_data(pkg_build, dst_bin_data)
+			# Returning archive blocks.
+			return [[pkg_release, dst_bin_data]]
 		## Creating release archive data blocks storage.
 		g_releaseBlocks = list()
-		## Building ActionScript.
-		print '>>> Building ActionScript... <<<'
-		# Detecting flex.
-		detect_flex()
-		# Building projects.
+		## Building release archive packages.
+		print '>>> Building packages... <<<'
+		# Building packages.
 		g_releaseBlocks.extend(itertools.chain.from_iterable(
-			[g_actionscriptBuildProject(src_entry, level=1) for src_entry in g_config["actionscript"]]
+			[g_packageBuildEntry(src_entry, level=1) for src_entry in g_config["releasePackages"]]
 		))
-		## Building Python.
-		print '>>> Building Python... <<<'
-		# Printing status.
-		print 'Modules build started.'
-		# Building modules.
+		## Building release archive resources.
+		print '>>> Building resources... <<<'
 		g_releaseBlocks.extend(itertools.chain.from_iterable(
-			[g_pythonBuildSourceModule(src_entry, level=1) for src_entry in g_config["python"]["modules"]]
-		))
-		# Printing status.
-		print 'Plug-ins build started.'
-		# Building plug-ins.
-		g_pythonSourcePlugins = dict(g_pythonBuildPluginAttachGroup(att_entry, level=1) for att_entry in g_config["python"]["plugins"])
-		# Printing status.
-		print 'Source build started.'
-		# Building and adding sources.
-		g_releaseBlocks.extend(itertools.chain.from_iterable(
-			[g_pythonBuildSourceGroup(src_entry, g_pythonSourcePlugins, level=1) for src_entry in g_config["python"]["sources"]]
-		))
-		## Building Resource.
-		print '>>> Building Resource... <<<'
-		# Printing status.
-		print 'Resource build started.'
-		# Adding resources.
-		g_releaseBlocks.extend(itertools.chain.from_iterable(
-			[g_resourceBuildEntry(src_entry, level=1) for src_entry in g_config["resources"]]
-		))
-		## Building Localization.
-		print '>>> Building Localization... <<<'
-		# Printing status.
-		print 'Localization build started.'
-		# Compiling and adding localization.
-		g_releaseBlocks.extend(itertools.chain.from_iterable(
-			[g_localizationBuildEntry(src_entry, level=1) for src_entry in g_config["localizations"]]
-		))
-		## Building Atlas.
-		print '>>> Building Atlas... <<<'
-		# Printing status.
-		print 'Atlas build started.'
-		# Assembling and adding atlases.
-		g_releaseBlocks.extend(itertools.chain.from_iterable(
-			[g_atlasBuildEntry(src_entry, level=1) for src_entry in g_config["atlases"]]
+			[g_resourceBuildEntry(src_entry, level=1) for src_entry in g_config["releaseResources"]]
 		))
 		## Loading release archive filename.
 		g_releaseArchive = norm_path(format_macros(g_config["releaseArchive"], g_allMacros))

@@ -244,7 +244,7 @@ def loadConfiguration():
 						'default': {
 							'alpha': ('Float', 1.0),
 							'visible': ('Bool', True),
-							'background': ('String', 'img://gui/maps/icons/mods/AdvancedAimingSystem/AimingInfoBackground.png'),
+							'background': ('String', 'img://mods/GPCracker.AdvancedAimingSystem/icons/AimingInfoBackground.png'),
 							'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemAimingPanel'),
 							'template': ('LocalizedWideString', u'<textformat leftmargin="20" rightmargin="20" tabstops="[0,70]"><font color="#64F0B4" size="20" face="$UniversCondC">\tRemains:\t{{remainingAimingTime:.2f}}s;\n\tDistance:\t{{aimingDistance:.1f}}m;\n\tDeviation:\t{{deviation:.2f}}m;\n\tFly time:\t{{flyTime:.2f}}s;\n\tHit angle:\t{{hitAngleDeg:+.1f}}dg;</font></textformat>'),
 							'position': ('Vector2AsTuple', (0.4, -0.1)),
@@ -253,7 +253,7 @@ def loadConfiguration():
 						'arcade': ('AimingPanelSettings', {
 							'alpha': ('Float', 1.0),
 							'visible': ('Bool', True),
-							'background': ('String', 'img://gui/maps/icons/mods/AdvancedAimingSystem/AimingInfoBackground.png'),
+							'background': ('String', 'img://mods/GPCracker.AdvancedAimingSystem/icons/AimingInfoBackground.png'),
 							'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemAimingPanel'),
 							'template': ('LocalizedWideString', u'<textformat leftmargin="20" rightmargin="20" tabstops="[0,70]"><font color="#64F0B4" size="20" face="$UniversCondC">\tRemains:\t{{remainingAimingTime:.2f}}s;\n\tDistance:\t{{aimingDistance:.1f}}m;\n\tDeviation:\t{{deviation:.2f}}m;\n\tFly time:\t{{flyTime:.2f}}s;\n\tHit angle:\t{{hitAngleDeg:+.1f}}dg;</font></textformat>'),
 							'position': ('Vector2AsTuple', (0.4, -0.1)),
@@ -262,7 +262,7 @@ def loadConfiguration():
 						'sniper': ('AimingPanelSettings', {
 							'alpha': ('Float', 1.0),
 							'visible': ('Bool', True),
-							'background': ('String', 'img://gui/maps/icons/mods/AdvancedAimingSystem/AimingInfoBackground.png'),
+							'background': ('String', 'img://mods/GPCracker.AdvancedAimingSystem/icons/AimingInfoBackground.png'),
 							'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemAimingPanel'),
 							'template': ('LocalizedWideString', u'<textformat leftmargin="20" rightmargin="20" tabstops="[0,70]"><font color="#64B4F0" size="20" face="$UniversCondC">\tRemains:\t{{remainingAimingTime:.2f}}s;\n\tDistance:\t{{aimingDistance:.1f}}m;\n\tDeviation:\t{{deviation:.2f}}m;\n\tFly time:\t{{flyTime:.2f}}s;\n\tHit angle:\t{{hitAngleDeg:+.1f}}dg;</font></textformat>'),
 							'position': ('Vector2AsTuple', (0.4, -0.25)),
@@ -271,7 +271,7 @@ def loadConfiguration():
 						'strategic': ('AimingPanelSettings', {
 							'alpha': ('Float', 1.0),
 							'visible': ('Bool', True),
-							'background': ('String', 'img://gui/maps/icons/mods/AdvancedAimingSystem/AimingInfoBackground.png'),
+							'background': ('String', 'img://mods/GPCracker.AdvancedAimingSystem/icons/AimingInfoBackground.png'),
 							'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemAimingPanel'),
 							'template': ('LocalizedWideString', u'<textformat leftmargin="20" rightmargin="20" tabstops="[0,70]"><font color="#B46464" size="20" face="$UniversCondC">\tRemains:\t{{remainingAimingTime:.2f}}s;\n\tDistance:\t{{aimingDistance:.1f}}m;\n\tDeviation:\t{{deviation:.2f}}m;\n\tFly time:\t{{flyTime:.2f}}s;\n\tHit angle:\t{{hitAngleDeg:+.1f}}dg;</font></textformat>'),
 							'position': ('Vector2AsTuple', (-0.3, -0.4)),
