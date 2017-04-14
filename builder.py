@@ -205,6 +205,7 @@ if __name__ == '__main__':
 		## Loading macros.
 		g_globalMacros = {macro: format_macros(replace, {'<<version>>': g_version}) for macro, replace in g_config["globalMacros"].viewitems()}
 		g_pathsMacros = {macro: format_macros(replace, g_globalMacros) for macro, replace in g_config["pathsMacros"].viewitems()}
+		g_metaMacros = {macro.replace('<<', '{{').replace('>>', '}}'): replace for macro, replace in g_globalMacros.viewitems()}
 		g_allMacros = merge_dicts(g_globalMacros, g_pathsMacros)
 		## Cleanup previous build.
 		for cleanup in g_config["cleanup"]:
@@ -372,11 +373,35 @@ if __name__ == '__main__':
 			compile_atlas(dst_atlas, src_wildcards, src_basepath, ext_args)
 			# Returning archive blocks.
 			return list(itertools.chain.from_iterable(g_resourceBuildEntry(atl_entry, level + 1) for atl_entry in atl_entries))
+		# Package metadata build command.
+		def g_packageMetadataBuildEntry(src_entry, level=0):
+			# Formatting macros.
+			src_entry = [norm_path(format_macros(path, g_allMacros)) for path in src_entry]
+			# Creating archive data blocks storage.
+			archive_blocks = list()
+			# Processing source entries.
+			for src_entry in get_path_group_block_iterator(src_entry):
+				# Parsing metadata entry.
+				src_filename, zip_filename, src_encoding = src_entry
+				# Formatting macros.
+				src_filename = norm_path(format_macros(src_filename, g_allMacros))
+				zip_filename = norm_path(format_macros(zip_filename, g_allMacros))
+				# Printing status.
+				indent = ' ' * level
+				print indent + 'Building metadata file: {}.'.format(src_filename)
+				print indent + ' Target package file: {}.'.format(zip_filename)
+				# Loading meta file.
+				dst_str_data = load_file_str(src_filename, src_encoding)
+				# Formatting macros in meta data.
+				dst_bin_data = format_macros(dst_str_data, g_metaMacros).encode(encoding=src_encoding)
+				# Appending archive block.
+				archive_blocks.append([zip_filename, dst_bin_data])
+			return archive_blocks
 		# Package build command.
 		def g_packageBuildEntry(src_entry, level=0):
 			# Parsing package entry.
-			entry_parser = operator.itemgetter('name', 'build', 'release', 'actionscript', 'python', 'resources', 'localizations', 'atlases')
-			pkg_name, pkg_build, pkg_release, pkg_actionscript, pkg_python, pkg_resources, pkg_localizations, pkg_atlases = entry_parser(src_entry)
+			entry_parser = operator.itemgetter('name', 'build', 'release', 'metadata', 'actionscript', 'python', 'resources', 'localizations', 'atlases')
+			pkg_name, pkg_build, pkg_release, pkg_metadata, pkg_actionscript, pkg_python, pkg_resources, pkg_localizations, pkg_atlases = entry_parser(src_entry)
 			# Formatting macros.
 			pkg_name = norm_path(format_macros(pkg_name, g_allMacros))
 			pkg_build = norm_path(format_macros(pkg_build, g_allMacros))
@@ -429,6 +454,12 @@ if __name__ == '__main__':
 			# Building atlases.
 			package_blocks.extend(itertools.chain.from_iterable(
 				[g_atlasBuildEntry(src_entry, level + 2) for src_entry in pkg_atlases]
+			))
+			#>> Building package metadata.
+			print indent + ' >> Building package metadata... <<'
+			# Building metadata.
+			package_blocks.extend(itertools.chain.from_iterable(
+				[g_packageMetadataBuildEntry(src_entry, level + 2) for src_entry in pkg_metadata]
 			))
 			#>> Assembling package.
 			dst_bin_data = compile_zipfile_string(package_blocks, compress=False)
