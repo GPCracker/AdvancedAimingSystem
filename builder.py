@@ -203,7 +203,7 @@ if __name__ == '__main__':
 		## Printing status.
 		print 'Acquired version for build: {}.'.format(g_version)
 		## Loading macros.
-		g_globalMacros = {macro: format_macros(replace, {'<version>': g_version}) for macro, replace in g_config["globalMacros"].viewitems()}
+		g_globalMacros = {macro: format_macros(replace, {'<<version>>': g_version}) for macro, replace in g_config["globalMacros"].viewitems()}
 		g_pathsMacros = {macro: format_macros(replace, g_globalMacros) for macro, replace in g_config["pathsMacros"].viewitems()}
 		g_allMacros = merge_dicts(g_globalMacros, g_pathsMacros)
 		## Cleanup previous build.
