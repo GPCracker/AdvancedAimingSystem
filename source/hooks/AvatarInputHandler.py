@@ -16,7 +16,7 @@ def new_AvatarInputHandler_init(self, *args, **kwargs):
 def new_AvatarInputHandler_handleKeyEvent(self, event):
 	event = XModLib.KeyboardUtils.KeyboardEvent(event)
 	## HotKeys - Common
-	if self.ctrlModeName in ('arcade', 'sniper', 'strategic'):
+	if self.ctrlModeName in (AvatarInputHandler.aih_constants.CTRL_MODE_NAME.ARCADE, AvatarInputHandler.aih_constants.CTRL_MODE_NAME.SNIPER, AvatarInputHandler.aih_constants.CTRL_MODE_NAME.STRATEGIC):
 		## HotKeys - TargetScanner
 		config = _config_['commonAS']['targetScanner']
 		if config['enabled']:
@@ -50,7 +50,7 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 				if targetScanner is not None:
 					targetScanner.engageManualOverride()
 	## HotKeys - Arcade
-	if self.ctrlModeName == 'arcade':
+	if self.ctrlModeName == AvatarInputHandler.aih_constants.CTRL_MODE_NAME.ARCADE:
 		## HotKeys - AimCorrection
 		config = _config_['arcadeAS']['aimCorrection']
 		if True:
@@ -87,14 +87,14 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 		if shortcutHandle and XModLib.ArenaInfo.getClass(BigWorld.player().playerVehicleID) == 'SPG':
 			if shortcutHandle.pushed:
 				self.onControlModeChanged(
-					'sniper',
+					AvatarInputHandler.aih_constants.CTRL_MODE_NAME.SNIPER,
 					preferredPos=self.ctrl.camera.aimingSystem.getDesiredShotPoint(),
 					aimingMode=self.ctrl.aimingMode,
 					saveZoom=True,
 					equipmentID=None
 				)
 	## HotKeys - Sniper
-	elif self.ctrlModeName == 'sniper':
+	elif self.ctrlModeName == AvatarInputHandler.aih_constants.CTRL_MODE_NAME.SNIPER:
 		## HotKeys - AimCorrection
 		config = _config_['sniperAS']['aimCorrection']
 		if True:
@@ -131,7 +131,7 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 		if shortcutHandle and XModLib.ArenaInfo.getClass(BigWorld.player().playerVehicleID) == 'SPG':
 			if shortcutHandle.pushed:
 				self.onControlModeChanged(
-					'arcade',
+					AvatarInputHandler.aih_constants.CTRL_MODE_NAME.ARCADE,
 					preferredPos=self.ctrl.camera.aimingSystem.getDesiredShotPoint(),
 					turretYaw=self.ctrl.camera.aimingSystem.turretYaw,
 					gunPitch=self.ctrl.camera.aimingSystem.gunPitch,
@@ -139,7 +139,7 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 					closesDist=False
 				)
 	## HotKeys - Strategic
-	elif self.ctrlModeName == 'strategic':
+	elif self.ctrlModeName == AvatarInputHandler.aih_constants.CTRL_MODE_NAME.STRATEGIC:
 		## HotKeys - AimCorrection
 		config = _config_['strategicAS']['aimCorrection']
 		if True:

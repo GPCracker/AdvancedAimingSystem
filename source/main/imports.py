@@ -22,6 +22,7 @@ import BigWorld
 import constants
 import gui.shared.personality
 import AvatarInputHandler.cameras
+import AvatarInputHandler.aih_constants
 
 # *************************
 # WoT Client GUI
