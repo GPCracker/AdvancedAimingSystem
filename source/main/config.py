@@ -42,7 +42,7 @@ def loadConfiguration():
 			'targetScanner': {
 				'enabled': ('Bool', True),
 				'scanMode': {
-					'useNormalMode': ('Bool', True),
+					'useStandardMode': ('Bool', True),
 					'useXRayMode': ('Bool', False),
 					'useBBoxMode': ('Bool', False),
 					'useBEpsMode': ('Bool', False),

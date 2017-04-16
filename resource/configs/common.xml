@@ -14,7 +14,7 @@
 		<scanMode>
 			<!-- Enables normal target to be accounted. -->
 			<!-- Разрешает использование обычного режима сканирования. -->
-			<useNormalMode>True</useNormalMode>
+			<useStandardMode>True</useStandardMode>
 			<!-- Enables XRay target scan module to be used. -->
 			<!-- Разрешает использование рентгена для поиска целей. -->
 			<useXRayMode>False</useXRayMode>
