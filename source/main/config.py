@@ -13,10 +13,6 @@ def loadConfiguration():
 			constructor=lambda shortcut: XModLib.KeyboardUtils.Shortcut(**shortcut),
 			section_type='Dict'
 		)),
-		('Vector2AsTuple', XModLib.XMLConfigReader.VectorAsTupleXMLReaderMeta.construct(
-			'Vector2AsTupleXMLReader',
-			vector_type='Vector2'
-		)),
 		('LocalizedWideString', XModLib.XMLConfigReader.LocalizedWideStringXMLReaderMeta.construct(
 			'LocalizedWideStringXMLReader',
 			translator=_globals_['i18nFormatter']
