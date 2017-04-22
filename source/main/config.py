@@ -6,12 +6,12 @@ def loadConfiguration():
 		('SimpleShortcut', XModLib.XMLConfigReader.DataObjectXMLReaderMeta.construct(
 			'SimpleShortcutXMLReader',
 			constructor=lambda shortcut, **kwargs: XModLib.KeyboardUtils.Shortcut(shortcut, **kwargs),
-			section_type='String'
+			sectionType='String'
 		)),
 		('AdvancedShortcut', XModLib.XMLConfigReader.DataObjectXMLReaderMeta.construct(
 			'AdvancedShortcutXMLReader',
 			constructor=lambda shortcut: XModLib.KeyboardUtils.Shortcut(**shortcut),
-			section_type='Dict'
+			sectionType='Dict'
 		)),
 		('LocalizedWideString', XModLib.XMLConfigReader.LocalizedWideStringXMLReaderMeta.construct(
 			'LocalizedWideStringXMLReader',
@@ -19,18 +19,18 @@ def loadConfiguration():
 		)),
 		('CorrectionPanelSettings', XModLib.XMLConfigReader.OptionalDictXMLReaderMeta.construct(
 			'PanelSettingsXMLReader',
-			required_keys=('visible', ),
-			default_keys=('visible', )
+			requiredKeys=('visible', ),
+			defaultKeys=('visible', )
 		)),
 		('TargetPanelSettings', XModLib.XMLConfigReader.OptionalDictXMLReaderMeta.construct(
 			'PanelSettingsXMLReader',
-			required_keys=('visible', ),
-			default_keys=('visible', )
+			requiredKeys=('visible', ),
+			defaultKeys=('visible', )
 		)),
 		('AimingPanelSettings', XModLib.XMLConfigReader.OptionalDictXMLReaderMeta.construct(
 			'PanelSettingsXMLReader',
-			required_keys=('visible', ),
-			default_keys=('visible', 'template', 'position')
+			requiredKeys=('visible', ),
+			defaultKeys=('visible', 'template', 'position')
 		))
 	))
 	defaultConfig = {
@@ -279,7 +279,7 @@ def loadConfiguration():
 			}
 		}
 	}
-	mainSection = configReader.open_section(os.path.splitext(__file__)[0] + '.xml')
+	mainSection = XModLib.XMLConfigReader.openSection(os.path.splitext(__file__)[0] + '.xml')
 	if mainSection is None:
 		print '[{}] Config file is missing. Loading defaults.'.format(__application__[1])
 	else:
