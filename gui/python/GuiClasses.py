@@ -157,7 +157,9 @@ class GuiBattleBusinessHandler(GuiBaseBusinessHandler):
 	def _handleCtrlModeDisableEvent(self, event):
 		ctrlModeName = event.ctx['ctrlModeName']
 		for alias in (GuiSettings.CORRECTION_PANEL_ALIAS, GuiSettings.TARGET_PANEL_ALIAS, GuiSettings.AIMING_PANEL_ALIAS):
-			self._updatePanelConfig(alias, {'visible': False})
+			config = self._staticConfigs.get(alias, {}).get('default', {}).copy()
+			config.update(self._ingameConfigs.get(alias, {}).get('default', {}))
+			self._updatePanelConfig(alias, config)
 		self._ctrlModeName = None
 		return
 
@@ -176,5 +178,7 @@ class GuiGlobalBusinessHandler(GuiBaseBusinessHandler):
 
 	def _handleComponentRegistrationEvent(self, event):
 		if event.alias in (GuiSettings.CORRECTION_PANEL_ALIAS, GuiSettings.TARGET_PANEL_ALIAS, GuiSettings.AIMING_PANEL_ALIAS):
-			self._updatePanelConfig(event.alias, self._staticConfigs.get(event.alias, {}).get('default', {}))
+			config = self._staticConfigs.get(event.alias, {}).get('default', {}).copy()
+			config.update(self._ingameConfigs.get(event.alias, {}).get('default', {}))
+			self._updatePanelConfig(event.alias, config)
 		return

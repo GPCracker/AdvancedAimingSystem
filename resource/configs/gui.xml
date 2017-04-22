@@ -22,7 +22,7 @@
 				<!-- Параметры по умолчанию (все доступные) для графического элемента, загружаемые после отображения элемента. -->
 				<default>
 					<alpha>1.0</alpha>
-					<visible>True</visible>
+					<visible>False</visible>
 					<background></background>
 					<tooltip>#AdvancedAimingSystem:gui/CorrectionPanel/default/tooltip;</tooltip>
 					<template>#AdvancedAimingSystem:gui/CorrectionPanel/default/text;</template>
@@ -57,7 +57,7 @@
 			<AdvancedAimingSystemTargetPanel>
 				<default>
 					<alpha>1.0</alpha>
-					<visible>True</visible>
+					<visible>False</visible>
 					<background></background>
 					<tooltip>#AdvancedAimingSystem:gui/TargetPanel/default/tooltip;</tooltip>
 					<template>#AdvancedAimingSystem:gui/TargetPanel/default/text;</template>
@@ -79,7 +79,7 @@
 			<AdvancedAimingSystemAimingPanel>
 				<default>
 					<alpha>1.0</alpha>
-					<visible>True</visible>
+					<visible>False</visible>
 					<background>img://mods/GPCracker.AdvancedAimingSystem/icons/AimingInfoBackground.png</background>
 					<tooltip>#AdvancedAimingSystem:gui/AimingPanel/default/tooltip;</tooltip>
 					<template>#AdvancedAimingSystem:gui/AimingPanel/default/text;</template>
