@@ -31,6 +31,10 @@ def loadConfiguration():
 			'PanelSettingsXMLReader',
 			requiredKeys=('visible', ),
 			defaultKeys=('visible', 'template', 'position')
+		)),
+		('InfoPanelsIngameSettings', XModLib.IngameSettings.IngameSettingsXMLReaderMeta.construct(
+			'InfoPanelsIngameSettingsXMLReader',
+			constructor=XModLib.IngameSettings.IngameSettingsDictDataObject.loader('mods/GPCracker.AdvancedAimingSystem/gui/panels/ingame', True)
 		))
 	))
 	defaultConfig = {
@@ -275,7 +279,7 @@ def loadConfiguration():
 						})
 					}
 				},
-				'ingame': ('Dict', {})
+				'ingame': ('InfoPanelsIngameSettings', 'KGRwMQou')
 			}
 		}
 	}

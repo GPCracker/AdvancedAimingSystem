@@ -136,11 +136,13 @@ class GuiBattleBusinessHandler(GuiBaseBusinessHandler):
 	def _handleInfoPanelDragEvent(self, event):
 		if self._ctrlModeName is not None:
 			self._ingameConfigs.setdefault(event.ctx['alias'], {}).setdefault(self._ctrlModeName, {})['position'] = event.ctx['position']
+			self._ingameConfigs.save()
 		return
 
 	def _handleInfoPanelDropEvent(self, event):
 		if self._ctrlModeName is not None:
 			self._ingameConfigs.setdefault(event.ctx['alias'], {}).setdefault(self._ctrlModeName, {})['position'] = event.ctx['position']
+			self._ingameConfigs.save()
 		return
 
 	def _handleCtrlModeEnableEvent(self, event):

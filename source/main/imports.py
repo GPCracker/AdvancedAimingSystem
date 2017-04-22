@@ -69,6 +69,7 @@ import XModLib.KeyboardUtils
 import XModLib.BallisticsMath
 import XModLib.ClientMessages
 import XModLib.CollisionUtils
+import XModLib.IngameSettings
 import XModLib.TargetScanners
 import XModLib.XMLConfigReader
 
