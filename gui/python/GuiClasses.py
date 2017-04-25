@@ -103,6 +103,8 @@ class GuiSettings(object):
 		)
 
 class GuiEvent(gui.shared.events.GameEvent):
+	INFO_PANEL_INGAME_CONFIG = 'game/AdvancedAimingSystem/InfoPanelIngameConfig'
+	INFO_PANEL_INGAME_RESET = 'game/AdvancedAimingSystem/InfoPanelIngameReset'
 	INFO_PANEL_CONFIG = 'game/AdvancedAimingSystem/InfoPanelConfig'
 	INFO_PANEL_UPDATE = 'game/AdvancedAimingSystem/InfoPanelUpdate'
 	INFO_PANEL_DRAG = 'game/AdvancedAimingSystem/InfoPanelDrag'
@@ -123,6 +125,8 @@ class GuiBattleBusinessHandler(GuiBaseBusinessHandler):
 		self._ingameConfigs = ingameConfigs
 		super(GuiBattleBusinessHandler, self).__init__(
 			(
+				(GuiEvent.INFO_PANEL_INGAME_CONFIG, self._handleInfoPanelIngameConfigEvent),
+				(GuiEvent.INFO_PANEL_INGAME_RESET, self._handleInfoPanelIngameResetEvent),
 				(GuiEvent.INFO_PANEL_DRAG, self._handleInfoPanelDragEvent),
 				(GuiEvent.INFO_PANEL_DROP, self._handleInfoPanelDropEvent),
 				(GuiEvent.CTRL_MODE_ENABLE, self._handleCtrlModeEnableEvent),
@@ -131,6 +135,29 @@ class GuiBattleBusinessHandler(GuiBaseBusinessHandler):
 			gui.app_loader.settings.APP_NAME_SPACE.SF_BATTLE,
 			gui.shared.EVENT_BUS_SCOPE.BATTLE
 		)
+		return
+
+	def _reconfigureInfoPanel(self, alias):
+		if self._ctrlModeName is not None:
+			config = self._staticConfigs.get(alias, {}).get('default', {}).copy()
+			config.update(self._ingameConfigs.get(alias, {}).get('default', {}))
+			config.update(self._staticConfigs.get(alias, {}).get(self._ctrlModeName, {}))
+			config.update(self._ingameConfigs.get(alias, {}).get(self._ctrlModeName, {}))
+			self._updatePanelConfig(alias, config)
+		return
+
+	def _handleInfoPanelIngameConfigEvent(self, event):
+		if self._ctrlModeName is not None:
+			self._ingameConfigs.setdefault(event.ctx['alias'], {}).setdefault(self._ctrlModeName, {}).update(event.ctx['config'])
+			self._reconfigureInfoPanel(event.ctx['alias'])
+			self._ingameConfigs.save()
+		return
+
+	def _handleInfoPanelIngameResetEvent(self, event):
+		if self._ctrlModeName is not None:
+			self._ingameConfigs.setdefault(event.ctx['alias'], {}).setdefault(self._ctrlModeName, {}).clear()
+			self._reconfigureInfoPanel(event.ctx['alias'])
+			self._ingameConfigs.save()
 		return
 
 	def _handleInfoPanelDragEvent(self, event):
