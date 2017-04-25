@@ -21,6 +21,68 @@ class GuiLoaderView(XModLib.pygui.battle.views.PanelsLoaderView.PanelsLoaderView
 			self.destroy()
 		return
 
+class GuiInfoPanelContextMenuHandler(XModLib.pygui.battle.views.handlers.ContextMenuHandler.ContextMenuHandler):
+	OPTIONS = (
+		('hideInfoPanel', '_hideInfoPanel', _config_['gui']['panels']['context']['hideInfoPanel'], '', True, None),
+		('resetInfoPanel', '_resetInfoPanel', _config_['gui']['panels']['context']['resetInfoPanel'], '', True, None)
+	)
+
+	@classmethod
+	def _getOptionsHandlers(cls):
+		def _getOptionsHandlersGenerator(options):
+			for idx, handler, label, icon, enabled, submenu in options:
+				if submenu is not None:
+					for entry in _getOptionsHandlersGenerator(submenu):
+						yield entry
+				else:
+					yield idx, handler
+			return
+		return dict(_getOptionsHandlersGenerator(cls.OPTIONS))
+
+	@classmethod
+	def _getOptionsItems(cls):
+		def _makeOptionsItems(options):
+			return [cls._makeItem(idx, label, optInitData={'enabled': enabled, 'iconType': icon}, optSubMenu=_makeOptionsItems(submenu) if submenu is not None else submenu) for idx, handler, label, icon, enabled, submenu in options]
+		return _makeOptionsItems(cls.OPTIONS)
+
+	def __init__(self, cmProxy, ctx=None):
+		super(GuiInfoPanelContextMenuHandler, self).__init__(cmProxy, ctx=ctx, handlers=self._getOptionsHandlers())
+		return
+
+	def fini(self):
+		super(GuiInfoPanelContextMenuHandler, self).fini()
+		return
+
+	def _initFlashValues(self, ctx):
+		super(GuiInfoPanelContextMenuHandler, self)._initFlashValues(ctx)
+		self._alias = ctx.alias
+		return
+
+	def _clearFlashValues(self):
+		super(GuiInfoPanelContextMenuHandler, self)._clearFlashValues()
+		self._alias = None
+		return
+
+	def _hideInfoPanel(self):
+		gui.shared.g_eventBus.handleEvent(GuiEvent(GuiEvent.INFO_PANEL_INGAME_CONFIG, {'alias': self._alias, 'config': {'visible': False}}), gui.shared.EVENT_BUS_SCOPE.BATTLE)
+		return
+
+	def _resetInfoPanel(self):
+		gui.shared.g_eventBus.handleEvent(GuiEvent(GuiEvent.INFO_PANEL_INGAME_RESET, {'alias': self._alias}), gui.shared.EVENT_BUS_SCOPE.BATTLE)
+		return
+
+	def _generateOptions(self, ctx=None):
+		return self._getOptionsItems()
+
+class GuiCorrectionPanelContextMenuHandler(GuiInfoPanelContextMenuHandler):
+	pass
+
+class GuiTargetPanelContextMenuHandler(GuiInfoPanelContextMenuHandler):
+	pass
+
+class GuiAimingPanelContextMenuHandler(GuiInfoPanelContextMenuHandler):
+	pass
+
 class GuiInfoPanel(XModLib.pygui.battle.views.components.panels.TextPanel.TextPanel):
 	def __init__(self, *args, **kwargs):
 		super(GuiInfoPanel, self).__init__(*args, **kwargs)
@@ -92,6 +154,14 @@ class GuiSettings(object):
 	AIMING_PANEL_ALIAS = 'AdvancedAimingSystemAimingPanel'
 	LOADER_VIEW_ALIAS = 'AdvancedAimingSystemLoaderView'
 	SWF_PATH = 'AdvancedAimingSystem.swf'
+
+	@staticmethod
+	def getContextMenuHandlers():
+		return (
+			GuiCorrectionPanelContextMenuHandler.getHandler(GuiSettings.CORRECTION_PANEL_ALIAS),
+			GuiTargetPanelContextMenuHandler.getHandler(GuiSettings.TARGET_PANEL_ALIAS),
+			GuiAimingPanelContextMenuHandler.getHandler(GuiSettings.AIMING_PANEL_ALIAS)
+		)
 
 	@staticmethod
 	def getViewSettings():

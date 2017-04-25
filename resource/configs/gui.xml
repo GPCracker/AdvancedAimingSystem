@@ -12,6 +12,12 @@
 	<!-- Info panels settings. -->
 	<!-- Настройки информационных панелей. -->
 	<panels>
+		<!-- Context menu labels (for localization purposes). -->
+		<!-- Пункты контекстного меню (используется для локализации). -->
+		<context>
+			<hideInfoPanel>#AdvancedAimingSystem:gui/panels/context/hideInfoPanel;</hideInfoPanel>
+			<resetInfoPanel>#AdvancedAimingSystem:gui/panels/context/resetInfoPanel;</resetInfoPanel>
+		</context>
 		<!-- Static settings (could be changed only by user). -->
 		<!-- Статические настройки (могут быть изменены только пользователем). -->
 		<static>

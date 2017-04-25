@@ -38,6 +38,12 @@ msgstr "[ДАЛЬНОМЕР] СТРАТЕГИЧЕСКИЙ по цели АКТИ
 msgid "strategicAimCorrection/targetMode/onDeactivate"
 msgstr "[ДАЛЬНОМЕР] СТРАТЕГИЧЕСКИЙ по цели ДЕАКТИВИРОВАН."
 
+msgid "gui/panels/context/hideInfoPanel"
+msgstr "Спрятать эту панель"
+
+msgid "gui/panels/context/resetInfoPanel"
+msgstr "Сбросить динамические настройки"
+
 msgid "gui/panels/CorrectionPanel/default/tooltip"
 msgstr "Панель информации корректировщика дальномера."
 

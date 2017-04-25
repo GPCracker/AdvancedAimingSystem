@@ -77,4 +77,5 @@ import XModLib.XMLConfigReader
 # X-Mod GUI Library
 # *************************
 import XModLib.pygui.battle.views.PanelsLoaderView
+import XModLib.pygui.battle.views.handlers.ContextMenuHandler
 import XModLib.pygui.battle.views.components.panels.TextPanel

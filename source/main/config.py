@@ -163,6 +163,10 @@ def loadConfiguration():
 			'enabled': ('Bool', True),
 			'updateInterval': ('Float', 0.04),
 			'panels': {
+				'context': {
+					'hideInfoPanel': ('LocalizedWideString', u'Hide this panel'),
+					'resetInfoPanel': ('LocalizedWideString', u'Reset ingame settings')
+				},
 				'static': {
 					'AdvancedAimingSystemCorrectionPanel': {
 						'default': {
