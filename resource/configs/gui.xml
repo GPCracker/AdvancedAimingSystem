@@ -24,8 +24,8 @@
 					<alpha>1.0</alpha>
 					<visible>False</visible>
 					<background></background>
-					<tooltip>#AdvancedAimingSystem:gui/CorrectionPanel/default/tooltip;</tooltip>
-					<template>#AdvancedAimingSystem:gui/CorrectionPanel/default/text;</template>
+					<tooltip>#AdvancedAimingSystem:gui/panels/CorrectionPanel/default/tooltip;</tooltip>
+					<template>#AdvancedAimingSystem:gui/panels/CorrectionPanel/default/text;</template>
 					<position>0.0 0.3</position>
 					<size>450.0 25.0</size>
 				</default>
@@ -59,8 +59,8 @@
 					<alpha>1.0</alpha>
 					<visible>False</visible>
 					<background></background>
-					<tooltip>#AdvancedAimingSystem:gui/TargetPanel/default/tooltip;</tooltip>
-					<template>#AdvancedAimingSystem:gui/TargetPanel/default/text;</template>
+					<tooltip>#AdvancedAimingSystem:gui/panels/TargetPanel/default/tooltip;</tooltip>
+					<template>#AdvancedAimingSystem:gui/panels/TargetPanel/default/text;</template>
 					<position>0.0 0.4</position>
 					<size>450.0 25.0</size>
 				</default>
@@ -81,24 +81,24 @@
 					<alpha>1.0</alpha>
 					<visible>False</visible>
 					<background>img://mods/GPCracker.AdvancedAimingSystem/icons/AimingInfoBackground.png</background>
-					<tooltip>#AdvancedAimingSystem:gui/AimingPanel/default/tooltip;</tooltip>
-					<template>#AdvancedAimingSystem:gui/AimingPanel/default/text;</template>
+					<tooltip>#AdvancedAimingSystem:gui/panels/AimingPanel/default/tooltip;</tooltip>
+					<template>#AdvancedAimingSystem:gui/panels/AimingPanel/default/text;</template>
 					<position>0.4 -0.1</position>
 					<size>200.0 130.0</size>
 				</default>
 				<arcade>
 					<visible>True</visible>
-					<template>#AdvancedAimingSystem:gui/AimingPanel/arcade/text;</template>
+					<template>#AdvancedAimingSystem:gui/panels/AimingPanel/arcade/text;</template>
 					<position>0.4 -0.1</position>
 				</arcade>
 				<sniper>
 					<visible>True</visible>
-					<template>#AdvancedAimingSystem:gui/AimingPanel/sniper/text;</template>
+					<template>#AdvancedAimingSystem:gui/panels/AimingPanel/sniper/text;</template>
 					<position>0.4 -0.25</position>
 				</sniper>
 				<strategic>
 					<visible>True</visible>
-					<template>#AdvancedAimingSystem:gui/AimingPanel/strategic/text;</template>
+					<template>#AdvancedAimingSystem:gui/panels/AimingPanel/strategic/text;</template>
 					<position>-0.3 -0.4</position>
 				</strategic>
 			</AdvancedAimingSystemAimingPanel>

@@ -38,29 +38,29 @@ msgstr "[ДАЛЬНОМЕР] СТРАТЕГИЧЕСКИЙ по цели АКТИ
 msgid "strategicAimCorrection/targetMode/onDeactivate"
 msgstr "[ДАЛЬНОМЕР] СТРАТЕГИЧЕСКИЙ по цели ДЕАКТИВИРОВАН."
 
-msgid "gui/CorrectionPanel/default/tooltip"
+msgid "gui/panels/CorrectionPanel/default/tooltip"
 msgstr "Панель информации корректировщика дальномера."
 
-msgid "gui/CorrectionPanel/default/text"
+msgid "gui/panels/CorrectionPanel/default/text"
 msgstr "<p align='center'><font color='#00FF00' size='20' face='$UniversCondC'>Дальномер: {{manualInfo:.1f}}м.</font></p>"
 
-msgid "gui/TargetPanel/default/tooltip"
+msgid "gui/panels/TargetPanel/default/tooltip"
 msgstr "Панель информации сканера целей."
 
-msgid "gui/TargetPanel/default/text"
+msgid "gui/panels/TargetPanel/default/text"
 msgstr "<p align='center'><font color='#FF7F00' size='20' face='$UniversCondC'>Цель: {{shortName}}; Дистанция: {{distance:.1f}}м; Скорость: {{speedMS:.1f}}м/с.</font></p>"
 
-msgid "gui/AimingPanel/default/tooltip"
+msgid "gui/panels/AimingPanel/default/tooltip"
 msgstr "Панель информации о сведении."
 
-msgid "gui/AimingPanel/default/text"
+msgid "gui/panels/AimingPanel/default/text"
 msgstr "<textformat leftmargin='20' rightmargin='20' tabstops='[0,105]'><font color='#64F0B4' size='20' face='$UniversCondC'>\tОсталось:\t{{remainingAimingTime:.2f}}с;\n\tРасстояние:\t{{aimingDistance:.1f}}м;\n\tРазброс:\t{{deviation:.2f}}м;\n\tВремя полета:\t{{flyTime:.2f}}с;\n\tУгол падения:\t{{hitAngleDeg:+.1f}}°;</font></textformat>"
 
-msgid "gui/AimingPanel/arcade/text"
+msgid "gui/panels/AimingPanel/arcade/text"
 msgstr "<textformat leftmargin='20' rightmargin='20' tabstops='[0,105]'><font color='#64F0B4' size='20' face='$UniversCondC'>\tОсталось:\t{{remainingAimingTime:.2f}}с;\n\tРасстояние:\t{{aimingDistance:.1f}}м;\n\tРазброс:\t{{deviation:.2f}}м;\n\tВремя полета:\t{{flyTime:.2f}}с;\n\tУгол падения:\t{{hitAngleDeg:+.1f}}°;</font></textformat>"
 
-msgid "gui/AimingPanel/sniper/text"
+msgid "gui/panels/AimingPanel/sniper/text"
 msgstr "<textformat leftmargin='20' rightmargin='20' tabstops='[0,105]'><font color='#64B4F0' size='20' face='$UniversCondC'>\tОсталось:\t{{remainingAimingTime:.2f}}с;\n\tРасстояние:\t{{aimingDistance:.1f}}м;\n\tРазброс:\t{{deviation:.2f}}м;\n\tВремя полета:\t{{flyTime:.2f}}с;\n\tУгол падения:\t{{hitAngleDeg:+.1f}}°;</font></textformat>"
 
-msgid "gui/AimingPanel/strategic/text"
+msgid "gui/panels/AimingPanel/strategic/text"
 msgstr "<textformat leftmargin='20' rightmargin='20' tabstops='[0,105]'><font color='#B46464' size='20' face='$UniversCondC'>\tОсталось:\t{{remainingAimingTime:.2f}}с;\n\tРасстояние:\t{{aimingDistance:.1f}}м;\n\tРазброс:\t{{deviation:.2f}}м;\n\tВремя полета:\t{{flyTime:.2f}}с;\n\tУгол падения:\t{{hitAngleDeg:+.1f}}°;</font></textformat>"
