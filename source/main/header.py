@@ -2,7 +2,7 @@ __application__ = ('Advanced Aiming System Mod', 'AdvancedAimingSystem', 'GPCrac
 __official_topic__ = 'http://www.koreanrandom.com/forum/topic/16559-/'
 __authors__ = ('GPCracker', )
 __version__ = '<<version>>'
-__xmodlib__ = ('v0.1.7', None)
+__xmodlib__ = ('v0.1.8', None)
 __client__ = (('ru', ), '<<client>>', None)
 
 # *************************
