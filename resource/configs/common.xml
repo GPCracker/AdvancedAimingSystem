@@ -43,7 +43,7 @@
 			<enabled>True</enabled>
 			<activated>True</activated>
 			<shortcut>
-				<sequence>KEY_LCONTROL+KEY_X</sequence>
+				<sequence>KEY_LALT+KEY_N</sequence>
 				<switch>True</switch>
 				<invert>False</invert>
 			</shortcut>

@@ -59,7 +59,7 @@ def loadConfiguration():
 					'enabled': ('Bool', True),
 					'activated': ('Bool', True),
 					'shortcut': ('AdvancedShortcut', {
-						'sequence': ('String', 'KEY_LCONTROL+KEY_X'),
+						'sequence': ('String', 'KEY_LALT+KEY_N'),
 						'switch': ('Bool', True),
 						'invert': ('Bool', False),
 					}),
@@ -102,7 +102,7 @@ def loadConfiguration():
 					'enabled': ('Bool', False),
 					'activated': ('Bool', True),
 					'shortcut': ('AdvancedShortcut', {
-						'sequence': ('String', 'KEY_LCONTROL+KEY_T'),
+						'sequence': ('String', 'KEY_LALT+KEY_T'),
 						'switch': ('Bool', True),
 						'invert': ('Bool', False),
 					}),
@@ -124,7 +124,7 @@ def loadConfiguration():
 					'enabled': ('Bool', True),
 					'activated': ('Bool', True),
 					'shortcut': ('AdvancedShortcut', {
-						'sequence': ('String', 'KEY_LCONTROL+KEY_T'),
+						'sequence': ('String', 'KEY_LALT+KEY_T'),
 						'switch': ('Bool', True),
 						'invert': ('Bool', False),
 					}),
@@ -146,7 +146,7 @@ def loadConfiguration():
 					'enabled': ('Bool', True),
 					'activated': ('Bool', False),
 					'shortcut': ('AdvancedShortcut', {
-						'sequence': ('String', 'KEY_LCONTROL+KEY_T'),
+						'sequence': ('String', 'KEY_LALT+KEY_T'),
 						'switch': ('Bool', True),
 						'invert': ('Bool', False),
 					}),
