@@ -84,18 +84,6 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 						'red'
 					)
 				self.ctrl.XAimCorrection.targetEnabled = config['activated']
-		## HotKeys - SPG Sniper Mode
-		config = _config_['commonAS']['sniperModeSPG']
-		shortcutHandle = config['enabled'] and config['shortcut'](event)
-		if shortcutHandle and XModLib.ArenaInfo.getClass(BigWorld.player().playerVehicleID) == 'SPG':
-			if shortcutHandle.pushed:
-				self.onControlModeChanged(
-					AvatarInputHandler.aih_constants.CTRL_MODE_NAME.SNIPER,
-					preferredPos=self.ctrl.camera.aimingSystem.getDesiredShotPoint(),
-					aimingMode=self.ctrl.aimingMode,
-					saveZoom=True,
-					equipmentID=None
-				)
 	## HotKeys - Sniper
 	elif self.ctrlModeName == AvatarInputHandler.aih_constants.CTRL_MODE_NAME.SNIPER:
 		## HotKeys - AimCorrection
@@ -128,19 +116,6 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 						'red'
 					)
 				self.ctrl.XAimCorrection.targetEnabled = config['activated']
-		## HotKeys - SPG Sniper Mode
-		config = _config_['commonAS']['sniperModeSPG']
-		shortcutHandle = config['enabled'] and config['shortcut'](event)
-		if shortcutHandle and XModLib.ArenaInfo.getClass(BigWorld.player().playerVehicleID) == 'SPG':
-			if shortcutHandle.pushed:
-				self.onControlModeChanged(
-					AvatarInputHandler.aih_constants.CTRL_MODE_NAME.ARCADE,
-					preferredPos=self.ctrl.camera.aimingSystem.getDesiredShotPoint(),
-					turretYaw=self.ctrl.camera.aimingSystem.turretYaw,
-					gunPitch=self.ctrl.camera.aimingSystem.gunPitch,
-					aimingMode=self.ctrl.aimingMode,
-					closesDist=False
-				)
 	## HotKeys - Strategic
 	elif self.ctrlModeName == AvatarInputHandler.aih_constants.CTRL_MODE_NAME.STRATEGIC:
 		## HotKeys - AimCorrection
