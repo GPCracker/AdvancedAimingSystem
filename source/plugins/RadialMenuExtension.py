@@ -31,7 +31,7 @@ def new_RadialMenu_show(self):
 	player = BigWorld.player()
 	target = BigWorld.target()
 	# Target substitution begins.
-	config = _config_['commonAS']['radialMenu']
+	config = _config_['plugins']['radialMenu']
 	if target is None and config['useTargetScan']:
 		targetScanner = getattr(player.inputHandler, 'XTargetScanner', None)
 		if targetScanner is not None:
@@ -57,7 +57,7 @@ def new_ChatCommandsController_handleShortcutChatCommand(self, key):
 	player = BigWorld.player()
 	target = BigWorld.target()
 	# Target substitution begins.
-	config = _config_['commonAS']['radialMenu']
+	config = _config_['plugins']['radialMenu']
 	if target is None and config['useTargetScan']:
 		targetScanner = getattr(player.inputHandler, 'XTargetScanner', None)
 		if targetScanner is not None:

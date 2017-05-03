@@ -64,7 +64,7 @@ def new_ArcadeControlMode_handleKeyEvent(self, isDown, key, mods, event=None):
 	event = XModLib.KeyboardUtils.KeyboardEvent(event)
 	## HotKeys - SPG Sniper Mode
 	if self._aih.isSPG:
-		config = _config_['commonAS']['sniperModeSPG']
+		config = _config_['plugins']['sniperModeSPG']
 		shortcutHandle = config['enabled'] and config['shortcut'](event)
 		if shortcutHandle and shortcutHandle.pushed:
 			if not BigWorld.player().isGunLocked and not BigWorld.player().isOwnBarrelUnderWater:
@@ -86,7 +86,7 @@ def new_SniperControlMode_handleKeyEvent(self, isDown, key, mods, event=None):
 	event = XModLib.KeyboardUtils.KeyboardEvent(event)
 	## HotKeys - SPG Sniper Mode
 	if self._aih.isSPG:
-		config = _config_['commonAS']['sniperModeSPG']
+		config = _config_['plugins']['sniperModeSPG']
 		shortcutHandle = config['enabled'] and config['shortcut'](event)
 		if shortcutHandle and shortcutHandle.pushed:
 			if not BigWorld.player().isGunLocked and not BigWorld.player().isOwnBarrelUnderWater:

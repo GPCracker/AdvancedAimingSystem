@@ -63,10 +63,10 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 	## HotKeys - Common
 	if self.ctrlModeName in (AvatarInputHandler.aih_constants.CTRL_MODE_NAME.ARCADE, AvatarInputHandler.aih_constants.CTRL_MODE_NAME.SNIPER, AvatarInputHandler.aih_constants.CTRL_MODE_NAME.STRATEGIC):
 		## HotKeys - SafeShot
-		config = _config_['commonAS']['safeShot']
+		config = _config_['plugins']['safeShot']
 		if config['enabled']:
 			## HotKeys - SafeShot - Global
-			config = _config_['commonAS']['safeShot']
+			config = _config_['plugins']['safeShot']
 			shortcutHandle = config['enabled'] and config['shortcut'](event)
 			if shortcutHandle and (not shortcutHandle.switch or shortcutHandle.pushed):
 				config['activated'] = shortcutHandle(config['activated'])
@@ -92,7 +92,7 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 # *************************
 @XModLib.HookUtils.methodHookExt(_inject_hooks_, Avatar.PlayerAvatar, 'shoot', invoke=XModLib.HookUtils.HookInvoke.MASTER)
 def new_PlayerAvatar_shoot(old_PlayerAvatar_shoot, self, *args, **kwargs):
-	config = _config_['commonAS']['safeShot']
+	config = _config_['plugins']['safeShot']
 	if not config['enabled'] or not config['activated']:
 		return old_PlayerAvatar_shoot(self, *args, **kwargs)
 	gunTargetClient = getattr(self.inputHandler.ctrl, '_clientTarget', None)

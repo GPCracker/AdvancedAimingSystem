@@ -38,11 +38,11 @@ def new_AutoAimControlMode_handleKeyEvent(old_AutoAimControlMode_handleKeyEvent,
 	if not result and CommandMapping.g_instance.get('CMD_CM_LOCK_TARGET') == key and isDown:
 		target = BigWorld.target()
 		# Target substitution begins.
-		if target is None and _config_['commonAS']['autoAim']['useTargetScan']:
+		if target is None and _config_['plugins']['autoAim']['useTargetScan']:
 			targetScanner = getattr(self._aih, 'XTargetScanner', None)
 			if targetScanner is not None:
 				target = targetScanner.scanTarget().target
-		if target is None and _config_['commonAS']['autoAim']['useTargetInfo']:
+		if target is None and _config_['plugins']['autoAim']['useTargetInfo']:
 			targetInfo = getattr(self._aih, 'XTargetInfo', None)
 			if targetInfo is not None and not targetInfo.isExpired:
 				target = targetInfo.getVehicle()

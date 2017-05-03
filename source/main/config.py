@@ -73,53 +73,6 @@ def loadConfiguration():
 					'shortcut': ('SimpleShortcut', 'KEY_T', {'switch': True, 'invert': False})
 				}
 			},
-			'safeShot': {
-				'enabled': ('Bool', False),
-				'activated': ('Bool', True),
-				'shortcut': ('AdvancedShortcut', {
-					'sequence': ('String', 'KEY_LALT'),
-					'switch': ('Bool', False),
-					'invert': ('Bool', True),
-				}),
-				'message': {
-					'onActivate': ('LocalizedWideString', u'SafeShot: ENABLED.'),
-					'onDeactivate': ('LocalizedWideString', u'SafeShot: DISABLED.')
-				},
-				'useGunTarget': ('Bool', True),
-				'considerBlueHostile': ('Bool', False),
-				'fragExpirationTimeout': ('Float', 2.0),
-				'template': ('LocalizedWideString', u'[{{reason}}] Shot has been blocked.'),
-				'reasons': {
-					'team': {
-						'enabled': ('Bool', True),
-						'chat': {
-							'enabled': ('Bool', True),
-							'message': ('LocalizedWideString', u'{{player}} ({{vehicle}}), you\'re in my line of fire!')
-						},
-						'template': ('LocalizedWideString', u'friendly')
-					},
-					'dead': {
-						'enabled': ('Bool', True),
-						'template': ('LocalizedWideString', u'corpse')
-					},
-					'waste': {
-						'enabled': ('Bool', False),
-						'template': ('LocalizedWideString', u'waste')
-					}
-				}
-			},
-			'sniperModeSPG': {
-				'enabled': ('Bool', False),
-				'shortcut': ('SimpleShortcut', 'KEY_E', {'switch': True, 'invert': False})
-			},
-			'autoAim': {
-				'useTargetScan': ('Bool', False),
-				'useTargetInfo': ('Bool', False)
-			},
-			'radialMenu': {
-				'useTargetScan': ('Bool', False),
-				'useTargetInfo': ('Bool', False)
-			},
 			'expertPerk': {
 				'enabled': ('Bool', False),
 				'cacheExtrasInfo': ('Bool', True),
@@ -193,6 +146,55 @@ def loadConfiguration():
 				},
 				'ignoreVehicles': ('Bool', False)
 			}
+		},
+		'plugins': {
+			'safeShot': {
+				'enabled': ('Bool', False),
+				'activated': ('Bool', True),
+				'shortcut': ('AdvancedShortcut', {
+					'sequence': ('String', 'KEY_LALT'),
+					'switch': ('Bool', False),
+					'invert': ('Bool', True),
+				}),
+				'message': {
+					'onActivate': ('LocalizedWideString', u'SafeShot: ENABLED.'),
+					'onDeactivate': ('LocalizedWideString', u'SafeShot: DISABLED.')
+				},
+				'useGunTarget': ('Bool', True),
+				'considerBlueHostile': ('Bool', False),
+				'fragExpirationTimeout': ('Float', 2.0),
+				'template': ('LocalizedWideString', u'[{{reason}}] Shot has been blocked.'),
+				'reasons': {
+					'team': {
+						'enabled': ('Bool', True),
+						'chat': {
+							'enabled': ('Bool', True),
+							'message': ('LocalizedWideString', u'{{player}} ({{vehicle}}), you\'re in my line of fire!')
+						},
+						'template': ('LocalizedWideString', u'friendly')
+					},
+					'dead': {
+						'enabled': ('Bool', True),
+						'template': ('LocalizedWideString', u'corpse')
+					},
+					'waste': {
+						'enabled': ('Bool', False),
+						'template': ('LocalizedWideString', u'waste')
+					}
+				}
+			},
+			'sniperModeSPG': {
+				'enabled': ('Bool', False),
+				'shortcut': ('SimpleShortcut', 'KEY_E', {'switch': True, 'invert': False})
+			},
+			'autoAim': {
+				'useTargetScan': ('Bool', False),
+				'useTargetInfo': ('Bool', False)
+			},
+			'radialMenu': {
+				'useTargetScan': ('Bool', False),
+				'useTargetInfo': ('Bool', False)
+			},
 		},
 		'gui': {
 			'enabled': ('Bool', True),
