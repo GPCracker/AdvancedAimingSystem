@@ -71,6 +71,15 @@ msgstr "Панель информации корректировщика дал�
 msgid "gui/panels/CorrectionPanel/default/text"
 msgstr "<p align='center'><font color='#00FF00' size='20' face='$UniversCondC'>Дальномер: {{manualInfo:.1f}}м.</font></p>"
 
+msgid "gui/panels/CorrectionPanel/arcade/text"
+msgstr "<p align='center'><font color='#00FF00' size='20' face='$UniversCondC'>Дальномер: {{manualInfo:.1f}}м.</font></p>"
+
+msgid "gui/panels/CorrectionPanel/sniper/text"
+msgstr "<p align='center'><font color='#00FF00' size='20' face='$UniversCondC'>Дальномер: {{manualInfo:.1f}}м.</font></p>"
+
+msgid "gui/panels/CorrectionPanel/strategic/text"
+msgstr "<p align='center'><font color='#00FF00' size='20' face='$UniversCondC'>Абсолютная высота: {{manualInfo:.1f}}м.</font></p>"
+
 msgid "gui/panels/TargetPanel/default/tooltip"
 msgstr "Панель информации сканера целей."
 

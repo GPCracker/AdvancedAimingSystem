@@ -236,7 +236,7 @@ def loadConfiguration():
 							'visible': ('Bool', True),
 							'background': ('String', ''),
 							'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemCorrectionPanel'),
-							'template': ('LocalizedWideString', u'<p align="center"><font color="#00FF00" size="20" face="$UniversCondC">Distance locked: {{manualInfo:.1f}}m.</font></p>'),
+							'template': ('LocalizedWideString', u'<p align="center"><font color="#00FF00" size="20" face="$UniversCondC">Altitude locked: {{manualInfo:.1f}}m.</font></p>'),
 							'position': ('Vector2AsTuple', (0.0, 0.3)),
 							'size': ('Vector2AsTuple', (450.0, 25.0))
 						})
