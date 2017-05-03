@@ -74,7 +74,7 @@ def loadConfiguration():
 				}
 			},
 			'safeShot': {
-				'enabled': ('Bool', True),
+				'enabled': ('Bool', False),
 				'activated': ('Bool', True),
 				'shortcut': ('AdvancedShortcut', {
 					'sequence': ('String', 'KEY_LALT'),

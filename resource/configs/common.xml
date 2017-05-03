@@ -62,7 +62,7 @@
 	<!-- Safe shooting settings. -->
 	<!-- Настройки безопасной стрельбы. -->
 	<safeShot>
-		<enabled>True</enabled>
+		<enabled>False</enabled>
 		<activated>True</activated>
 		<shortcut>
 			<sequence>KEY_LALT</sequence>
