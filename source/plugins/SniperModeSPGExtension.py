@@ -47,15 +47,16 @@ def new_ControlMarkersFactory_createSPGMarkers(old_ControlMarkersFactory_createS
 # *************************
 @XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.control_modes.ArcadeControlMode, '_ArcadeControlMode__activateAlternateMode')
 def new_ArcadeControlMode_activateAlternateMode(self, pos=None, bByScroll=False):
-	if not BigWorld.player().isGunLocked and not BigWorld.player().isOwnBarrelUnderWater:
-		if self._aih.isSPG and bByScroll:
-			self._aih.onControlModeChanged(
-				AvatarInputHandler.aih_constants.CTRL_MODE_NAME.SNIPER,
-				preferredPos=self.camera.aimingSystem.getDesiredShotPoint(),
-				aimingMode=self.aimingMode,
-				saveZoom=False,
-				equipmentID=None
-			)
+	if _config_['plugins']['sniperModeSPG']['enabled']:
+		if not BigWorld.player().isGunLocked and not BigWorld.player().isOwnBarrelUnderWater:
+			if self._aih.isSPG and bByScroll:
+				self._aih.onControlModeChanged(
+					AvatarInputHandler.aih_constants.CTRL_MODE_NAME.SNIPER,
+					preferredPos=self.camera.aimingSystem.getDesiredShotPoint(),
+					aimingMode=self.aimingMode,
+					saveZoom=False,
+					equipmentID=None
+				)
 	return
 
 @XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.control_modes.ArcadeControlMode, 'handleKeyEvent')

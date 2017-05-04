@@ -18,7 +18,6 @@ import AvatarInputHandler.aih_constants
 # *************************
 import Avatar
 import Vehicle
-import AvatarInputHandler
 import AvatarInputHandler.control_modes
 
 # *************************
@@ -52,39 +51,33 @@ def new_Vehicle_onVehicleDeath(self, isDeadStarted=False):
 	return
 
 # *************************
-# AvatarInputHandler Hooks
+# SafeShotControlMode Hooks
 # *************************
-@XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.AvatarInputHandler, 'handleKeyEvent')
-def new_AvatarInputHandler_handleKeyEvent(self, event):
-	if not self._AvatarInputHandler__isStarted or self.isDetached:
-		return
+@XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.control_modes.ArcadeControlMode, 'handleKeyEvent')
+@XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.control_modes.SniperControlMode, 'handleKeyEvent')
+def new_SafeShotControlMode_handleKeyEvent(self, isDown, key, mods, event=None):
 	## Keyboard event parsing
 	event = XModLib.KeyboardUtils.KeyboardEvent(event)
-	## HotKeys - Common
-	if self.ctrlModeName in (AvatarInputHandler.aih_constants.CTRL_MODE_NAME.ARCADE, AvatarInputHandler.aih_constants.CTRL_MODE_NAME.SNIPER, AvatarInputHandler.aih_constants.CTRL_MODE_NAME.STRATEGIC):
-		## HotKeys - SafeShot
-		config = _config_['plugins']['safeShot']
-		if config['enabled']:
-			## HotKeys - SafeShot - Global
-			config = _config_['plugins']['safeShot']
-			shortcutHandle = config['enabled'] and config['shortcut'](event)
-			if shortcutHandle and (not shortcutHandle.switch or shortcutHandle.pushed):
-				config['activated'] = shortcutHandle(config['activated'])
-				if shortcutHandle.switch and config['activated']:
-					XModLib.ClientMessages.showMessageOnPanel(
-						'Player',
-						None,
-						config['message']['onActivate'],
-						'green'
-					)
-				elif shortcutHandle.switch:
-					XModLib.ClientMessages.showMessageOnPanel(
-						'Player',
-						None,
-						config['message']['onDeactivate'],
-						'red'
-					)
-				pass
+	## HotKeys - SafeShot
+	config = _config_['plugins']['safeShot']
+	shortcutHandle = config['enabled'] and config['shortcut'](event)
+	if shortcutHandle and (not shortcutHandle.switch or shortcutHandle.pushed):
+		config['activated'] = shortcutHandle(config['activated'])
+		if shortcutHandle.switch and config['activated']:
+			XModLib.ClientMessages.showMessageOnPanel(
+				'Player',
+				None,
+				config['message']['onActivate'],
+				'green'
+			)
+		elif shortcutHandle.switch:
+			XModLib.ClientMessages.showMessageOnPanel(
+				'Player',
+				None,
+				config['message']['onDeactivate'],
+				'red'
+			)
+		pass
 	return
 
 # *************************
@@ -93,7 +86,9 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 @XModLib.HookUtils.methodHookExt(_inject_hooks_, Avatar.PlayerAvatar, 'shoot', invoke=XModLib.HookUtils.HookInvoke.MASTER)
 def new_PlayerAvatar_shoot(old_PlayerAvatar_shoot, self, *args, **kwargs):
 	config = _config_['plugins']['safeShot']
-	if not config['enabled'] or not config['activated']:
+	def isIgnoredCtrlMode(ctrlModeName):
+		return ctrlModeName in (AvatarInputHandler.aih_constants.CTRL_MODE_NAME.STRATEGIC, )
+	if not config['enabled'] or not config['activated'] or isIgnoredCtrlMode(self.inputHandler.ctrlModeName):
 		return old_PlayerAvatar_shoot(self, *args, **kwargs)
 	gunTargetClient = getattr(self.inputHandler.ctrl, '_clientTarget', None)
 	gunTargetServer = getattr(self.inputHandler.ctrl, '_serverTarget', None)
