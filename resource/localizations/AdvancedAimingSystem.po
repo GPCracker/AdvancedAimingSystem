@@ -59,6 +59,12 @@ msgstr "[ДАЛЬНОМЕР] СТРАТЕГИЧЕСКИЙ по цели АКТИ
 msgid "strategicAimCorrection/targetMode/onDeactivate"
 msgstr "[ДАЛЬНОМЕР] СТРАТЕГИЧЕСКИЙ по цели ДЕАКТИВИРОВАН."
 
+msgid "artyAimCorrection/targetMode/onActivate"
+msgstr "[ДАЛЬНОМЕР] БАЛЛИСТИЧЕСКИЙ по цели АКТИВИРОВАН."
+
+msgid "artyAimCorrection/targetMode/onDeactivate"
+msgstr "[ДАЛЬНОМЕР] БАЛЛИСТИЧЕСКИЙ по цели ДЕАКТИВИРОВАН."
+
 msgid "gui/panels/context/hideInfoPanel"
 msgstr "Спрятать эту панель"
 
@@ -80,6 +86,9 @@ msgstr "<p align='center'><font color='#00FF00' size='20' face='$UniversCondC'>�
 msgid "gui/panels/CorrectionPanel/strategic/text"
 msgstr "<p align='center'><font color='#00FF00' size='20' face='$UniversCondC'>Абсолютная высота: {{manualInfo:.1f}}м.</font></p>"
 
+msgid "gui/panels/CorrectionPanel/arty/text"
+msgstr "<p align='center'><font color='#00FF00' size='20' face='$UniversCondC'>Неопределенный параметр: {{manualInfo:.1f}}м.</font></p>"
+
 msgid "gui/panels/TargetPanel/default/tooltip"
 msgstr "Панель информации сканера целей."
 
@@ -99,4 +108,7 @@ msgid "gui/panels/AimingPanel/sniper/text"
 msgstr "<textformat leftmargin='20' rightmargin='20' tabstops='[0,105]'><font color='#64B4F0' size='20' face='$UniversCondC'>\tОсталось:\t{{remainingAimingTime:.2f}}с;\n\tРасстояние:\t{{aimingDistance:.1f}}м;\n\tРазброс:\t{{deviation:.2f}}м;\n\tВремя полета:\t{{flyTime:.2f}}с;\n\tУгол падения:\t{{hitAngleDeg:+.1f}}°;</font></textformat>"
 
 msgid "gui/panels/AimingPanel/strategic/text"
+msgstr "<textformat leftmargin='20' rightmargin='20' tabstops='[0,105]'><font color='#B46464' size='20' face='$UniversCondC'>\tОсталось:\t{{remainingAimingTime:.2f}}с;\n\tРасстояние:\t{{aimingDistance:.1f}}м;\n\tРазброс:\t{{deviation:.2f}}м;\n\tВремя полета:\t{{flyTime:.2f}}с;\n\tУгол падения:\t{{hitAngleDeg:+.1f}}°;</font></textformat>"
+
+msgid "gui/panels/AimingPanel/arty/text"
 msgstr "<textformat leftmargin='20' rightmargin='20' tabstops='[0,105]'><font color='#B46464' size='20' face='$UniversCondC'>\tОсталось:\t{{remainingAimingTime:.2f}}с;\n\tРасстояние:\t{{aimingDistance:.1f}}м;\n\tРазброс:\t{{deviation:.2f}}м;\n\tВремя полета:\t{{flyTime:.2f}}с;\n\tУгол падения:\t{{hitAngleDeg:+.1f}}°;</font></textformat>"

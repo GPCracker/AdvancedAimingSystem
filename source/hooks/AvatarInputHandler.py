@@ -19,7 +19,7 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 	## Keyboard event parsing
 	event = XModLib.KeyboardUtils.KeyboardEvent(event)
 	## HotKeys - Common
-	if self.ctrlModeName in (AvatarInputHandler.aih_constants.CTRL_MODE_NAME.ARCADE, AvatarInputHandler.aih_constants.CTRL_MODE_NAME.SNIPER, AvatarInputHandler.aih_constants.CTRL_MODE_NAME.STRATEGIC):
+	if self.ctrlModeName in (AvatarInputHandler.aih_constants.CTRL_MODE_NAME.ARCADE, AvatarInputHandler.aih_constants.CTRL_MODE_NAME.SNIPER, AvatarInputHandler.aih_constants.CTRL_MODE_NAME.STRATEGIC, AvatarInputHandler.aih_constants.CTRL_MODE_NAME.ARTY):
 		## HotKeys - TargetScanner
 		config = _config_['commonAS']['targetScanner']
 		if config['enabled']:
@@ -130,6 +130,38 @@ def new_AvatarInputHandler_handleKeyEvent(self, event):
 					self.ctrl.XAimCorrection.setManualInfo()
 			## HotKeys - AimCorrection - Target Mode
 			config = _config_['strategicAS']['aimCorrection']['targetMode']
+			shortcutHandle = config['enabled'] and config['shortcut'](event)
+			if shortcutHandle and (not shortcutHandle.switch or shortcutHandle.pushed):
+				config['activated'] = shortcutHandle(config['activated'])
+				if shortcutHandle.switch and config['activated']:
+					XModLib.ClientMessages.showMessageOnPanel(
+						'Player',
+						None,
+						config['message']['onActivate'],
+						'green'
+					)
+				elif shortcutHandle.switch:
+					XModLib.ClientMessages.showMessageOnPanel(
+						'Player',
+						None,
+						config['message']['onDeactivate'],
+						'red'
+					)
+				self.ctrl.XAimCorrection.targetEnabled = config['activated']
+	## HotKeys - Arty
+	elif self.ctrlModeName == AvatarInputHandler.aih_constants.CTRL_MODE_NAME.ARTY:
+		## HotKeys - AimCorrection
+		config = _config_['artyAS']['aimCorrection']
+		if True:
+			## HotKeys - AimCorrection - ManualMode
+			config = _config_['artyAS']['aimCorrection']['manualMode']
+			shortcutHandle = config['enabled'] and config['shortcut'](event)
+			if shortcutHandle:
+				self.ctrl.XAimCorrection.resetManualInfo()
+				if shortcutHandle.pushed:
+					self.ctrl.XAimCorrection.setManualInfo()
+			## HotKeys - AimCorrection - Target Mode
+			config = _config_['artyAS']['aimCorrection']['targetMode']
 			shortcutHandle = config['enabled'] and config['shortcut'](event)
 			if shortcutHandle and (not shortcutHandle.switch or shortcutHandle.pushed):
 				config['activated'] = shortcutHandle(config['activated'])

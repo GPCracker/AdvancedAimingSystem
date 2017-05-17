@@ -54,6 +54,10 @@
 					<visible>True</visible>
 					<template>#AdvancedAimingSystem:gui/panels/CorrectionPanel/strategic/text;</template>
 				</strategic>
+				<arty>
+					<visible>True</visible>
+					<template>#AdvancedAimingSystem:gui/panels/CorrectionPanel/arty/text;</template>
+				</arty>
 			</AdvancedAimingSystemCorrectionPanel>
 			<!-- Target scanner GUI settings. -->
 			<!-- Настройки графического интерфейса сканера целей. -->
@@ -76,6 +80,9 @@
 				<strategic>
 					<visible>True</visible>
 				</strategic>
+				<arty>
+					<visible>True</visible>
+				</arty>
 			</AdvancedAimingSystemTargetPanel>
 			<!-- Aiming info GUI settings. -->
 			<!-- Настройки графического интерфейса информации о сведении. -->
@@ -104,6 +111,11 @@
 					<template>#AdvancedAimingSystem:gui/panels/AimingPanel/strategic/text;</template>
 					<position>-0.3 -0.4</position>
 				</strategic>
+				<arty>
+					<visible>True</visible>
+					<template>#AdvancedAimingSystem:gui/panels/AimingPanel/arty/text;</template>
+					<position>-0.3 -0.4</position>
+				</arty>
 			</AdvancedAimingSystemAimingPanel>
 		</static>
 		<!-- Dynamic settings (could be changed ingame by scripts to save panels movements, etc.). -->

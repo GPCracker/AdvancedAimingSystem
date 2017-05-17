@@ -222,3 +222,6 @@ class StrategicAimCorrection(BaseAimCorrection):
 	def getGunMarkerCollisionPoint(self, start, end):
 		# This is not required in strategic mode - gun marker is always on ground.
 		return None
+
+class ArtyAimCorrection(BaseAimCorrection):
+	__slots__ = ()

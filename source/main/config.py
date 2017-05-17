@@ -141,6 +141,27 @@ def loadConfiguration():
 				'ignoreVehicles': ('Bool', False)
 			}
 		},
+		'artyAS': {
+			'aimCorrection': {
+				'manualMode': {
+					'enabled': ('Bool', False),
+					'shortcut': ('SimpleShortcut', 'KEY_LALT', {'switch': False, 'invert': False}),
+				},
+				'targetMode': {
+					'enabled': ('Bool', False),
+					'activated': ('Bool', True),
+					'shortcut': ('AdvancedShortcut', {
+						'sequence': ('String', 'KEY_LALT+KEY_T'),
+						'switch': ('Bool', True),
+						'invert': ('Bool', False),
+					}),
+					'message': {
+						'onActivate': ('LocalizedWideString', u'ArtyAimCorrection:TargetMode ENABLED.'),
+						'onDeactivate': ('LocalizedWideString', u'ArtyAimCorrection:TargetMode DISABLED.')
+					}
+				}
+			}
+		},
 		'plugins': {
 			'safeShot': {
 				'enabled': ('Bool', False),
@@ -235,6 +256,15 @@ def loadConfiguration():
 							'template': ('LocalizedWideString', u'<p align="center"><font color="#00FF00" size="20" face="$UniversCondC">Altitude locked: {{manualInfo:.1f}}m.</font></p>'),
 							'position': ('Vector2AsTuple', (0.0, 0.3)),
 							'size': ('Vector2AsTuple', (450.0, 25.0))
+						}),
+						'arty': ('CorrectionPanelSettings', {
+							'alpha': ('Float', 1.0),
+							'visible': ('Bool', True),
+							'background': ('String', ''),
+							'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemCorrectionPanel'),
+							'template': ('LocalizedWideString', u'<p align="center"><font color="#00FF00" size="20" face="$UniversCondC">Unknown parameter locked: {{manualInfo:.1f}}m.</font></p>'),
+							'position': ('Vector2AsTuple', (0.0, 0.3)),
+							'size': ('Vector2AsTuple', (450.0, 25.0))
 						})
 					},
 					'AdvancedAimingSystemTargetPanel': {
@@ -273,6 +303,15 @@ def loadConfiguration():
 							'template': ('LocalizedWideString', u'<p align="center"><font color="#FF7F00" size="20" face="$UniversCondC">Target: {{shortName}}; Distance: {{distance:.1f}}m; Speed: {{speedMS:.1f}}m/s.</font></p>'),
 							'position': ('Vector2AsTuple', (0.0, 0.4)),
 							'size': ('Vector2AsTuple', (450.0, 25.0))
+						}),
+						'arty': ('TargetPanelSettings', {
+							'alpha': ('Float', 1.0),
+							'visible': ('Bool', True),
+							'background': ('String', ''),
+							'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemTargetPanel'),
+							'template': ('LocalizedWideString', u'<p align="center"><font color="#FF7F00" size="20" face="$UniversCondC">Target: {{shortName}}; Distance: {{distance:.1f}}m; Speed: {{speedMS:.1f}}m/s.</font></p>'),
+							'position': ('Vector2AsTuple', (0.0, 0.4)),
+							'size': ('Vector2AsTuple', (450.0, 25.0))
 						})
 					},
 					'AdvancedAimingSystemAimingPanel': {
@@ -304,6 +343,15 @@ def loadConfiguration():
 							'size': ('Vector2AsTuple', (175.0, 130.0))
 						}),
 						'strategic': ('AimingPanelSettings', {
+							'alpha': ('Float', 1.0),
+							'visible': ('Bool', True),
+							'background': ('String', 'img://mods/GPCracker.AdvancedAimingSystem/icons/AimingInfoBackground.png'),
+							'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemAimingPanel'),
+							'template': ('LocalizedWideString', u'<textformat leftmargin="20" rightmargin="20" tabstops="[0,70]"><font color="#B46464" size="20" face="$UniversCondC">\tRemains:\t{{remainingAimingTime:.2f}}s;\n\tDistance:\t{{aimingDistance:.1f}}m;\n\tDeviation:\t{{deviation:.2f}}m;\n\tFly time:\t{{flyTime:.2f}}s;\n\tHit angle:\t{{hitAngleDeg:+.1f}}dg;</font></textformat>'),
+							'position': ('Vector2AsTuple', (-0.3, -0.4)),
+							'size': ('Vector2AsTuple', (175.0, 130.0))
+						}),
+						'arty': ('AimingPanelSettings', {
 							'alpha': ('Float', 1.0),
 							'visible': ('Bool', True),
 							'background': ('String', 'img://mods/GPCracker.AdvancedAimingSystem/icons/AimingInfoBackground.png'),
