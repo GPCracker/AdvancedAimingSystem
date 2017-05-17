@@ -87,7 +87,7 @@ def new_SafeShotControlMode_handleKeyEvent(self, isDown, key, mods, event=None):
 def new_PlayerAvatar_shoot(old_PlayerAvatar_shoot, self, *args, **kwargs):
 	config = _config_['plugins']['safeShot']
 	def isIgnoredCtrlMode(ctrlModeName):
-		return ctrlModeName in (AvatarInputHandler.aih_constants.CTRL_MODE_NAME.STRATEGIC, )
+		return ctrlModeName not in (AvatarInputHandler.aih_constants.CTRL_MODE_NAME.ARCADE, AvatarInputHandler.aih_constants.CTRL_MODE_NAME.SNIPER)
 	if not config['enabled'] or not config['activated'] or isIgnoredCtrlMode(self.inputHandler.ctrlModeName):
 		return old_PlayerAvatar_shoot(self, *args, **kwargs)
 	gunTargetClient = getattr(self.inputHandler.ctrl, '_clientTarget', None)
