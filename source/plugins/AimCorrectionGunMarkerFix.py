@@ -31,7 +31,7 @@ import XModLib.CollisionUtils
 # VehicleGunRotator Hooks
 # *************************
 @XModLib.HookUtils.methodAddExt(_inject_hooks_, VehicleGunRotator.VehicleGunRotator, '_VehicleGunRotator__getGunMarkerPosition')
-def __getGunMarkerPosition(self, shotPoint, shotVector, dispersionAngles):
+def new_VehicleGunRotator_getGunMarkerPosition(self, shotPoint, shotVector, dispersionAngles):
 	aimCorrection = getattr(self._VehicleGunRotator__avatar.inputHandler.ctrl, 'XAimCorrection', None)
 	def colliderCorrection(collisionTestStart, collisionTestStop):
 		if aimCorrection is not None:
