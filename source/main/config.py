@@ -42,7 +42,7 @@ def loadConfiguration():
 		'ignoreClientVersion': ('Bool', True),
 		'appLoadedMessage': ('LocalizedWideString', u'<a href="event:AdvancedAimingSystem.official_topic"><font color="#0080FF">"Advanced&nbsp;Aiming&nbsp;System"</font></a> <font color="#008000">successfully loaded.</font>'),
 		'appFailedMessage': ('LocalizedWideString', u'<a href="event:AdvancedAimingSystem.official_topic"><font color="#0080FF">"Advanced&nbsp;Aiming&nbsp;System"</font></a> <font color="#E00000">is incompatible with current client version.</font>'),
-		'commonAS': {
+		'modules': {
 			'targetScanner': {
 				'enabled': ('Bool', True),
 				'scanMode': {
@@ -51,9 +51,9 @@ def loadConfiguration():
 					'useBBoxMode': ('Bool', False),
 					'useBEpsMode': ('Bool', False),
 					'maxDistance': ('Float', 720.0),
-					'boundsScalar': ('Float', 1.0),
+					'boundsScalar': ('Float', 2.5),
 					'autoScanInterval': ('Float', 0.04),
-					'autoScanExpiryTime': ('Float', 5.0)
+					'autoScanExpiryTime': ('Float', 10.0)
 				},
 				'autoScan': {
 					'enabled': ('Bool', True),
@@ -72,92 +72,86 @@ def loadConfiguration():
 					'enabled': ('Bool', False),
 					'shortcut': ('SimpleShortcut', 'KEY_T', {'switch': True, 'invert': False})
 				}
-			}
-		},
-		'arcadeAS': {
+			},
 			'aimCorrection': {
-				'manualMode': {
-					'enabled': ('Bool', False),
-					'shortcut': ('SimpleShortcut', 'KEY_LALT', {'switch': False, 'invert': False})
-				},
-				'targetMode': {
-					'enabled': ('Bool', False),
-					'activated': ('Bool', True),
-					'shortcut': ('AdvancedShortcut', {
-						'sequence': ('String', 'KEY_LALT+KEY_T'),
-						'switch': ('Bool', True),
-						'invert': ('Bool', False),
-					}),
-					'message': {
-						'onActivate': ('LocalizedWideString', u'ArcadeAimCorrection:TargetMode ENABLED.'),
-						'onDeactivate': ('LocalizedWideString', u'ArcadeAimCorrection:TargetMode DISABLED.')
+				'arcade': {
+					'manualMode': {
+						'enabled': ('Bool', False),
+						'shortcut': ('SimpleShortcut', 'KEY_LALT', {'switch': False, 'invert': False})
 					},
-					'distance': ('Vector2AsTuple', (50.0, 720.0))
-				}
-			}
-		},
-		'sniperAS': {
-			'aimCorrection': {
-				'manualMode': {
-					'enabled': ('Bool', True),
-					'shortcut': ('SimpleShortcut', 'KEY_LALT', {'switch': False, 'invert': False}),
+					'targetMode': {
+						'enabled': ('Bool', False),
+						'activated': ('Bool', True),
+						'shortcut': ('AdvancedShortcut', {
+							'sequence': ('String', 'KEY_LALT+KEY_T'),
+							'switch': ('Bool', True),
+							'invert': ('Bool', False)
+						}),
+						'message': {
+							'onActivate': ('LocalizedWideString', u'ArcadeAimCorrection:TargetMode ENABLED.'),
+							'onDeactivate': ('LocalizedWideString', u'ArcadeAimCorrection:TargetMode DISABLED.')
+						},
+						'distance': ('Vector2AsTuple', (50.0, 720.0))
+					}
 				},
-				'targetMode': {
-					'enabled': ('Bool', True),
-					'activated': ('Bool', True),
-					'shortcut': ('AdvancedShortcut', {
-						'sequence': ('String', 'KEY_LALT+KEY_T'),
-						'switch': ('Bool', True),
-						'invert': ('Bool', False),
-					}),
-					'message': {
-						'onActivate': ('LocalizedWideString', u'SniperAimCorrection:TargetMode ENABLED.'),
-						'onDeactivate': ('LocalizedWideString', u'SniperAimCorrection:TargetMode DISABLED.')
+				'sniper': {
+					'manualMode': {
+						'enabled': ('Bool', True),
+						'shortcut': ('SimpleShortcut', 'KEY_LALT', {'switch': False, 'invert': False})
 					},
-					'distance': ('Vector2AsTuple', (10.0, 720.0))
-				}
-			}
-		},
-		'strategicAS': {
-			'aimCorrection': {
-				'manualMode': {
-					'enabled': ('Bool', True),
-					'shortcut': ('SimpleShortcut', 'KEY_LALT', {'switch': False, 'invert': False}),
+					'targetMode': {
+						'enabled': ('Bool', True),
+						'activated': ('Bool', True),
+						'shortcut': ('AdvancedShortcut', {
+							'sequence': ('String', 'KEY_LALT+KEY_T'),
+							'switch': ('Bool', True),
+							'invert': ('Bool', False)
+						}),
+						'message': {
+							'onActivate': ('LocalizedWideString', u'SniperAimCorrection:TargetMode ENABLED.'),
+							'onDeactivate': ('LocalizedWideString', u'SniperAimCorrection:TargetMode DISABLED.')
+						},
+						'distance': ('Vector2AsTuple', (10.0, 720.0))
+					}
 				},
-				'targetMode': {
-					'enabled': ('Bool', True),
-					'activated': ('Bool', False),
-					'shortcut': ('AdvancedShortcut', {
-						'sequence': ('String', 'KEY_LALT+KEY_T'),
-						'switch': ('Bool', True),
-						'invert': ('Bool', False),
-					}),
-					'message': {
-						'onActivate': ('LocalizedWideString', u'StrategicAimCorrection:TargetMode ENABLED.'),
-						'onDeactivate': ('LocalizedWideString', u'StrategicAimCorrection:TargetMode DISABLED.')
+				'strategic': {
+					'manualMode': {
+						'enabled': ('Bool', True),
+						'shortcut': ('SimpleShortcut', 'KEY_LALT', {'switch': False, 'invert': False})
 					},
-					'heightMultiplier': ('Float', 0.5)
+					'targetMode': {
+						'enabled': ('Bool', True),
+						'activated': ('Bool', False),
+						'shortcut': ('AdvancedShortcut', {
+							'sequence': ('String', 'KEY_LALT+KEY_T'),
+							'switch': ('Bool', True),
+							'invert': ('Bool', False)
+						}),
+						'message': {
+							'onActivate': ('LocalizedWideString', u'StrategicAimCorrection:TargetMode ENABLED.'),
+							'onDeactivate': ('LocalizedWideString', u'StrategicAimCorrection:TargetMode DISABLED.')
+						},
+						'heightMultiplier': ('Float', 0.5)
+					},
+					'ignoreVehicles': ('Bool', False)
 				},
-				'ignoreVehicles': ('Bool', False)
-			}
-		},
-		'artyAS': {
-			'aimCorrection': {
-				'manualMode': {
-					'enabled': ('Bool', False),
-					'shortcut': ('SimpleShortcut', 'KEY_LALT', {'switch': False, 'invert': False}),
-				},
-				'targetMode': {
-					'enabled': ('Bool', False),
-					'activated': ('Bool', True),
-					'shortcut': ('AdvancedShortcut', {
-						'sequence': ('String', 'KEY_LALT+KEY_T'),
-						'switch': ('Bool', True),
-						'invert': ('Bool', False),
-					}),
-					'message': {
-						'onActivate': ('LocalizedWideString', u'ArtyAimCorrection:TargetMode ENABLED.'),
-						'onDeactivate': ('LocalizedWideString', u'ArtyAimCorrection:TargetMode DISABLED.')
+				'arty': {
+					'manualMode': {
+						'enabled': ('Bool', False),
+						'shortcut': ('SimpleShortcut', 'KEY_LALT', {'switch': False, 'invert': False})
+					},
+					'targetMode': {
+						'enabled': ('Bool', False),
+						'activated': ('Bool', True),
+						'shortcut': ('AdvancedShortcut', {
+							'sequence': ('String', 'KEY_LALT+KEY_T'),
+							'switch': ('Bool', True),
+							'invert': ('Bool', False)
+						}),
+						'message': {
+							'onActivate': ('LocalizedWideString', u'ArtyAimCorrection:TargetMode ENABLED.'),
+							'onDeactivate': ('LocalizedWideString', u'ArtyAimCorrection:TargetMode DISABLED.')
+						}
 					}
 				}
 			}
