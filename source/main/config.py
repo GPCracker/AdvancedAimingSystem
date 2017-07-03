@@ -72,12 +72,6 @@ def loadConfiguration():
 					'enabled': ('Bool', False),
 					'shortcut': ('SimpleShortcut', 'KEY_T', {'switch': True, 'invert': False})
 				}
-			},
-			'expertPerk': {
-				'enabled': ('Bool', False),
-				'cacheExtrasInfo': ('Bool', True),
-				'replyTimeout': ('Float', 5.0),
-				'cacheExpiryTime': ('Float', 60.0),
 			}
 		},
 		'arcadeAS': {
