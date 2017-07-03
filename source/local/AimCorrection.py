@@ -2,14 +2,11 @@
 # AimCorrection Class
 # *************************
 class BaseAimCorrection(object):
-	__slots__ = ('__weakref__', 'manualEnabled', 'targetEnabled', 'manualInfo')
+	__slots__ = ('__weakref__', '_aihc', 'manualEnabled', 'targetEnabled', 'manualInfo')
 
-	@classmethod
-	def getInputHandlerCtrl(sclass):
-		return BigWorld.player().inputHandler.ctrl
-
-	def __init__(self, manualEnabled=False, targetEnabled=False):
+	def __init__(self, avatarInputHandlerCtrl, manualEnabled=False, targetEnabled=False):
 		super(BaseAimCorrection, self).__init__()
+		self._aihc = weakref.proxy(avatarInputHandlerCtrl)
 		self.manualEnabled = manualEnabled
 		self.targetEnabled = targetEnabled
 		self.manualInfo = None
@@ -54,39 +51,43 @@ class BaseAimCorrection(object):
 	def getGunMarkerCollisionPoint(self, start, end):
 		return None
 
+	def __repr__(self):
+		return '{!s}(avatarInputHandlerCtrl={!r}, manualEnabled={!r}, targetEnabled={!r})'.format(
+			self.__class__.__name__,
+			self._aihc, self.manualEnabled, self.targetEnabled
+		)
+
 	def __del__(self):
 		return
 
 class ArcadeAimCorrection(BaseAimCorrection):
 	__slots__ = ('minDistance', 'maxDistance')
 
-	@classmethod
-	def getScanRayAndPoint(sclass):
-		aimingSystemMatrix = sclass.getInputHandlerCtrl().camera.aimingSystem.matrix
-		return aimingSystemMatrix.applyToAxis(2), aimingSystemMatrix.applyToOrigin()
-
-	@classmethod
-	def getPositionAboveVehicle(sclass):
-		return sclass.getInputHandlerCtrl().camera.aimingSystem.positionAboveVehicleProv.value[0:3]
-
-	def __init__(self, manualEnabled=False, targetEnabled=False, minDistance=50.0, maxDistance=720.0):
-		super(ArcadeAimCorrection, self).__init__(manualEnabled, targetEnabled)
+	def __init__(self, avatarInputHandlerCtrl, manualEnabled=False, targetEnabled=False, minDistance=50.0, maxDistance=720.0):
+		super(ArcadeAimCorrection, self).__init__(avatarInputHandlerCtrl, manualEnabled, targetEnabled)
 		self.minDistance = minDistance
 		self.maxDistance = maxDistance
 		return
 
+	def _getScanRayAndPoint(self):
+		aimingSystemMatrix = self._aihc.camera.aimingSystem.matrix
+		return aimingSystemMatrix.applyToAxis(2), aimingSystemMatrix.applyToOrigin()
+
+	def _getPositionAboveVehicle(self):
+		return self._aihc.camera.aimingSystem.positionAboveVehicleProv.value[0:3]
+
 	def setManualInfo(self):
 		if self.manualEnabled:
-			shotPoint = self.getInputHandlerCtrl().getDesiredShotPoint()
+			shotPoint = self._aihc.getDesiredShotPoint()
 			if shotPoint is not None:
-				self.manualInfo = self.getPositionAboveVehicle().flatDistTo(shotPoint)
+				self.manualInfo = self._getPositionAboveVehicle().flatDistTo(shotPoint)
 		return
 
 	def _getManualDesiredShotPoint(self, shotPoint):
 		if self.manualEnabled and shotPoint is not None:
 			if self.manualInfo is not None:
-				scanRay, scanPoint = self.getScanRayAndPoint()
-				flatDistance = scanPoint.flatDistTo(self.getPositionAboveVehicle()) + self.manualInfo
+				scanRay, scanPoint = self._getScanRayAndPoint()
+				flatDistance = scanPoint.flatDistTo(self._getPositionAboveVehicle()) + self.manualInfo
 				flatScanRayLength = scanRay.flatDistTo(Math.Vector3(0.0, 0.0, 0.0))
 				return scanPoint + scanRay.scale(flatDistance / flatScanRayLength)
 		return None
@@ -96,7 +97,7 @@ class ArcadeAimCorrection(BaseAimCorrection):
 			if self.targetInfo is not None and not self.targetInfo.isExpired:
 				target = BigWorld.target()
 				if target is None or target.id != self.targetInfo:
-					scanRay, scanPoint = self.getScanRayAndPoint()
+					scanRay, scanPoint = self._getScanRayAndPoint()
 					if self.minDistance <= self.targetInfo.getDistance() <= self.maxDistance:
 						flatDistance = scanPoint.flatDistTo(self.targetInfo.getPosition())
 						flatScanRayLength = scanRay.flatDistTo(Math.Vector3(0.0, 0.0, 0.0))
@@ -105,7 +106,7 @@ class ArcadeAimCorrection(BaseAimCorrection):
 
 	def getGunMarkerCollisionPoint(self, start, end):
 		flatDistance = None
-		positionAboveVehicle = self.getPositionAboveVehicle()
+		positionAboveVehicle = self._getPositionAboveVehicle()
 		if self.manualEnabled and self.manualInfo is not None:
 			flatDistance = self.manualInfo
 		elif self.targetEnabled and self.targetInfo is not None and not self.targetInfo.isExpired:
@@ -115,33 +116,37 @@ class ArcadeAimCorrection(BaseAimCorrection):
 				return start + (end - start).scale((flatDistance - positionAboveVehicle.flatDistTo(start)) / start.flatDistTo(end))
 		return None
 
+	def __repr__(self):
+		return '{!s}(avatarInputHandlerCtrl={!r}, manualEnabled={!r}, targetEnabled={!r}, minDistance={!r}, maxDistance={!r})'.format(
+			self.__class__.__name__,
+			self._aihc, self.manualEnabled, self.targetEnabled, self.minDistance, self.maxDistance
+		)
+
 class SniperAimCorrection(BaseAimCorrection):
 	__slots__ = ('minDistance', 'maxDistance')
 
-	@classmethod
-	def getScanRayAndPoint(sclass):
-		inputHandlerCtrl = sclass.getInputHandlerCtrl()
-		aimingSystemMatrix = inputHandlerCtrl.camera.aimingSystem.matrix
-		return aimingSystemMatrix.applyToAxis(2), aimingSystemMatrix.applyToOrigin()
-
-	def __init__(self, manualEnabled=False, targetEnabled=False, minDistance=10.0, maxDistance=720.0):
-		super(SniperAimCorrection, self).__init__(manualEnabled, targetEnabled)
+	def __init__(self, avatarInputHandlerCtrl, manualEnabled=False, targetEnabled=False, minDistance=10.0, maxDistance=720.0):
+		super(SniperAimCorrection, self).__init__(avatarInputHandlerCtrl, manualEnabled, targetEnabled)
 		self.minDistance = minDistance
 		self.maxDistance = maxDistance
 		return
 
+	def _getScanRayAndPoint(self):
+		aimingSystemMatrix = self._aihc.camera.aimingSystem.matrix
+		return aimingSystemMatrix.applyToAxis(2), aimingSystemMatrix.applyToOrigin()
+
 	def setManualInfo(self):
 		if self.manualEnabled:
-			shotPoint = self.getInputHandlerCtrl().getDesiredShotPoint()
+			shotPoint = self._aihc.getDesiredShotPoint()
 			if shotPoint is not None:
-				scanRay, scanPoint = self.getScanRayAndPoint()
+				scanRay, scanPoint = self._getScanRayAndPoint()
 				self.manualInfo = (shotPoint - scanPoint).length
 		return
 
 	def _getManualDesiredShotPoint(self, shotPoint):
 		if self.manualEnabled and shotPoint is not None:
 			if self.manualInfo is not None:
-				scanRay, scanPoint = self.getScanRayAndPoint()
+				scanRay, scanPoint = self._getScanRayAndPoint()
 				return scanPoint + scanRay.scale(self.manualInfo)
 		return None
 
@@ -150,14 +155,14 @@ class SniperAimCorrection(BaseAimCorrection):
 			if self.targetInfo is not None and not self.targetInfo.isExpired:
 				target = BigWorld.target()
 				if target is None or target.id != self.targetInfo:
-					scanRay, scanPoint = self.getScanRayAndPoint()
+					scanRay, scanPoint = self._getScanRayAndPoint()
 					if self.minDistance <= self.targetInfo.getDistance() <= self.maxDistance:
 						return scanPoint + scanRay.scale(scanPoint.distTo(self.targetInfo.getPosition()))
 		return None
 
 	def getGunMarkerCollisionPoint(self, start, end):
 		distance = None
-		scanRay, scanPoint = self.getScanRayAndPoint()
+		scanRay, scanPoint = self._getScanRayAndPoint()
 		if self.manualEnabled and self.manualInfo is not None:
 			distance = self.manualInfo
 		elif self.targetEnabled and self.targetInfo is not None and not self.targetInfo.isExpired:
@@ -171,24 +176,28 @@ class SniperAimCorrection(BaseAimCorrection):
 				return start + (end - start).scale((distance - baseDistance) / (scanPoint.distTo(end) - baseDistance))
 		return None
 
+	def __repr__(self):
+		return '{!s}(avatarInputHandlerCtrl={!r}, manualEnabled={!r}, targetEnabled={!r}, minDistance={!r}, maxDistance={!r})'.format(
+			self.__class__.__name__,
+			self._aihc, self.manualEnabled, self.targetEnabled, self.minDistance, self.maxDistance
+		)
+
 class StrategicAimCorrection(BaseAimCorrection):
 	__slots__ = ('ignoreVehicles', 'heightMultiplier')
 
-	@classmethod
-	def getScanRayAndPoint(sclass):
-		inputHandlerCtrl = sclass.getInputHandlerCtrl()
-		aimingSystemMatrix = inputHandlerCtrl.camera.aimingSystem.matrix
-		return Math.Vector3(0.0, -1.0, 0.0), aimingSystemMatrix.applyToOrigin()
-
-	def __init__(self, manualEnabled=False, targetEnabled=False, ignoreVehicles=False, heightMultiplier=0.5):
-		super(StrategicAimCorrection, self).__init__(manualEnabled, targetEnabled)
+	def __init__(self, avatarInputHandlerCtrl, manualEnabled=False, targetEnabled=False, ignoreVehicles=False, heightMultiplier=0.5):
+		super(StrategicAimCorrection, self).__init__(avatarInputHandlerCtrl, manualEnabled, targetEnabled)
 		self.ignoreVehicles = ignoreVehicles
 		self.heightMultiplier = heightMultiplier
 		return
 
+	def _getScanRayAndPoint(self):
+		aimingSystemMatrix = self._aihc.camera.aimingSystem.matrix
+		return Math.Vector3(0.0, -1.0, 0.0), aimingSystemMatrix.applyToOrigin()
+
 	def setManualInfo(self):
 		if self.manualEnabled:
-			shotPoint = self.getInputHandlerCtrl().getDesiredShotPoint()
+			shotPoint = self._aihc.getDesiredShotPoint()
 			if shotPoint is not None:
 				self.manualInfo = shotPoint.y
 		return
@@ -211,7 +220,7 @@ class StrategicAimCorrection(BaseAimCorrection):
 
 	def _getGroundDesiredShotPoint(self, shotPoint):
 		if self.ignoreVehicles and shotPoint is not None:
-			scanRay, scanPoint = self.getScanRayAndPoint()
+			scanRay, scanPoint = self._getScanRayAndPoint()
 			result = XModLib.CollisionUtils.collideStatic(scanPoint, scanPoint + scanRay.scale(10000.0))
 			return result[0] if result is not None else None
 		return None
@@ -222,6 +231,12 @@ class StrategicAimCorrection(BaseAimCorrection):
 	def getGunMarkerCollisionPoint(self, start, end):
 		# This is not required in strategic mode - gun marker is always on ground.
 		return None
+
+	def __repr__(self):
+		return '{!s}(avatarInputHandlerCtrl={!r}, manualEnabled={!r}, targetEnabled={!r}, ignoreVehicles={!r}, heightMultiplier={!r})'.format(
+			self.__class__.__name__,
+			self._aihc, self.manualEnabled, self.targetEnabled, self.ignoreVehicles, self.heightMultiplier
+		)
 
 class ArtyAimCorrection(BaseAimCorrection):
 	__slots__ = ()

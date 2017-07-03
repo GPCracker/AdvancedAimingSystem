@@ -5,6 +5,7 @@
 def new_StrategicControlMode_init(self, *args, **kwargs):
 	config = _config_['strategicAS']['aimCorrection']
 	self.XAimCorrection = StrategicAimCorrection(
+		self,
 		config['manualMode']['enabled'],
 		config['targetMode']['enabled'] and config['targetMode']['activated'],
 		config['ignoreVehicles'],

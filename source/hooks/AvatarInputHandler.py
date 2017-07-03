@@ -5,7 +5,7 @@
 def new_AvatarInputHandler_init(self, *args, **kwargs):
 	config = _config_['commonAS']['targetScanner']
 	self.XTargetScanner = TargetScanner(
-		TargetScanMode(config['scanMode']),
+		TargetScanMode(**config['scanMode']),
 		config['autoScan']['enabled'] and config['autoScan']['activated']
 	) if config['enabled'] else None
 	config = _config_['gui']

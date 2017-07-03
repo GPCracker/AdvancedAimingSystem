@@ -5,6 +5,7 @@
 def new_ArtyControlMode_init(self, *args, **kwargs):
 	config = _config_['artyAS']['aimCorrection']
 	self.XAimCorrection = ArtyAimCorrection(
+		self,
 		config['manualMode']['enabled'],
 		config['targetMode']['enabled'] and config['targetMode']['activated']
 	)

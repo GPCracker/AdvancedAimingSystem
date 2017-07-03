@@ -1,47 +1,64 @@
 # *************************
 # TargetScanner Class
 # *************************
-class TargetScanMode(dict):
+class TargetScanMode(tuple):
 	__slots__ = ()
 
-	defaults = {
-		'useStandardMode': True,
-		'useXRayMode': False,
-		'useBBoxMode': False,
-		'useBEpsMode': False,
-		'maxDistance': 720.0,
-		'boundsScalar': 1.0,
-		'autoScanInterval': 0.04,
-		'autoScanExpiryTime': 10.0,
-		'filterID': None,
-		'filterVehicle': lambda vehicle: vehicle.isAlive() and vehicle.publicInfo['team'] is not BigWorld.player().team
-	}
+	_fields, _defaults = zip(
+		('useStandardMode', True),
+		('useXRayMode', False),
+		('useBBoxMode', False),
+		('useBEpsMode', False),
+		('maxDistance', 720.0),
+		('boundsScalar', 2.5),
+		('autoScanInterval', 0.04),
+		('autoScanExpiryTime', 10.0)
+	)
 
-	def __init__(self, *args, **kwargs):
-		super(TargetScanMode, self).__init__(*args, **kwargs)
-		for key in self.defaults:
-			self.setdefault(key, self.defaults.get(key))
-		return
+	@staticmethod
+	def filterID(vehicleID):
+		return XModLib.ArenaInfo.isEnemy(vehicleID)
 
-class TargetScanResult(collections.namedtuple('TargetScanResult', ('result', 'target'))):
-	__slots__ = ()
+	@staticmethod
+	def filterVehicle(vehicle):
+		return XModLib.VehicleInfo.isAlive(vehicle)
 
+	def __new__(cls, **kwargs):
+		return super(TargetScanMode, cls).__new__(cls, itertools.imap(kwargs.get, cls._fields, cls._defaults))
+
+	def __getattr__(self, name):
+		if name not in self._fields:
+			raise AttributeError('{!r} object has no attribute {!r}'.format(self.__class__.__name__, name))
+		return operator.getitem(self, self._fields.index(name))
+
+	def __repr__(self):
+		args = itertools.imap('{!s}={!r}'.format, self._fields, self)
+		return '{!s}({!s})'.format(self.__class__.__name__, ', '.join(args))
+
+class TargetScanResultCategory(enum.Enum):
 	NOTHING = 'nothing'
 	PRIMARY = 'primary'
 	SECONDARY = 'secondary'
 	AMBIGUOUS = 'ambiguous'
 
+class TargetScanResult(collections.namedtuple('TargetScanResult', ('category', 'target'))):
+	__slots__ = ()
+
+	@property
+	def isNothing(self):
+		return self.category == TargetScanResultCategory.NOTHING
+
 	@property
 	def isPrimary(self):
-		return self.result == TargetScanResult.PRIMARY
+		return self.category == TargetScanResultCategory.PRIMARY
 
 	@property
 	def isSecondary(self):
-		return self.result == TargetScanResult.SECONDARY
+		return self.category == TargetScanResultCategory.SECONDARY
 
 	@property
 	def isAmbiguous(self):
-		return self.result == TargetScanResult.AMBIGUOUS
+		return self.category == TargetScanResultCategory.AMBIGUOUS
 
 class TargetScanner(object):
 	__slots__ = ('__weakref__', 'autoScanActivated', '_targetScanMode', '_standardScanner', '_xrayScanner', '_bboxScanner', '_bepsScanner', '_updateCallbackLoop')
@@ -63,28 +80,28 @@ class TargetScanner(object):
 	def targetScanMode(self, value):
 		self._targetScanMode = value
 		self._standardScanner = XModLib.TargetScanners.StandardScanner(
-			self._targetScanMode['filterID'],
-			self._targetScanMode['filterVehicle']
+			self._targetScanMode.filterID,
+			self._targetScanMode.filterVehicle
 		)
 		self._xrayScanner = XModLib.TargetScanners.XRayScanner(
-			self._targetScanMode['filterID'],
-			self._targetScanMode['filterVehicle'],
-			self._targetScanMode['maxDistance']
+			self._targetScanMode.filterID,
+			self._targetScanMode.filterVehicle,
+			self._targetScanMode.maxDistance
 		)
 		self._bboxScanner = XModLib.TargetScanners.BBoxScanner(
-			self._targetScanMode['filterID'],
-			self._targetScanMode['filterVehicle'],
-			self._targetScanMode['maxDistance'],
-			self._targetScanMode['boundsScalar']
+			self._targetScanMode.filterID,
+			self._targetScanMode.filterVehicle,
+			self._targetScanMode.maxDistance,
+			self._targetScanMode.boundsScalar
 		)
 		self._bepsScanner = XModLib.TargetScanners.BEllipseScanner(
-			self._targetScanMode['filterID'],
-			self._targetScanMode['filterVehicle'],
-			self._targetScanMode['maxDistance'],
-			self._targetScanMode['boundsScalar']
+			self._targetScanMode.filterID,
+			self._targetScanMode.filterVehicle,
+			self._targetScanMode.maxDistance,
+			self._targetScanMode.boundsScalar
 		)
 		self._updateCallbackLoop = XModLib.CallbackUtils.CallbackLoop(
-			self._targetScanMode['autoScanInterval'],
+			self._targetScanMode.autoScanInterval,
 			XModLib.CallbackUtils.getMethodProxy(self._updateTargetInfo)
 		)
 		return
@@ -98,30 +115,30 @@ class TargetScanner(object):
 
 	def _performScanningProcedure(self):
 		collidableEntities = XModLib.TargetScanners.getCollidableEntities(
-			self._targetScanMode['filterID'],
-			self._targetScanMode['filterVehicle']
+			self._targetScanMode.filterID,
+			self._targetScanMode.filterVehicle
 		)
 		primaryTarget = (
-			self._standardScanner.getTarget() if self._targetScanMode['useStandardMode'] else None
+			self._standardScanner.getTarget() if self._targetScanMode.useStandardMode else None
 		) or (
-			self._xrayScanner.getTarget(collidableEntities) if self._targetScanMode['useXRayMode'] else None
+			self._xrayScanner.getTarget(collidableEntities) if self._targetScanMode.useXRayMode else None
 		)
 		secondaryTargets = set(
-			self._bboxScanner.getTargets(collidableEntities) if self._targetScanMode['useBBoxMode'] else []
+			self._bboxScanner.getTargets(collidableEntities) if self._targetScanMode.useBBoxMode else []
 		) | set(
-			self._bepsScanner.getTargets(collidableEntities) if self._targetScanMode['useBEpsMode'] else []
+			self._bepsScanner.getTargets(collidableEntities) if self._targetScanMode.useBEpsMode else []
 		) if primaryTarget is None else set([])
 		return primaryTarget, secondaryTargets
 
 	def scanTarget(self):
 		primaryTarget, secondaryTargets = self._performScanningProcedure()
 		if primaryTarget is not None:
-			return TargetScanResult(TargetScanResult.PRIMARY, primaryTarget)
+			return TargetScanResult(TargetScanResultCategory.PRIMARY, primaryTarget)
 		if len(secondaryTargets) == 1:
-			return TargetScanResult(TargetScanResult.SECONDARY, secondaryTargets.pop())
+			return TargetScanResult(TargetScanResultCategory.SECONDARY, secondaryTargets.pop())
 		if secondaryTargets:
-			return TargetScanResult(TargetScanResult.AMBIGUOUS, None)
-		return TargetScanResult(TargetScanResult.NOTHING, None)
+			return TargetScanResult(TargetScanResultCategory.AMBIGUOUS, None)
+		return TargetScanResult(TargetScanResultCategory.NOTHING, None)
 
 	def _updateTargetInfo(self):
 		if self.isManualOverrideInEffect or not self.autoScanActivated:
@@ -131,9 +148,9 @@ class TargetScanner(object):
 			if self.targetInfo is not None and self.targetInfo.isAutoLocked and primaryTarget.id == self.targetInfo:
 				self.targetInfo.lastLockTime = BigWorld.time()
 			elif self.targetInfo is None or self.targetInfo.isAutoLocked:
-				self.targetInfo = TargetInfo(primaryTarget, BigWorld.time(), self._targetScanMode['autoScanExpiryTime'])
+				self.targetInfo = TargetInfo(primaryTarget, BigWorld.time(), self._targetScanMode.autoScanExpiryTime)
 		elif len(secondaryTargets) == 1 and (self.targetInfo is None or self.targetInfo.isExpired):
-			self.targetInfo = TargetInfo(secondaryTargets.pop(), BigWorld.time(), self._targetScanMode['autoScanExpiryTime'])
+			self.targetInfo = TargetInfo(secondaryTargets.pop(), BigWorld.time(), self._targetScanMode.autoScanExpiryTime)
 		elif self.targetInfo is not None and self.targetInfo.isAutoLocked and not self.targetInfo.isExpired and self.targetInfo.getVehicle() in secondaryTargets:
 			self.targetInfo.lastLockTime = BigWorld.time()
 		return
