@@ -20,7 +20,7 @@
 			<enabled>False</enabled>
 			<activated>True</activated>
 			<shortcut>
-				<sequence>KEY_LALT+KEY_T</sequence>
+				<sequence>KEY_LCONTROL+KEY_K</sequence>
 				<switch>True</switch>
 				<invert>False</invert>
 			</shortcut>
@@ -48,7 +48,7 @@
 			<enabled>True</enabled>
 			<activated>True</activated>
 			<shortcut>
-				<sequence>KEY_LALT+KEY_T</sequence>
+				<sequence>KEY_LCONTROL+KEY_K</sequence>
 				<switch>True</switch>
 				<invert>False</invert>
 			</shortcut>
@@ -76,7 +76,7 @@
 			<enabled>True</enabled>
 			<activated>False</activated>
 			<shortcut>
-				<sequence>KEY_LALT+KEY_T</sequence>
+				<sequence>KEY_LCONTROL+KEY_K</sequence>
 				<switch>True</switch>
 				<invert>False</invert>
 			</shortcut>
@@ -107,7 +107,7 @@
 			<enabled>False</enabled>
 			<activated>True</activated>
 			<shortcut>
-				<sequence>KEY_LALT+KEY_T</sequence>
+				<sequence>KEY_LCONTROL+KEY_K</sequence>
 				<switch>True</switch>
 				<invert>False</invert>
 			</shortcut>

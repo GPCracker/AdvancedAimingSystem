@@ -59,7 +59,7 @@ def loadConfiguration():
 					'enabled': ('Bool', True),
 					'activated': ('Bool', True),
 					'shortcut': ('AdvancedShortcut', {
-						'sequence': ('String', 'KEY_LALT+KEY_N'),
+						'sequence': ('String', 'KEY_LCONTROL+KEY_N'),
 						'switch': ('Bool', True),
 						'invert': ('Bool', False),
 					}),
@@ -70,7 +70,7 @@ def loadConfiguration():
 				},
 				'manualOverride': {
 					'enabled': ('Bool', False),
-					'shortcut': ('SimpleShortcut', 'KEY_T', {'switch': True, 'invert': False})
+					'shortcut': ('SimpleShortcut', 'KEY_NONE', {'switch': True, 'invert': False})
 				}
 			},
 			'aimCorrection': {
@@ -83,7 +83,7 @@ def loadConfiguration():
 						'enabled': ('Bool', False),
 						'activated': ('Bool', True),
 						'shortcut': ('AdvancedShortcut', {
-							'sequence': ('String', 'KEY_LALT+KEY_T'),
+							'sequence': ('String', 'KEY_LCONTROL+KEY_K'),
 							'switch': ('Bool', True),
 							'invert': ('Bool', False)
 						}),
@@ -103,7 +103,7 @@ def loadConfiguration():
 						'enabled': ('Bool', True),
 						'activated': ('Bool', True),
 						'shortcut': ('AdvancedShortcut', {
-							'sequence': ('String', 'KEY_LALT+KEY_T'),
+							'sequence': ('String', 'KEY_LCONTROL+KEY_K'),
 							'switch': ('Bool', True),
 							'invert': ('Bool', False)
 						}),
@@ -123,7 +123,7 @@ def loadConfiguration():
 						'enabled': ('Bool', True),
 						'activated': ('Bool', False),
 						'shortcut': ('AdvancedShortcut', {
-							'sequence': ('String', 'KEY_LALT+KEY_T'),
+							'sequence': ('String', 'KEY_LCONTROL+KEY_K'),
 							'switch': ('Bool', True),
 							'invert': ('Bool', False)
 						}),
@@ -144,7 +144,7 @@ def loadConfiguration():
 						'enabled': ('Bool', False),
 						'activated': ('Bool', True),
 						'shortcut': ('AdvancedShortcut', {
-							'sequence': ('String', 'KEY_LALT+KEY_T'),
+							'sequence': ('String', 'KEY_LCONTROL+KEY_K'),
 							'switch': ('Bool', True),
 							'invert': ('Bool', False)
 						}),

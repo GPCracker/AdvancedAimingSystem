@@ -12,76 +12,91 @@ def new_AvatarInputHandler_init(self, *args, **kwargs):
 	self.XGuiController = GuiController(_globals_['macrosFormatter'], config['updateInterval']) if config['enabled'] else None
 	return
 
-@XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.AvatarInputHandler, 'handleKeyEvent')
-def new_AvatarInputHandler_handleKeyEvent(self, event):
-	if not self._AvatarInputHandler__isStarted or self.isDetached:
-		return
+@XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.AvatarInputHandler, 'handleKeyEvent', invoke=XModLib.HookUtils.HookInvoke.MASTER)
+def new_AvatarInputHandler_handleKeyEvent(old_AvatarInputHandler_handleKeyEvent, self, event):
+	result = old_AvatarInputHandler_handleKeyEvent(self, event)
 	## Keyboard event parsing
-	event = XModLib.KeyboardUtils.KeyboardEvent(event)
-	## HotKeys - Common
-	if self.ctrlModeName in (AvatarInputHandler.aih_constants.CTRL_MODE_NAME.ARCADE, AvatarInputHandler.aih_constants.CTRL_MODE_NAME.SNIPER, AvatarInputHandler.aih_constants.CTRL_MODE_NAME.STRATEGIC, AvatarInputHandler.aih_constants.CTRL_MODE_NAME.ARTY):
+	kbevent = XModLib.KeyboardUtils.KeyboardEvent(event)
+	## Operating control modes
+	operatingControlModes = (
+		AvatarInputHandler.aih_constants.CTRL_MODE_NAME.ARCADE,
+		AvatarInputHandler.aih_constants.CTRL_MODE_NAME.SNIPER,
+		AvatarInputHandler.aih_constants.CTRL_MODE_NAME.STRATEGIC,
+		AvatarInputHandler.aih_constants.CTRL_MODE_NAME.ARTY
+	)
+	## AvatarInputHandler started, control mode supported, event not handled by game (for AvatarInputHandler switches)
+	if self._AvatarInputHandler__isStarted and self.ctrlModeName in operatingControlModes and not result:
 		## HotKeys - TargetScanner
-		config = _config_['modules']['targetScanner']
-		if config['enabled']:
+		mconfig = _config_['modules']['targetScanner']
+		if mconfig['enabled']:
 			## HotKeys - TargetScanner - AutoScan
-			config = _config_['modules']['targetScanner']['autoScan']
-			shortcutHandle = config['enabled'] and config['shortcut'](event)
+			fconfig = mconfig['autoScan']
+			shortcutHandle = fconfig['enabled'] and fconfig['shortcut'](kbevent)
 			if shortcutHandle and (not shortcutHandle.switch or shortcutHandle.pushed):
-				config['activated'] = shortcutHandle(config['activated'])
-				if shortcutHandle.switch and config['activated']:
+				fconfig['activated'] = shortcutHandle(fconfig['activated'])
+				if shortcutHandle.switch and fconfig['activated']:
 					XModLib.ClientMessages.showMessageOnPanel(
 						'Player',
 						None,
-						config['message']['onActivate'],
+						fconfig['message']['onActivate'],
 						'green'
 					)
 				elif shortcutHandle.switch:
 					XModLib.ClientMessages.showMessageOnPanel(
 						'Player',
 						None,
-						config['message']['onDeactivate'],
+						fconfig['message']['onDeactivate'],
 						'red'
 					)
 				targetScanner = getattr(self, 'XTargetScanner', None)
 				if targetScanner is not None:
-					targetScanner.autoScanActivated = config['activated']
+					targetScanner.autoScanActivated = fconfig['activated']
 			## HotKeys - TargetScanner - ManualOverride
-			config = _config_['modules']['targetScanner']['manualOverride']
-			shortcutHandle = config['enabled'] and config['shortcut'](event)
+			fconfig = mconfig['manualOverride']
+			shortcutHandle = fconfig['enabled'] and fconfig['shortcut'](kbevent)
 			if shortcutHandle and shortcutHandle.pushed:
 				targetScanner = getattr(self, 'XTargetScanner', None)
 				if targetScanner is not None:
 					targetScanner.engageManualOverride()
-	## HotKeys - Operating
-	if self.ctrlModeName in (AvatarInputHandler.aih_constants.CTRL_MODE_NAME.ARCADE, AvatarInputHandler.aih_constants.CTRL_MODE_NAME.SNIPER, AvatarInputHandler.aih_constants.CTRL_MODE_NAME.STRATEGIC, AvatarInputHandler.aih_constants.CTRL_MODE_NAME.ARTY):
 		## HotKeys - AimCorrection
-		config = _config_['modules']['aimCorrection'][self.ctrlModeName]
+		mconfig = _config_['modules']['aimCorrection'][self.ctrlModeName]
 		if True:
-			## HotKeys - AimCorrection - ManualMode
-			config = _config_['modules']['aimCorrection'][self.ctrlModeName]['manualMode']
-			shortcutHandle = config['enabled'] and config['shortcut'](event)
-			if shortcutHandle:
-				self.ctrl.XAimCorrection.resetManualInfo()
-				if shortcutHandle.pushed:
-					self.ctrl.XAimCorrection.setManualInfo()
 			## HotKeys - AimCorrection - Target Mode
-			config = _config_['modules']['aimCorrection'][self.ctrlModeName]['targetMode']
-			shortcutHandle = config['enabled'] and config['shortcut'](event)
+			fconfig = mconfig['targetMode']
+			shortcutHandle = fconfig['enabled'] and fconfig['shortcut'](kbevent)
 			if shortcutHandle and (not shortcutHandle.switch or shortcutHandle.pushed):
-				config['activated'] = shortcutHandle(config['activated'])
-				if shortcutHandle.switch and config['activated']:
+				fconfig['activated'] = shortcutHandle(fconfig['activated'])
+				if shortcutHandle.switch and fconfig['activated']:
 					XModLib.ClientMessages.showMessageOnPanel(
 						'Player',
 						None,
-						config['message']['onActivate'],
+						fconfig['message']['onActivate'],
 						'green'
 					)
 				elif shortcutHandle.switch:
 					XModLib.ClientMessages.showMessageOnPanel(
 						'Player',
 						None,
-						config['message']['onDeactivate'],
+						fconfig['message']['onDeactivate'],
 						'red'
 					)
-				self.ctrl.XAimCorrection.targetEnabled = config['activated']
-	return
+				self.ctrl.XAimCorrection.targetEnabled = fconfig['activated']
+	## AvatarInputHandler started, not detached, control mode supported (for AvatarInputHandler shortcuts)
+	if self._AvatarInputHandler__isStarted and not self.isDetached and self.ctrlModeName in operatingControlModes:
+		## HotKeys - AimCorrection
+		mconfig = _config_['modules']['aimCorrection'][self.ctrlModeName]
+		if True:
+			## HotKeys - AimCorrection - ManualMode
+			fconfig = mconfig['manualMode']
+			shortcutHandle = fconfig['enabled'] and fconfig['shortcut'](kbevent)
+			if shortcutHandle:
+				self.ctrl.XAimCorrection.resetManualInfo()
+				if shortcutHandle.pushed:
+					self.ctrl.XAimCorrection.setManualInfo()
+	## AvatarInputHandler started, event not handled by game (for avatar switches)
+	if self._AvatarInputHandler__isStarted and not result:
+		pass
+	## AvatarInputHandler started (for avatar shortcuts)
+	if self._AvatarInputHandler__isStarted:
+		pass
+	return result
