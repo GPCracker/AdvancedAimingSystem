@@ -78,7 +78,22 @@ class TargetScanner(object):
 
 	@targetScanMode.setter
 	def targetScanMode(self, value):
+		if self.isUpdateActive:
+			raise RuntimeError('Target scan mode could not be changed while scanner is running.')
 		self._targetScanMode = value
+		# Recreate target scanners and callback loop.
+		self._initInternalComponents()
+		return
+
+	def __init__(self, targetScanMode=TargetScanMode(), autoScanActivated=True):
+		super(TargetScanner, self).__init__()
+		self._targetScanMode = targetScanMode
+		self.autoScanActivated = autoScanActivated
+		# Initialize target scanners and callback loop.
+		self._initInternalComponents()
+		return
+
+	def _initInternalComponents(self):
 		self._standardScanner = XModLib.TargetScanners.StandardScanner(
 			self._targetScanMode.filterID,
 			self._targetScanMode.filterVehicle
@@ -104,13 +119,6 @@ class TargetScanner(object):
 			self._targetScanMode.autoScanInterval,
 			XModLib.CallbackUtils.getMethodProxy(self._updateTargetInfo)
 		)
-		return
-
-	def __init__(self, targetScanMode=TargetScanMode(), autoScanActivated=True):
-		super(TargetScanner, self).__init__()
-		# Init scanners and callback loop.
-		self.targetScanMode = targetScanMode
-		self.autoScanActivated = autoScanActivated
 		return
 
 	def _performScanningProcedure(self):
