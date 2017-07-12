@@ -11,7 +11,7 @@
 	<id>{{author}}.{{application}}</id>
 	<!-- Package version. -->
 	<!-- Версия пакета. -->
-	<version>{{version}}</version>
+	<version>{{signature}}</version>
 	<!-- Human readable name. -->
 	<!-- Удобочитаемое имя модификации. -->
 	<name>Radial Menu Extended Target Scan plug-in for Advanced Aiming System Mod</name>
