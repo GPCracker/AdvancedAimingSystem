@@ -56,7 +56,11 @@
 	</libraryPaths>
 	<!-- External Libraries -->
 	<externalLibraryPaths>
-		<element path="swc/wg_battle.swc" />
+		<element path="swc/wg/base_app.swc" />
+		<element path="swc/wg/common.swc" />
+		<element path="swc/wg/battle.swc" />
+		<element path="swc/wg/gui_base.swc" />
+		<element path="swc/wg/gui_battle.swc" />
 	</externalLibraryPaths>
 	<!-- Runtime Shared Libraries -->
 	<rslPaths>
