@@ -61,7 +61,7 @@ def loadConfiguration():
 					'shortcut': ('AdvancedShortcut', {
 						'sequence': ('String', 'KEY_LCONTROL+KEY_N'),
 						'switch': ('Bool', True),
-						'invert': ('Bool', False),
+						'invert': ('Bool', False)
 					}),
 					'message': {
 						'onActivate': ('LocalizedWideString', u'TargetScanner:AutoMode ENABLED.'),
@@ -163,7 +163,7 @@ def loadConfiguration():
 				'shortcut': ('AdvancedShortcut', {
 					'sequence': ('String', 'KEY_LALT'),
 					'switch': ('Bool', False),
-					'invert': ('Bool', True),
+					'invert': ('Bool', True)
 				}),
 				'message': {
 					'onActivate': ('LocalizedWideString', u'SafeShot: ENABLED.'),
@@ -203,7 +203,7 @@ def loadConfiguration():
 			'radialMenu': {
 				'useTargetScan': ('Bool', False),
 				'useTargetInfo': ('Bool', False)
-			},
+			}
 		},
 		'gui': {
 			'enabled': ('Bool', True),
