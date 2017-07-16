@@ -192,6 +192,12 @@ def loadConfiguration():
 					}
 				}
 			},
+			'expertPerk': {
+				'enabled': ('Bool', False),
+				'cacheExtrasInfo': ('Bool', False),
+				'cacheExpiryTimeout': ('Float', 30.0),
+				'responseTimeout': ('Float', 5.0)
+			},
 			'sniperModeSPG': {
 				'enabled': ('Bool', False),
 				'shortcut': ('SimpleShortcut', 'KEY_E', {'switch': True, 'invert': False})

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- *** This file contains package metadata. *** -->
+<!-- *** Other languages are supported for texts *** -->
+<!-- *** To use them here you should switch encoding into 'UTF-8 without BOM'! *** -->
+<!-- *** Editing file in incorrect encoding will cause content damage. Check encoding before saving. *** -->
+<!-- *** It is recommended to use Notepad++, Sublime Text or any other professional text editor for making changes in this file. *** -->
+<!-- *** Official topic: http://www.koreanrandom.com/forum/topic/16559-/ *** -->
+<root>
+	<!-- Technical modification identifier. -->
+	<!-- Технический идентификатор модификации. -->
+	<id>{{author}}.{{application}}</id>
+	<!-- Package version. -->
+	<!-- Версия пакета. -->
+	<version>{{signature}}</version>
+	<!-- Human readable name. -->
+	<!-- Удобочитаемое имя модификации. -->
+	<name>ExpertPerk Extended Functional plug-in for Advanced Aiming System Mod</name>
+	<!-- Human readable description. -->
+	<!-- Удобочитаемое описание модификации. -->
+	<description>Необязательный дополнительный модуль для Advanced Aiming System. Оптимизирует работу умения "Эксперт", добавляет возможность кэширования полученных с сервера данных для их быстрого отображения при повторном наведении на противника. Параметры конфигурации доступны в основном файле. Ознакомиться с дополнительной информацией, а также задать вопрос можно в официальной теме модификации (http://www.koreanrandom.com/forum/topic/16559-/).</description>
+</root>
