@@ -2,15 +2,16 @@
 # TargetInfo Class
 # *************************
 class TargetInfo(int):
-	__slots__ = ('lastLockTime', 'expiryTime', 'shortName', '_height', '_lastHeightVector', '_lastPosition')
+	__slots__ = ('lastLockTime', 'expiryTimeout', 'relockTimeout', 'shortName', '_height', '_lastHeightVector', '_lastPosition')
 
-	def __new__(sclass, target, *args, **kwargs):
-		return super(TargetInfo, sclass).__new__(sclass, target.id) if XModLib.VehicleInfo.isVehicle(target) else None
+	def __new__(cls, target, *args, **kwargs):
+		return super(TargetInfo, cls).__new__(cls, target.id) if XModLib.VehicleInfo.isVehicle(target) else None
 
-	def __init__(self, target, lastLockTime=None, expiryTime=10.0):
+	def __init__(self, target, lastLockTime=None, expiryTimeout=10.0, relockTimeout=0.16):
 		super(TargetInfo, self).__init__(target.id)
 		self.lastLockTime = lastLockTime
-		self.expiryTime = expiryTime
+		self.expiryTimeout = expiryTimeout
+		self.relockTimeout = relockTimeout
 		self.shortName = XModLib.ArenaInfo.getShortName(target.id)
 		self._height = XModLib.VehicleMath.getVehicleHeight(target)
 		self._lastHeightVector = XModLib.VehicleMath.getVehicleHeightVector(target, self._height)
@@ -23,7 +24,11 @@ class TargetInfo(int):
 
 	@property
 	def isExpired(self):
-		return self.isAutoLocked and self.lastLockTime + self.expiryTime <= BigWorld.time()
+		return self.lastLockTime is not None and self.lastLockTime + self.expiryTimeout <= BigWorld.time()
+
+	@property
+	def isInsight(self):
+		return self.lastLockTime is None or self.lastLockTime + self.relockTimeout >= BigWorld.time()
 
 	def getMacroData(self):
 		speed = self.getSpeed() or 0.0
@@ -67,7 +72,13 @@ class TargetInfo(int):
 		return self._lastHeightVector if not actualOnly else None
 
 	def __repr__(self):
-		return 'TargetInfo(target={}, lastLockTime={!r}, expiryTime={!r})'.format(super(TargetInfo, self).__repr__(), self.lastLockTime, self.expiryTime)
+		return '{!s}(target=BigWorld.entity({}), lastLockTime={!r}, expiryTimeout={!r}, relockTimeout={!r})'.format(
+			self.__class__.__name__,
+			super(TargetInfo, self).__repr__(),
+			self.lastLockTime,
+			self.expiryTimeout,
+			self.relockTimeout
+		)
 
 	def __del__(self):
 		return

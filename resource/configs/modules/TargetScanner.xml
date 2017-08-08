@@ -34,7 +34,10 @@
 		<autoScanInterval>0.04</autoScanInterval>
 		<!-- When this time passes since target last time under crosshairs, target (auto scanned) is deprecated. -->
 		<!-- Время устаревания цели с момента ее последнего попадания в прицел (для автоматического сканера). -->
-		<autoScanExpiryTime>10.0</autoScanExpiryTime>
+		<autoScanExpiryTimeout>10.0</autoScanExpiryTimeout>
+		<!-- When this time passes since target last time under crosshairs, target (auto scanned) is considered out of sight. -->
+		<!-- Расчетное время потери цели из поля зрения с момента ее последнего попадания в прицел (для автоматического сканера). -->
+		<autoScanRelockTimeout>0.16</autoScanRelockTimeout>
 	</scanMode>
 	<!-- Automatic scanner settings. -->
 	<!-- Настройки автоматического сканера. -->

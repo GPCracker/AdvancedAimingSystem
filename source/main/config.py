@@ -53,7 +53,8 @@ def loadConfiguration():
 					'maxDistance': ('Float', 720.0),
 					'boundsScalar': ('Float', 2.5),
 					'autoScanInterval': ('Float', 0.04),
-					'autoScanExpiryTime': ('Float', 10.0)
+					'autoScanExpiryTimeout': ('Float', 10.0),
+					'autoScanRelockTimeout': ('Float', 0.16)
 				},
 				'autoScan': {
 					'enabled': ('Bool', True),

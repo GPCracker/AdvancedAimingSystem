@@ -12,7 +12,8 @@ class TargetScanMode(tuple):
 		('maxDistance', 720.0),
 		('boundsScalar', 2.5),
 		('autoScanInterval', 0.04),
-		('autoScanExpiryTime', 10.0)
+		('autoScanExpiryTimeout', 10.0),
+		('autoScanRelockTimeout', 0.16)
 	)
 
 	@staticmethod
@@ -156,9 +157,19 @@ class TargetScanner(object):
 			if self.targetInfo is not None and self.targetInfo.isAutoLocked and primaryTarget.id == self.targetInfo:
 				self.targetInfo.lastLockTime = BigWorld.time()
 			elif self.targetInfo is None or self.targetInfo.isAutoLocked:
-				self.targetInfo = TargetInfo(primaryTarget, BigWorld.time(), self._targetScanMode.autoScanExpiryTime)
+				self.targetInfo = TargetInfo(
+					primaryTarget,
+					lastLockTime=BigWorld.time(),
+					expiryTimeout=self._targetScanMode.autoScanExpiryTimeout,
+					relockTimeout=self._targetScanMode.autoScanRelockTimeout
+				)
 		elif len(secondaryTargets) == 1 and (self.targetInfo is None or self.targetInfo.isExpired):
-			self.targetInfo = TargetInfo(secondaryTargets.pop(), BigWorld.time(), self._targetScanMode.autoScanExpiryTime)
+			self.targetInfo = TargetInfo(
+				secondaryTargets.pop(),
+				lastLockTime=BigWorld.time(),
+				expiryTimeout=self._targetScanMode.autoScanExpiryTimeout,
+				relockTimeout=self._targetScanMode.autoScanRelockTimeout
+			)
 		elif self.targetInfo is not None and self.targetInfo.isAutoLocked and not self.targetInfo.isExpired and self.targetInfo.getVehicle() in secondaryTargets:
 			self.targetInfo.lastLockTime = BigWorld.time()
 		return
@@ -197,6 +208,9 @@ class TargetScanner(object):
 	def stop(self):
 		self._updateCallbackLoop.stop()
 		return
+
+	def __repr__(self):
+		return '{!s}(targetScanMode={!r}, autoScanActivated={!r})'.format(self.__class__.__name__, self._targetScanMode, self.autoScanActivated)
 
 	def __del__(self):
 		self._updateCallbackLoop = None
