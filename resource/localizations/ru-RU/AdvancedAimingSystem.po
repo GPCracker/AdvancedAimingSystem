@@ -20,27 +20,6 @@ msgstr "[СКАНЕР] АВТОРЕЖИМ АКТИВИРОВАН."
 msgid "targetScanner/autoScan/onDeactivate"
 msgstr "[СКАНЕР] АВТОРЕЖИМ ДЕАКТИВИРОВАН."
 
-msgid "safeShot/onActivate"
-msgstr "[ПРЕДОХРАНИТЕЛЬ] АКТИВИРОВАН."
-
-msgid "safeShot/onDeactivate"
-msgstr "[ПРЕДОХРАНИТЕЛЬ] ДЕАКТИВИРОВАН."
-
-msgid "safeShot/error/template"
-msgstr "[{{reason}}] Выстрел заблокирован предохранителем."
-
-msgid "safeShot/reasons/team/chat/message"
-msgstr "{{player}} ({{vehicle}}), не мешай стрелять!"
-
-msgid "safeShot/reasons/team/template"
-msgstr "союзник"
-
-msgid "safeShot/reasons/dead/template"
-msgstr "труп"
-
-msgid "safeShot/reasons/waste/template"
-msgstr "промах"
-
 msgid "arcadeAimCorrection/targetMode/onActivate"
 msgstr "[ДАЛЬНОМЕР] АРКАДНЫЙ по цели АКТИВИРОВАН."
 
@@ -64,6 +43,27 @@ msgstr "[ДАЛЬНОМЕР] БАЛЛИСТИЧЕСКИЙ по цели АКТИ
 
 msgid "artyAimCorrection/targetMode/onDeactivate"
 msgstr "[ДАЛЬНОМЕР] БАЛЛИСТИЧЕСКИЙ по цели ДЕАКТИВИРОВАН."
+
+msgid "safeShot/onActivate"
+msgstr "[ПРЕДОХРАНИТЕЛЬ] АКТИВИРОВАН."
+
+msgid "safeShot/onDeactivate"
+msgstr "[ПРЕДОХРАНИТЕЛЬ] ДЕАКТИВИРОВАН."
+
+msgid "safeShot/error/template"
+msgstr "[{{reason}}] Выстрел заблокирован предохранителем."
+
+msgid "safeShot/reasons/team/chat/message"
+msgstr "{{player}} ({{vehicle}}), не мешай стрелять!"
+
+msgid "safeShot/reasons/team/template"
+msgstr "союзник"
+
+msgid "safeShot/reasons/dead/template"
+msgstr "труп"
+
+msgid "safeShot/reasons/waste/template"
+msgstr "промах"
 
 msgid "gui/panels/context/hideInfoPanel"
 msgstr "Спрятать эту панель"

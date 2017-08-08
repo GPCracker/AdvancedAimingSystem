@@ -64,8 +64,8 @@ def loadConfiguration():
 						'invert': ('Bool', False)
 					}),
 					'message': {
-						'onActivate': ('LocalizedWideString', u'TargetScanner:AutoMode ENABLED.'),
-						'onDeactivate': ('LocalizedWideString', u'TargetScanner:AutoMode DISABLED.')
+						'onActivate': ('LocalizedWideString', u'[TargetScanner] AutoMode ENABLED.'),
+						'onDeactivate': ('LocalizedWideString', u'[TargetScanner] AutoMode DISABLED.')
 					}
 				},
 				'manualOverride': {
@@ -88,8 +88,8 @@ def loadConfiguration():
 							'invert': ('Bool', False)
 						}),
 						'message': {
-							'onActivate': ('LocalizedWideString', u'ArcadeAimCorrection:TargetMode ENABLED.'),
-							'onDeactivate': ('LocalizedWideString', u'ArcadeAimCorrection:TargetMode DISABLED.')
+							'onActivate': ('LocalizedWideString', u'[ArcadeAimCorrection] TargetMode ENABLED.'),
+							'onDeactivate': ('LocalizedWideString', u'[ArcadeAimCorrection] TargetMode DISABLED.')
 						},
 						'distance': ('Vector2AsTuple', (50.0, 720.0))
 					}
@@ -108,8 +108,8 @@ def loadConfiguration():
 							'invert': ('Bool', False)
 						}),
 						'message': {
-							'onActivate': ('LocalizedWideString', u'SniperAimCorrection:TargetMode ENABLED.'),
-							'onDeactivate': ('LocalizedWideString', u'SniperAimCorrection:TargetMode DISABLED.')
+							'onActivate': ('LocalizedWideString', u'[SniperAimCorrection] TargetMode ENABLED.'),
+							'onDeactivate': ('LocalizedWideString', u'[SniperAimCorrection] TargetMode DISABLED.')
 						},
 						'distance': ('Vector2AsTuple', (10.0, 720.0))
 					}
@@ -128,8 +128,8 @@ def loadConfiguration():
 							'invert': ('Bool', False)
 						}),
 						'message': {
-							'onActivate': ('LocalizedWideString', u'StrategicAimCorrection:TargetMode ENABLED.'),
-							'onDeactivate': ('LocalizedWideString', u'StrategicAimCorrection:TargetMode DISABLED.')
+							'onActivate': ('LocalizedWideString', u'[StrategicAimCorrection] TargetMode ENABLED.'),
+							'onDeactivate': ('LocalizedWideString', u'[StrategicAimCorrection] TargetMode DISABLED.')
 						},
 						'heightMultiplier': ('Float', 0.5)
 					},
@@ -149,8 +149,8 @@ def loadConfiguration():
 							'invert': ('Bool', False)
 						}),
 						'message': {
-							'onActivate': ('LocalizedWideString', u'ArtyAimCorrection:TargetMode ENABLED.'),
-							'onDeactivate': ('LocalizedWideString', u'ArtyAimCorrection:TargetMode DISABLED.')
+							'onActivate': ('LocalizedWideString', u'[ArtyAimCorrection] TargetMode ENABLED.'),
+							'onDeactivate': ('LocalizedWideString', u'[ArtyAimCorrection] TargetMode DISABLED.')
 						}
 					}
 				}
@@ -166,8 +166,8 @@ def loadConfiguration():
 					'invert': ('Bool', True)
 				}),
 				'message': {
-					'onActivate': ('LocalizedWideString', u'SafeShot: ENABLED.'),
-					'onDeactivate': ('LocalizedWideString', u'SafeShot: DISABLED.')
+					'onActivate': ('LocalizedWideString', u'[SafeShot] ENABLED.'),
+					'onDeactivate': ('LocalizedWideString', u'[SafeShot] DISABLED.')
 				},
 				'useGunTarget': ('Bool', True),
 				'considerBlueHostile': ('Bool', False),
@@ -225,7 +225,7 @@ def loadConfiguration():
 							'alpha': ('Float', 1.0),
 							'visible': ('Bool', False),
 							'background': ('String', ''),
-							'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemCorrectionPanel'),
+							'tooltip': ('LocalizedWideString', u'Aim correction info panel.'),
 							'template': ('LocalizedWideString', u'<p align="center"><font color="#00FF00" size="20" face="$UniversCondC">Distance locked: {{manualInfo:.1f}}m.</font></p>'),
 							'position': ('Vector2AsTuple', (0.0, 0.3)),
 							'size': ('Vector2AsTuple', (450.0, 25.0))
@@ -234,7 +234,7 @@ def loadConfiguration():
 							'alpha': ('Float', 1.0),
 							'visible': ('Bool', True),
 							'background': ('String', ''),
-							'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemCorrectionPanel'),
+							'tooltip': ('LocalizedWideString', u'Aim correction info panel.'),
 							'template': ('LocalizedWideString', u'<p align="center"><font color="#00FF00" size="20" face="$UniversCondC">Distance locked: {{manualInfo:.1f}}m.</font></p>'),
 							'position': ('Vector2AsTuple', (0.0, 0.3)),
 							'size': ('Vector2AsTuple', (450.0, 25.0))
@@ -243,7 +243,7 @@ def loadConfiguration():
 							'alpha': ('Float', 1.0),
 							'visible': ('Bool', True),
 							'background': ('String', ''),
-							'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemCorrectionPanel'),
+							'tooltip': ('LocalizedWideString', u'Aim correction info panel.'),
 							'template': ('LocalizedWideString', u'<p align="center"><font color="#00FF00" size="20" face="$UniversCondC">Distance locked: {{manualInfo:.1f}}m.</font></p>'),
 							'position': ('Vector2AsTuple', (0.0, 0.3)),
 							'size': ('Vector2AsTuple', (450.0, 25.0))
@@ -252,7 +252,7 @@ def loadConfiguration():
 							'alpha': ('Float', 1.0),
 							'visible': ('Bool', True),
 							'background': ('String', ''),
-							'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemCorrectionPanel'),
+							'tooltip': ('LocalizedWideString', u'Aim correction info panel.'),
 							'template': ('LocalizedWideString', u'<p align="center"><font color="#00FF00" size="20" face="$UniversCondC">Altitude locked: {{manualInfo:.1f}}m.</font></p>'),
 							'position': ('Vector2AsTuple', (0.0, 0.3)),
 							'size': ('Vector2AsTuple', (450.0, 25.0))
@@ -261,7 +261,7 @@ def loadConfiguration():
 							'alpha': ('Float', 1.0),
 							'visible': ('Bool', True),
 							'background': ('String', ''),
-							'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemCorrectionPanel'),
+							'tooltip': ('LocalizedWideString', u'Aim correction info panel.'),
 							'template': ('LocalizedWideString', u'<p align="center"><font color="#00FF00" size="20" face="$UniversCondC">Unknown parameter locked: {{manualInfo:.1f}}m.</font></p>'),
 							'position': ('Vector2AsTuple', (0.0, 0.3)),
 							'size': ('Vector2AsTuple', (450.0, 25.0))
@@ -272,7 +272,7 @@ def loadConfiguration():
 							'alpha': ('Float', 1.0),
 							'visible': ('Bool', False),
 							'background': ('String', ''),
-							'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemTargetPanel'),
+							'tooltip': ('LocalizedWideString', u'Target scanner info panel.'),
 							'template': ('LocalizedWideString', u'<p align="center"><font color="#FF7F00" size="20" face="$UniversCondC">Target: {{shortName}}; Distance: {{distance:.1f}}m; Speed: {{speedMS:.1f}}m/s.</font></p>'),
 							'position': ('Vector2AsTuple', (0.0, 0.4)),
 							'size': ('Vector2AsTuple', (450.0, 25.0))
@@ -281,7 +281,7 @@ def loadConfiguration():
 							'alpha': ('Float', 1.0),
 							'visible': ('Bool', True),
 							'background': ('String', ''),
-							'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemTargetPanel'),
+							'tooltip': ('LocalizedWideString', u'Target scanner info panel.'),
 							'template': ('LocalizedWideString', u'<p align="center"><font color="#FF7F00" size="20" face="$UniversCondC">Target: {{shortName}}; Distance: {{distance:.1f}}m; Speed: {{speedMS:.1f}}m/s.</font></p>'),
 							'position': ('Vector2AsTuple', (0.0, 0.4)),
 							'size': ('Vector2AsTuple', (450.0, 25.0))
@@ -290,7 +290,7 @@ def loadConfiguration():
 							'alpha': ('Float', 1.0),
 							'visible': ('Bool', True),
 							'background': ('String', ''),
-							'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemTargetPanel'),
+							'tooltip': ('LocalizedWideString', u'Target scanner info panel.'),
 							'template': ('LocalizedWideString', u'<p align="center"><font color="#FF7F00" size="20" face="$UniversCondC">Target: {{shortName}}; Distance: {{distance:.1f}}m; Speed: {{speedMS:.1f}}m/s.</font></p>'),
 							'position': ('Vector2AsTuple', (0.0, 0.4)),
 							'size': ('Vector2AsTuple', (450.0, 25.0))
@@ -299,7 +299,7 @@ def loadConfiguration():
 							'alpha': ('Float', 1.0),
 							'visible': ('Bool', True),
 							'background': ('String', ''),
-							'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemTargetPanel'),
+							'tooltip': ('LocalizedWideString', u'Target scanner info panel.'),
 							'template': ('LocalizedWideString', u'<p align="center"><font color="#FF7F00" size="20" face="$UniversCondC">Target: {{shortName}}; Distance: {{distance:.1f}}m; Speed: {{speedMS:.1f}}m/s.</font></p>'),
 							'position': ('Vector2AsTuple', (0.0, 0.4)),
 							'size': ('Vector2AsTuple', (450.0, 25.0))
@@ -308,7 +308,7 @@ def loadConfiguration():
 							'alpha': ('Float', 1.0),
 							'visible': ('Bool', True),
 							'background': ('String', ''),
-							'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemTargetPanel'),
+							'tooltip': ('LocalizedWideString', u'Target scanner info panel.'),
 							'template': ('LocalizedWideString', u'<p align="center"><font color="#FF7F00" size="20" face="$UniversCondC">Target: {{shortName}}; Distance: {{distance:.1f}}m; Speed: {{speedMS:.1f}}m/s.</font></p>'),
 							'position': ('Vector2AsTuple', (0.0, 0.4)),
 							'size': ('Vector2AsTuple', (450.0, 25.0))
@@ -319,7 +319,7 @@ def loadConfiguration():
 							'alpha': ('Float', 1.0),
 							'visible': ('Bool', False),
 							'background': ('String', 'img://mods/GPCracker.AdvancedAimingSystem/icons/AimingInfoBackground.png'),
-							'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemAimingPanel'),
+							'tooltip': ('LocalizedWideString', u'Aiming info panel.'),
 							'template': ('LocalizedWideString', u'<textformat leftmargin="20" rightmargin="20" tabstops="[0,70]"><font color="#64F0B4" size="20" face="$UniversCondC">\tRemains:\t{{remainingAimingTime:.2f}}s;\n\tDistance:\t{{aimingDistance:.1f}}m;\n\tDeviation:\t{{deviation:.2f}}m;\n\tFly time:\t{{flyTime:.2f}}s;\n\tHit angle:\t{{hitAngleDeg:+.1f}}dg;</font></textformat>'),
 							'position': ('Vector2AsTuple', (0.4, -0.1)),
 							'size': ('Vector2AsTuple', (175.0, 130.0))
@@ -328,7 +328,7 @@ def loadConfiguration():
 							'alpha': ('Float', 1.0),
 							'visible': ('Bool', True),
 							'background': ('String', 'img://mods/GPCracker.AdvancedAimingSystem/icons/AimingInfoBackground.png'),
-							'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemAimingPanel'),
+							'tooltip': ('LocalizedWideString', u'Aiming info panel.'),
 							'template': ('LocalizedWideString', u'<textformat leftmargin="20" rightmargin="20" tabstops="[0,70]"><font color="#64F0B4" size="20" face="$UniversCondC">\tRemains:\t{{remainingAimingTime:.2f}}s;\n\tDistance:\t{{aimingDistance:.1f}}m;\n\tDeviation:\t{{deviation:.2f}}m;\n\tFly time:\t{{flyTime:.2f}}s;\n\tHit angle:\t{{hitAngleDeg:+.1f}}dg;</font></textformat>'),
 							'position': ('Vector2AsTuple', (0.4, -0.1)),
 							'size': ('Vector2AsTuple', (175.0, 130.0))
@@ -337,7 +337,7 @@ def loadConfiguration():
 							'alpha': ('Float', 1.0),
 							'visible': ('Bool', True),
 							'background': ('String', 'img://mods/GPCracker.AdvancedAimingSystem/icons/AimingInfoBackground.png'),
-							'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemAimingPanel'),
+							'tooltip': ('LocalizedWideString', u'Aiming info panel.'),
 							'template': ('LocalizedWideString', u'<textformat leftmargin="20" rightmargin="20" tabstops="[0,70]"><font color="#64B4F0" size="20" face="$UniversCondC">\tRemains:\t{{remainingAimingTime:.2f}}s;\n\tDistance:\t{{aimingDistance:.1f}}m;\n\tDeviation:\t{{deviation:.2f}}m;\n\tFly time:\t{{flyTime:.2f}}s;\n\tHit angle:\t{{hitAngleDeg:+.1f}}dg;</font></textformat>'),
 							'position': ('Vector2AsTuple', (0.4, -0.25)),
 							'size': ('Vector2AsTuple', (175.0, 130.0))
@@ -346,7 +346,7 @@ def loadConfiguration():
 							'alpha': ('Float', 1.0),
 							'visible': ('Bool', True),
 							'background': ('String', 'img://mods/GPCracker.AdvancedAimingSystem/icons/AimingInfoBackground.png'),
-							'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemAimingPanel'),
+							'tooltip': ('LocalizedWideString', u'Aiming info panel.'),
 							'template': ('LocalizedWideString', u'<textformat leftmargin="20" rightmargin="20" tabstops="[0,70]"><font color="#B46464" size="20" face="$UniversCondC">\tRemains:\t{{remainingAimingTime:.2f}}s;\n\tDistance:\t{{aimingDistance:.1f}}m;\n\tDeviation:\t{{deviation:.2f}}m;\n\tFly time:\t{{flyTime:.2f}}s;\n\tHit angle:\t{{hitAngleDeg:+.1f}}dg;</font></textformat>'),
 							'position': ('Vector2AsTuple', (-0.3, -0.4)),
 							'size': ('Vector2AsTuple', (175.0, 130.0))
@@ -355,7 +355,7 @@ def loadConfiguration():
 							'alpha': ('Float', 1.0),
 							'visible': ('Bool', True),
 							'background': ('String', 'img://mods/GPCracker.AdvancedAimingSystem/icons/AimingInfoBackground.png'),
-							'tooltip': ('LocalizedWideString', u'AdvancedAimingSystemAimingPanel'),
+							'tooltip': ('LocalizedWideString', u'Aiming info panel.'),
 							'template': ('LocalizedWideString', u'<textformat leftmargin="20" rightmargin="20" tabstops="[0,70]"><font color="#B46464" size="20" face="$UniversCondC">\tRemains:\t{{remainingAimingTime:.2f}}s;\n\tDistance:\t{{aimingDistance:.1f}}m;\n\tDeviation:\t{{deviation:.2f}}m;\n\tFly time:\t{{flyTime:.2f}}s;\n\tHit angle:\t{{hitAngleDeg:+.1f}}dg;</font></textformat>'),
 							'position': ('Vector2AsTuple', (-0.3, -0.4)),
 							'size': ('Vector2AsTuple', (175.0, 130.0))
