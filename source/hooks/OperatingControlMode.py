@@ -15,7 +15,7 @@ def new_OperatingControlMode_init(self, *args, **kwargs):
 			config['targetMode']['enabled'] and config['targetMode']['activated'],
 			config['targetMode']['distance'][0],
 			config['targetMode']['distance'][1]
-		)
+		) if config['enabled'] else None
 	elif type(self) is AvatarInputHandler.control_modes.SniperControlMode:
 		config = _config_['modules']['aimCorrection'][AvatarInputHandler.aih_constants.CTRL_MODE_NAME.SNIPER]
 		self.XAimCorrection = SniperAimCorrection(
@@ -24,7 +24,7 @@ def new_OperatingControlMode_init(self, *args, **kwargs):
 			config['targetMode']['enabled'] and config['targetMode']['activated'],
 			config['targetMode']['distance'][0],
 			config['targetMode']['distance'][1]
-		)
+		) if config['enabled'] else None
 	elif type(self) is AvatarInputHandler.control_modes.StrategicControlMode:
 		config = _config_['modules']['aimCorrection'][AvatarInputHandler.aih_constants.CTRL_MODE_NAME.STRATEGIC]
 		self.XAimCorrection = StrategicAimCorrection(
@@ -33,14 +33,14 @@ def new_OperatingControlMode_init(self, *args, **kwargs):
 			config['targetMode']['enabled'] and config['targetMode']['activated'],
 			config['ignoreVehicles'],
 			config['targetMode']['heightMultiplier']
-		)
+		) if config['enabled'] else None
 	elif type(self) is AvatarInputHandler.control_modes.ArtyControlMode:
 		config = _config_['modules']['aimCorrection'][AvatarInputHandler.aih_constants.CTRL_MODE_NAME.ARTY]
 		self.XAimCorrection = ArtyAimCorrection(
 			self,
 			config['manualMode']['enabled'],
 			config['targetMode']['enabled'] and config['targetMode']['activated']
-		)
+		) if config['enabled'] else None
 	return
 
 @XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.control_modes.ArcadeControlMode, 'enable', invoke=XModLib.HookUtils.HookInvoke.SECONDARY)
@@ -50,7 +50,9 @@ def new_OperatingControlMode_init(self, *args, **kwargs):
 def new_OperatingControlMode_enable(self, *args, **kwargs):
 	# These strict type checks ensure hooks will work only in original classes themselves, but not in their subclasses.
 	if type(self) in (AvatarInputHandler.control_modes.ArcadeControlMode, AvatarInputHandler.control_modes.SniperControlMode, AvatarInputHandler.control_modes.StrategicControlMode, AvatarInputHandler.control_modes.ArtyControlMode):
-		self.XAimCorrection.handleControlModeEnable()
+		aimCorrection = getattr(self, 'XAimCorrection', None)
+		if aimCorrection is not None:
+			aimCorrection.handleControlModeEnable()
 		targetScanner = getattr(self._aih, 'XTargetScanner', None)
 		if targetScanner is not None and not targetScanner.isUpdateActive:
 			targetScanner.start()
@@ -68,7 +70,9 @@ def new_OperatingControlMode_enable(self, *args, **kwargs):
 def new_OperatingControlMode_disable(self, *args, **kwargs):
 	# These strict type checks ensure hooks will work only in original classes themselves, but not in their subclasses.
 	if type(self) in (AvatarInputHandler.control_modes.ArcadeControlMode, AvatarInputHandler.control_modes.SniperControlMode, AvatarInputHandler.control_modes.StrategicControlMode, AvatarInputHandler.control_modes.ArtyControlMode):
-		self.XAimCorrection.handleControlModeDisable()
+		aimCorrection = getattr(self, 'XAimCorrection', None)
+		if aimCorrection is not None:
+			aimCorrection.handleControlModeDisable()
 		targetScanner = getattr(self._aih, 'XTargetScanner', None)
 		if targetScanner is not None and targetScanner.isUpdateActive:
 			targetScanner.stop()
@@ -87,5 +91,7 @@ def new_OperatingControlMode_getDesiredShotPoint(old_OperatingControlMode_getDes
 	shotPoint = old_OperatingControlMode_getDesiredShotPoint(self, *args, **kwargs)
 	# These strict type checks ensure hooks will work only in original classes themselves, but not in their subclasses.
 	if type(self) in (AvatarInputHandler.control_modes.ArcadeControlMode, AvatarInputHandler.control_modes.SniperControlMode, AvatarInputHandler.control_modes.StrategicControlMode, AvatarInputHandler.control_modes.ArtyControlMode):
-		return self.XAimCorrection.getDesiredShotPoint(shotPoint)
+		aimCorrection = getattr(self, 'XAimCorrection', None)
+		if aimCorrection is not None:
+			return aimCorrection.getDesiredShotPoint(shotPoint)
 	return shotPoint

@@ -76,12 +76,13 @@ def loadConfiguration():
 			},
 			'aimCorrection': {
 				'arcade': {
+					'enabled': ('Bool', False),
 					'manualMode': {
-						'enabled': ('Bool', False),
+						'enabled': ('Bool', True),
 						'shortcut': ('SimpleShortcut', 'KEY_LALT', {'switch': False, 'invert': False})
 					},
 					'targetMode': {
-						'enabled': ('Bool', False),
+						'enabled': ('Bool', True),
 						'activated': ('Bool', True),
 						'shortcut': ('AdvancedShortcut', {
 							'sequence': ('String', 'KEY_LCONTROL+KEY_K'),
@@ -96,6 +97,7 @@ def loadConfiguration():
 					}
 				},
 				'sniper': {
+					'enabled': ('Bool', True),
 					'manualMode': {
 						'enabled': ('Bool', True),
 						'shortcut': ('SimpleShortcut', 'KEY_LALT', {'switch': False, 'invert': False})
@@ -116,6 +118,7 @@ def loadConfiguration():
 					}
 				},
 				'strategic': {
+					'enabled': ('Bool', True),
 					'manualMode': {
 						'enabled': ('Bool', True),
 						'shortcut': ('SimpleShortcut', 'KEY_LALT', {'switch': False, 'invert': False})
@@ -137,12 +140,13 @@ def loadConfiguration():
 					'ignoreVehicles': ('Bool', False)
 				},
 				'arty': {
+					'enabled': ('Bool', False),
 					'manualMode': {
-						'enabled': ('Bool', False),
+						'enabled': ('Bool', True),
 						'shortcut': ('SimpleShortcut', 'KEY_LALT', {'switch': False, 'invert': False})
 					},
 					'targetMode': {
-						'enabled': ('Bool', False),
+						'enabled': ('Bool', True),
 						'activated': ('Bool', True),
 						'shortcut': ('AdvancedShortcut', {
 							'sequence': ('String', 'KEY_LCONTROL+KEY_K'),

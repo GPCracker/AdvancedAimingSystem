@@ -8,16 +8,17 @@
 	<!-- Arcade control mode aim correction settings. -->
 	<!-- Настройки корректировки в аркадном режиме прицеливания. -->
 	<arcade>
+		<enabled>False</enabled>
 		<!-- Manual correction mode. -->
 		<!-- Ручной режим корректировки. -->
 		<manualMode>
-			<enabled>False</enabled>
+			<enabled>True</enabled>
 			<shortcut>KEY_LALT</shortcut>
 		</manualMode>
 		<!-- Target correction mode. -->
 		<!-- Режим корректировки по данным цели. -->
 		<targetMode>
-			<enabled>False</enabled>
+			<enabled>True</enabled>
 			<activated>True</activated>
 			<shortcut>
 				<sequence>KEY_LCONTROL+KEY_K</sequence>
@@ -36,6 +37,7 @@
 	<!-- Sniper control mode aim correction settings. -->
 	<!-- Настройки корректировки в снайперском режиме прицеливания. -->
 	<sniper>
+		<enabled>True</enabled>
 		<!-- Manual correction mode. -->
 		<!-- Ручной режим корректировки. -->
 		<manualMode>
@@ -64,6 +66,7 @@
 	<!-- Strategic control mode aim correction settings. -->
 	<!-- Настройки корректировки в артиллерийском режиме прицеливания (вертикальный вид). -->
 	<strategic>
+		<enabled>True</enabled>
 		<!-- Manual correction mode. -->
 		<!-- Ручной режим корректировки. -->
 		<manualMode>
@@ -95,16 +98,17 @@
 	<!-- Arty control mode aim correction settings. -->
 	<!-- Настройки корректировки в артиллерийском режиме прицеливания (вид от траектории). -->
 	<arty>
+		<enabled>False</enabled>
 		<!-- Manual correction mode. -->
 		<!-- Ручной режим корректировки. -->
 		<manualMode>
-			<enabled>False</enabled>
+			<enabled>True</enabled>
 			<shortcut>KEY_LALT</shortcut>
 		</manualMode>
 		<!-- Target correction mode. -->
 		<!-- Режим корректировки по данным цели. -->
 		<targetMode>
-			<enabled>False</enabled>
+			<enabled>True</enabled>
 			<activated>True</activated>
 			<shortcut>
 				<sequence>KEY_LCONTROL+KEY_K</sequence>

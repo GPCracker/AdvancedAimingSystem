@@ -60,7 +60,7 @@ def new_AvatarInputHandler_handleKeyEvent(old_AvatarInputHandler_handleKeyEvent,
 					targetScanner.engageManualOverride()
 		## HotKeys - AimCorrection
 		mconfig = _config_['modules']['aimCorrection'][self.ctrlModeName]
-		if True:
+		if mconfig['enabled']:
 			## HotKeys - AimCorrection - Target Mode
 			fconfig = mconfig['targetMode']
 			shortcutHandle = fconfig['enabled'] and fconfig['shortcut'](kbevent)
@@ -80,19 +80,21 @@ def new_AvatarInputHandler_handleKeyEvent(old_AvatarInputHandler_handleKeyEvent,
 						fconfig['message']['onDeactivate'],
 						'red'
 					)
-				self.ctrl.XAimCorrection.targetEnabled = fconfig['activated']
+				aimCorrection = getattr(self.ctrl, 'XAimCorrection', None)
+				if aimCorrection is not None:
+					aimCorrection.targetEnabled = fconfig['activated']
 	## AvatarInputHandler started, not detached, control mode supported (for AvatarInputHandler shortcuts)
 	if self._AvatarInputHandler__isStarted and not self.isDetached and self.ctrlModeName in operatingControlModes:
 		## HotKeys - AimCorrection
 		mconfig = _config_['modules']['aimCorrection'][self.ctrlModeName]
-		if True:
+		if mconfig['enabled']:
 			## HotKeys - AimCorrection - ManualMode
 			fconfig = mconfig['manualMode']
 			shortcutHandle = fconfig['enabled'] and fconfig['shortcut'](kbevent)
 			if shortcutHandle:
-				self.ctrl.XAimCorrection.resetManualInfo()
-				if shortcutHandle.pushed:
-					self.ctrl.XAimCorrection.setManualInfo()
+				aimCorrection = getattr(self.ctrl, 'XAimCorrection', None)
+				if aimCorrection is not None:
+					aimCorrection.updateManualInfo(shortcutHandle.pushed)
 	## AvatarInputHandler started, event not handled by game (for avatar switches)
 	if self._AvatarInputHandler__isStarted and not result:
 		pass

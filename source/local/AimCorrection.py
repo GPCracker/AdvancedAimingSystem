@@ -31,6 +31,13 @@ class BaseAimCorrection(object):
 			self.manualInfo = None
 		return
 
+	def updateManualInfo(self, setRequired=True, resetRequired=True):
+		if resetRequired:
+			self.resetManualInfo()
+		if setRequired:
+			self.setManualInfo()
+		return
+
 	def handleControlModeEnable(self):
 		self.manualInfo = None
 		return
