@@ -50,8 +50,8 @@ def new_VehicleGunRotator_getGunMarkerPosition(self, shotPoint, shotVector, disp
 		return (result, ) if result is not None else None
 	colliders = (colliderCorrection, colliderMaterial, colliderSpace)
 	vehicleTypeDescriptor = self._VehicleGunRotator__avatar.vehicleTypeDescriptor
-	shotGravity = Math.Vector3(0.0, -1.0, 0.0).scale(vehicleTypeDescriptor.shot['gravity'])
-	shotMaxDistance = vehicleTypeDescriptor.shot['maxDistance']
+	shotGravity = Math.Vector3(0.0, -1.0, 0.0).scale(vehicleTypeDescriptor.shot.gravity)
+	shotMaxDistance = vehicleTypeDescriptor.shot.maxDistance
 	hitPoint, hitVector, hitResult, hitCollider = XModLib.CollisionUtils.computeProjectileTrajectoryEnd(shotPoint, shotVector, shotGravity, colliders)
 	hitData = hitResult[1] if hitCollider is colliderMaterial and hitResult[1] is not None and hitResult[1].isVehicle() else None
 	markerDistance = shotPoint.distTo(hitPoint)

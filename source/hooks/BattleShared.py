@@ -29,5 +29,5 @@ def new_BattleShared_getBusinessHandlers(old_BattleShared_getBusinessHandlers, *
 @XModLib.HookUtils.methodHookExt(_inject_hooks_, gui.Scaleform.daapi.view.battle.shared.SharedPage, '_populate', invoke=XModLib.HookUtils.HookInvoke.SECONDARY)
 def new_SharedPage_populate(self, *args, **kwargs):
 	if _config_['gui']['enabled']:
-		self.app.loadView(GuiSettings.LOADER_VIEW_ALIAS)
+		self.app.loadView(gui.Scaleform.framework.managers.loaders.ViewLoadParams(GuiSettings.LOADER_VIEW_ALIAS))
 	return
