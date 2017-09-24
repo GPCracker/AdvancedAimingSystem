@@ -1,2 +1,16 @@
-# Texture files should be handled in binary mode.
+# all text files in repository should have their line endings normalized
+* text=auto
+
+# these files are text ones
+*.as text
+*.md text
+*.py text
+*.cfg text
+*.xml text
+
+# these text files have specific line endings
+*.po text eol=lf
+*.as3proj text eol=crlf
+
+# these files are binaries
 *.png binary
