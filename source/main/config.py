@@ -203,6 +203,26 @@ def loadConfiguration():
 				'cacheExpiryTimeout': ('Float', 30.0),
 				'responseTimeout': ('Float', 5.0)
 			},
+			'advancedArty': {
+				'enabled': ('Bool', False),
+				'cameraAdjustment': {
+					'enabled': ('Bool', True),
+					'interpolationSpeed': ('Float', 5.0),
+					'disableInterpolation': ('Bool', True),
+					'disableHighPitchLevel': ('Bool', True)
+				},
+				'orthogonalView': {
+					'enabled': ('Bool', True),
+					'activated': ('Bool', False),
+					'shortcut': ('AdvancedShortcut', {
+						'sequence': ('String', 'KEY_LALT+KEY_MIDDLEMOUSE'),
+						'switch': ('Bool', True),
+						'invert': ('Bool', False)
+					}),
+					'cameraDistance': ('Float', 700.0),
+					'preserveLastView': ('Bool', True)
+				}
+			},
 			'sniperModeSPG': {
 				'enabled': ('Bool', False),
 				'shortcut': ('SimpleShortcut', 'KEY_E', {'switch': True, 'invert': False})
