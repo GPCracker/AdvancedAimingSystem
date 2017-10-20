@@ -45,7 +45,7 @@ def new_RadialMenu_show(self):
 	ctrl = self.sessionProvider.shared.crosshair
 	guiScreenWidth, guiScreenHeight = GUI.screenResolution()
 	screenRatio = float(guiScreenWidth / BigWorld.screenWidth()), float(guiScreenHeight / BigWorld.screenHeight())
-	screenPosition = ctrl.getScaledPosition() if ctrl is not None else (guiScreenWidth >> 1, guiScreenHeight >> 1)
+	screenPosition = ctrl.getDisaredPosition() if ctrl is not None else (guiScreenWidth * 0.5, guiScreenHeight * 0.5)
 	crosshairType = self._RadialMenu__getCrosshairType(player, target)
 	if self.app is not None:
 		self.app.registerGuiKeyHandler(self)
