@@ -255,8 +255,8 @@ def new_PlayerAvatar_targetFocus(self, entity):
 	return
 
 @XModLib.HookUtils.propertyHookExt(_inject_hooks_, Avatar.PlayerAvatar, '_PlayerAvatar__maySeeOtherVehicleDamagedDevices', XModLib.HookUtils.PropertyAction.GET, '_maySeeOtherVehicleDamagedDevices', invoke=XModLib.HookUtils.HookInvoke.MASTER)
-def new_PlayerAvatar_MSOVDD_getter(old_PlayerAvatar_MSOVDD_getter, self):
-	return old_PlayerAvatar_MSOVDD_getter(self) and getattr(self, 'XExtrasInfoController', None) is None
+def new_PlayerAvatar_maySeeOtherVehicleDamagedDevices_getter(old_PlayerAvatar_maySeeOtherVehicleDamagedDevices_getter, self):
+	return old_PlayerAvatar_maySeeOtherVehicleDamagedDevices_getter(self) and getattr(self, 'XExtrasInfoController', None) is None
 
 # *************************
 # Vehicle Hooks
