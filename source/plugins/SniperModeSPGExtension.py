@@ -59,44 +59,54 @@ def new_ArcadeControlMode_activateAlternateMode(self, pos=None, bByScroll=False)
 				)
 	return
 
-@XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.control_modes.ArcadeControlMode, 'handleKeyEvent')
-def new_ArcadeControlMode_handleKeyEvent(self, isDown, key, mods, event=None):
+@XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.control_modes.ArcadeControlMode, 'handleKeyEvent', invoke=XModLib.HookUtils.HookInvoke.MASTER)
+def new_ArcadeControlMode_handleKeyEvent(old_ArcadeControlMode_handleKeyEvent, self, isDown, key, mods, event=None):
+	result = old_ArcadeControlMode_handleKeyEvent(self, isDown, key, mods, event=event)
 	## Keyboard event parsing
-	event = XModLib.KeyboardUtils.KeyboardEvent(event)
-	## HotKeys - SPG Sniper Mode
-	if self._aih.isSPG:
-		config = _config_['plugins']['sniperModeSPG']
-		shortcutHandle = config['enabled'] and config['shortcut'](event)
-		if shortcutHandle and shortcutHandle.pushed:
-			if not BigWorld.player().isGunLocked and not BigWorld.player().isOwnBarrelUnderWater:
-				self._aih.onControlModeChanged(
-					AvatarInputHandler.aih_constants.CTRL_MODE_NAME.SNIPER,
-					preferredPos=self.camera.aimingSystem.getDesiredShotPoint(),
-					aimingMode=self.aimingMode,
-					saveZoom=True,
-					equipmentID=None
-				)
-	return
+	kbevent = XModLib.KeyboardUtils.KeyboardEvent(event)
+	## AvatarInputHandler started, not detached, control mode supported, event not handled by game (for AvatarInputHandler core switches)
+	if not result and self._aih.isSPG:
+		## HotKeys - SPG Sniper Mode
+		mconfig = _config_['plugins']['sniperModeSPG']
+		if mconfig['enabled']:
+			## HotKeys - SPG Sniper Mode - Global
+			fconfig = mconfig
+			shortcutHandle = fconfig['enabled'] and fconfig['shortcut'](kbevent)
+			if shortcutHandle and (not shortcutHandle.switch or shortcutHandle.pushed):
+				if not BigWorld.player().isGunLocked and not BigWorld.player().isOwnBarrelUnderWater:
+					self._aih.onControlModeChanged(
+						AvatarInputHandler.aih_constants.CTRL_MODE_NAME.SNIPER,
+						preferredPos=self.camera.aimingSystem.getDesiredShotPoint(),
+						aimingMode=self.aimingMode,
+						saveZoom=True,
+						equipmentID=None
+					)
+	return result
 
 # *************************
 # SniperControlMode Hooks
 # *************************
-@XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.control_modes.SniperControlMode, 'handleKeyEvent')
-def new_SniperControlMode_handleKeyEvent(self, isDown, key, mods, event=None):
+@XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.control_modes.SniperControlMode, 'handleKeyEvent', invoke=XModLib.HookUtils.HookInvoke.MASTER)
+def new_SniperControlMode_handleKeyEvent(old_SniperControlMode_handleKeyEvent, self, isDown, key, mods, event=None):
+	result = old_SniperControlMode_handleKeyEvent(self, isDown, key, mods, event=event)
 	## Keyboard event parsing
-	event = XModLib.KeyboardUtils.KeyboardEvent(event)
-	## HotKeys - SPG Sniper Mode
-	if self._aih.isSPG:
-		config = _config_['plugins']['sniperModeSPG']
-		shortcutHandle = config['enabled'] and config['shortcut'](event)
-		if shortcutHandle and shortcutHandle.pushed:
-			if not BigWorld.player().isGunLocked and not BigWorld.player().isOwnBarrelUnderWater:
-				self._aih.onControlModeChanged(
-					AvatarInputHandler.aih_constants.CTRL_MODE_NAME.ARCADE,
-					preferredPos=self.camera.aimingSystem.getDesiredShotPoint(),
-					turretYaw=self.camera.aimingSystem.turretYaw,
-					gunPitch=self.camera.aimingSystem.gunPitch,
-					aimingMode=self.aimingMode,
-					closesDist=False
-				)
-	return
+	kbevent = XModLib.KeyboardUtils.KeyboardEvent(event)
+	## AvatarInputHandler started, not detached, control mode supported, event not handled by game (for AvatarInputHandler core switches)
+	if not result and self._aih.isSPG:
+		## HotKeys - SPG Sniper Mode
+		mconfig = _config_['plugins']['sniperModeSPG']
+		if mconfig['enabled']:
+			## HotKeys - SPG Sniper Mode - Global
+			fconfig = mconfig
+			shortcutHandle = fconfig['enabled'] and fconfig['shortcut'](kbevent)
+			if shortcutHandle and (not shortcutHandle.switch or shortcutHandle.pushed):
+				if not BigWorld.player().isGunLocked and not BigWorld.player().isOwnBarrelUnderWater:
+					self._aih.onControlModeChanged(
+						AvatarInputHandler.aih_constants.CTRL_MODE_NAME.ARCADE,
+						preferredPos=self.camera.aimingSystem.getDesiredShotPoint(),
+						turretYaw=self.camera.aimingSystem.turretYaw,
+						gunPitch=self.camera.aimingSystem.gunPitch,
+						aimingMode=self.aimingMode,
+						closesDist=False
+					)
+	return result

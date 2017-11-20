@@ -57,27 +57,32 @@ def new_Vehicle_onVehicleDeath(self, isDeadStarted=False):
 @XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.control_modes.SniperControlMode, 'handleKeyEvent')
 def new_SafeShotControlMode_handleKeyEvent(self, isDown, key, mods, event=None):
 	## Keyboard event parsing
-	event = XModLib.KeyboardUtils.KeyboardEvent(event)
-	## HotKeys - SafeShot
-	config = _config_['plugins']['safeShot']
-	shortcutHandle = config['enabled'] and config['shortcut'](event)
-	if shortcutHandle and (not shortcutHandle.switch or shortcutHandle.pushed):
-		config['activated'] = shortcutHandle(config['activated'])
-		if shortcutHandle.switch and config['activated']:
-			XModLib.ClientMessages.showMessageOnPanel(
-				'Player',
-				None,
-				config['message']['onActivate'],
-				'green'
-			)
-		elif shortcutHandle.switch:
-			XModLib.ClientMessages.showMessageOnPanel(
-				'Player',
-				None,
-				config['message']['onDeactivate'],
-				'red'
-			)
-		pass
+	kbevent = XModLib.KeyboardUtils.KeyboardEvent(event)
+	## AvatarInputHandler started, not detached, control mode supported (for AvatarInputHandler shortcuts)
+	if True:
+		## HotKeys - SafeShot
+		mconfig = _config_['plugins']['safeShot']
+		if mconfig['enabled']:
+			## HotKeys - SafeShot - Global
+			fconfig = mconfig
+			shortcutHandle = fconfig['enabled'] and fconfig['shortcut'](kbevent)
+			if shortcutHandle and (not shortcutHandle.switch or shortcutHandle.pushed):
+				fconfig['activated'] = shortcutHandle(fconfig['activated'])
+				if shortcutHandle.switch and fconfig['activated']:
+					XModLib.ClientMessages.showMessageOnPanel(
+						'Player',
+						None,
+						fconfig['message']['onActivate'],
+						'green'
+					)
+				elif shortcutHandle.switch:
+					XModLib.ClientMessages.showMessageOnPanel(
+						'Player',
+						None,
+						fconfig['message']['onDeactivate'],
+						'red'
+					)
+				pass
 	return
 
 # *************************
