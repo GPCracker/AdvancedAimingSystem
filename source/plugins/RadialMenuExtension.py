@@ -1,31 +1,34 @@
-# *************************
-# Python
-# *************************
-# Nothing
+# ------------ #
+#    Python    #
+# ------------ #
+# nothing
 
-# *************************
-# BigWorld
-# *************************
+# -------------- #
+#    BigWorld    #
+# -------------- #
 import GUI
 import Math
 import BigWorld
 
-# *************************
-# WoT Client
-# *************************
+# ---------------- #
+#    WoT Client    #
+# ---------------- #
 import CommandMapping
 
-# *************************
-# WoT Client Hooks
-# *************************
+# ---------------------- #
+#    WoT Client Hooks    #
+# ---------------------- #
 import gui.battle_control.controllers.chat_cmd_ctrl
 import gui.Scaleform.daapi.view.battle.shared.radial_menu
 
-# *************************
-# X-Mod Code Library
-# *************************
+# ------------------- #
+#    X-Mod Library    #
+# ------------------- #
 import XModLib.HookUtils
 
+# ---------------------- #
+#    RadialMenu Hooks    #
+# ---------------------- #
 @XModLib.HookUtils.methodAddExt(_inject_hooks_, gui.Scaleform.daapi.view.battle.shared.radial_menu.RadialMenu, 'show')
 def new_RadialMenu_show(self):
 	player = BigWorld.player()
@@ -52,6 +55,9 @@ def new_RadialMenu_show(self):
 	self.as_showS(crosshairType, screenPosition, screenRatio)
 	return
 
+# ---------------------------------- #
+#    ChatCommandsController Hooks    #
+# ---------------------------------- #
 @XModLib.HookUtils.methodAddExt(_inject_hooks_, gui.battle_control.controllers.chat_cmd_ctrl.ChatCommandsController, 'handleShortcutChatCommand')
 def new_ChatCommandsController_handleShortcutChatCommand(self, key):
 	player = BigWorld.player()

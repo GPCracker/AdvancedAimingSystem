@@ -1,6 +1,6 @@
-# *************************
-# AimCorrection Class
-# *************************
+# --------------------------- #
+#    AimCorrection Classes    #
+# --------------------------- #
 class BaseAimCorrection(object):
 	__slots__ = ('__weakref__', '_aihc', 'manualEnabled', 'targetEnabled', 'fixGunMarker', 'manualInfo')
 

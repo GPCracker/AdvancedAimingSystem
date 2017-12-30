@@ -1,6 +1,6 @@
-# *************************
-# BattleShared Hooks
-# *************************
+# ------------------------ #
+#    BattleShared Hooks    #
+# ------------------------ #
 @XModLib.HookUtils.staticMethodHookExt(_inject_hooks_, gui.Scaleform.daapi.view.battle.shared, 'getContextMenuHandlers', invoke=XModLib.HookUtils.HookInvoke.MASTER)
 def new_BattleShared_getContextMenuHandlers(old_BattleShared_getContextMenuHandlers, *args, **kwargs):
 	result = old_BattleShared_getContextMenuHandlers(*args, **kwargs)
@@ -26,6 +26,9 @@ def new_BattleShared_getBusinessHandlers(old_BattleShared_getBusinessHandlers, *
 		)
 	return result
 
+# ---------------------- #
+#    SharedPage Hooks    #
+# ---------------------- #
 @XModLib.HookUtils.methodHookExt(_inject_hooks_, gui.Scaleform.daapi.view.battle.shared.SharedPage, '_populate', invoke=XModLib.HookUtils.HookInvoke.SECONDARY)
 def new_SharedPage_populate(self, *args, **kwargs):
 	if _config_['gui']['enabled']:

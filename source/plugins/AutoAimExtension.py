@@ -1,36 +1,39 @@
-# *************************
-# Python
-# *************************
-# Nothing
+# ------------ #
+#    Python    #
+# ------------ #
+# nothing
 
-# *************************
-# BigWorld
-# *************************
+# -------------- #
+#    BigWorld    #
+# -------------- #
 import Math
 import BigWorld
 
-# *************************
-# WoT Client
-# *************************
+# ---------------- #
+#    WoT Client    #
+# ---------------- #
 import CommandMapping
 
-# *************************
-# WoT Client Hooks
-# *************************
+# ---------------------- #
+#    WoT Client Hooks    #
+# ---------------------- #
 import AvatarInputHandler.control_modes
 
-# *************************
-# X-Mod Code Library
-# *************************
+# ------------------- #
+#    X-Mod Library    #
+# ------------------- #
 import XModLib.HookUtils
 
-# *************************
-# AutoAimControlMode Hooks
-# *************************
+# -------------------------- #
+#    CommandMapping Hooks    #
+# -------------------------- #
 @XModLib.HookUtils.methodHookExt(_inject_hooks_, CommandMapping.CommandMapping, 'isFired', invoke=XModLib.HookUtils.HookInvoke.MASTER)
 def new_CommandMapping_isFired(old_CommandMapping_isFired, self, command, key):
 	return command != CommandMapping.CMD_CM_LOCK_TARGET and old_CommandMapping_isFired(self, command, key)
 
+# ------------------------------ #
+#    AutoAimControlMode Hooks    #
+# ------------------------------ #
 @XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.control_modes.ArcadeControlMode, 'handleKeyEvent', invoke=XModLib.HookUtils.HookInvoke.MASTER)
 @XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.control_modes.SniperControlMode, 'handleKeyEvent', invoke=XModLib.HookUtils.HookInvoke.MASTER)
 def new_AutoAimControlMode_handleKeyEvent(old_AutoAimControlMode_handleKeyEvent, self, isDown, key, mods, event=None):

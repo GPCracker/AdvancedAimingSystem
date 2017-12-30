@@ -1,6 +1,6 @@
-# *************************
-# Application initializer
-# *************************
+# ----------------------------- #
+#    Application initializer    #
+# ----------------------------- #
 def initApplication():
 	global _inject_chain_
 	_inject_chain_ += _inject_loads_
@@ -14,7 +14,7 @@ def initApplication():
 	_inject_inits_()
 	return
 
-# *************************
-# Application init
-# *************************
+# ---------------------- #
+#    Application init    #
+# ---------------------- #
 initApplication()

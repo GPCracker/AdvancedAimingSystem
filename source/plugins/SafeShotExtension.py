@@ -1,37 +1,37 @@
-# *************************
-# Python
-# *************************
-# Nothing
+# ------------ #
+#    Python    #
+# ------------ #
+# nothing
 
-# *************************
-# BigWorld
-# *************************
+# -------------- #
+#    BigWorld    #
+# -------------- #
 import BigWorld
 
-# *************************
-# WoT Client
-# *************************
+# ---------------- #
+#    WoT Client    #
+# ---------------- #
 import AvatarInputHandler.aih_constants
 
-# *************************
-# WoT Client Hooks
-# *************************
+# ---------------------- #
+#    WoT Client Hooks    #
+# ---------------------- #
 import Avatar
 import Vehicle
 import AvatarInputHandler.control_modes
 
-# *************************
-# X-Mod Code Library
-# *************************
+# ------------------- #
+#    X-Mod Library    #
+# ------------------- #
 import XModLib.ArenaInfo
 import XModLib.HookUtils
 import XModLib.KeyboardUtils
 import XModLib.ClientMessages
 import XModLib.TargetScanners
 
-# *************************
-# GunControlMode Hooks
-# *************************
+# -------------------------- #
+#    GunControlMode Hooks    #
+# -------------------------- #
 @XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.control_modes._GunControlMode, 'updateGunMarker')
 def new_GunControlMode_updateGunMarker(self, markerType, pos, dir, size, relaxTime, collData):
 	gunTarget = collData.entity if collData is not None else None
@@ -41,18 +41,18 @@ def new_GunControlMode_updateGunMarker(self, markerType, pos, dir, size, relaxTi
 		self._serverTarget = gunTarget
 	return
 
-# *************************
-# Vehicle Hooks
-# *************************
+# ------------------- #
+#    Vehicle Hooks    #
+# ------------------- #
 @XModLib.HookUtils.methodHookExt(_inject_hooks_, Vehicle.Vehicle, '_Vehicle__onVehicleDeath')
 def new_Vehicle_onVehicleDeath(self, isDeadStarted=False):
 	if not isDeadStarted:
 		self._deathTime = BigWorld.time()
 	return
 
-# *************************
-# SafeShotControlMode Hooks
-# *************************
+# ------------------------------- #
+#    SafeShotControlMode Hooks    #
+# ------------------------------- #
 @XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.control_modes.ArcadeControlMode, 'handleKeyEvent')
 @XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.control_modes.SniperControlMode, 'handleKeyEvent')
 def new_SafeShotControlMode_handleKeyEvent(self, isDown, key, mods, event=None):
@@ -85,9 +85,9 @@ def new_SafeShotControlMode_handleKeyEvent(self, isDown, key, mods, event=None):
 				pass
 	return
 
-# *************************
-# PlayerAvatar Hooks
-# *************************
+# ------------------------ #
+#    PlayerAvatar Hooks    #
+# ------------------------ #
 @XModLib.HookUtils.methodHookExt(_inject_hooks_, Avatar.PlayerAvatar, 'shoot', invoke=XModLib.HookUtils.HookInvoke.MASTER)
 def new_PlayerAvatar_shoot(old_PlayerAvatar_shoot, self, *args, **kwargs):
 	config = _config_['plugins']['safeShot']

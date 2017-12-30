@@ -1,6 +1,6 @@
-# *************************
-# Python
-# *************************
+# ------------ #
+#    Python    #
+# ------------ #
 import os
 import enum
 import math
@@ -13,24 +13,24 @@ import functools
 import itertools
 import collections
 
-# *************************
-# BigWorld
-# *************************
+# -------------- #
+#    BigWorld    #
+# -------------- #
 import Math
 import BigWorld
 
-# *************************
-# WoT Client
-# *************************
+# ---------------- #
+#    WoT Client    #
+# ---------------- #
 import constants
 import gui.shared.personality
 import AvatarInputHandler.cameras
 import AvatarInputHandler.aih_constants
 import AvatarInputHandler.aih_global_binding
 
-# *************************
-# WoT Client GUI
-# *************************
+# -------------------- #
+#    WoT Client GUI    #
+# -------------------- #
 import gui.shared
 import gui.shared.events
 import gui.app_loader
@@ -42,9 +42,9 @@ import gui.Scaleform.framework.managers.loaders
 import gui.Scaleform.genConsts.BATTLE_VIEW_ALIASES
 import gui.Scaleform.daapi.settings.views
 
-# *************************
-# WoT Client Hooks
-# *************************
+# ---------------------- #
+#    WoT Client Hooks    #
+# ---------------------- #
 import Avatar
 import Account
 import Vehicle
@@ -53,14 +53,14 @@ import AvatarInputHandler.control_modes
 import AvatarInputHandler.DynamicCameras.StrategicCamera
 import AvatarInputHandler.AimingSystems.StrategicAimingSystem
 
-# *************************
-# WoT Client GUI Hooks
-# *************************
+# -------------------------- #
+#    WoT Client GUI Hooks    #
+# -------------------------- #
 import gui.Scaleform.daapi.view.battle.shared
 
-# *************************
-# X-Mod Library
-# *************************
+# ------------------- #
+#    X-Mod Library    #
+# ------------------- #
 import XModLib.ArenaInfo
 import XModLib.HookUtils
 import XModLib.MathUtils
@@ -78,9 +78,9 @@ import XModLib.IngameSettings
 import XModLib.TargetScanners
 import XModLib.XMLConfigReader
 
-# *************************
-# X-Mod GUI Library
-# *************************
+# ----------------------- #
+#    X-Mod GUI Library    #
+# ----------------------- #
 import XModLib.pygui.battle.views.PanelsLoaderView
 import XModLib.pygui.battle.views.handlers.ContextMenuHandler
 import XModLib.pygui.battle.views.components.panels.TextPanel

@@ -1,35 +1,35 @@
-# *************************
-# Python
-# *************************
+# ------------ #
+#    Python    #
+# ------------ #
 import weakref
 import operator
 import collections
 
-# *************************
-# BigWorld
-# *************************
+# -------------- #
+#    BigWorld    #
+# -------------- #
 import BigWorld
 
-# *************************
-# WoT Client
-# *************************
-# Nothing
+# ---------------- #
+#    WoT Client    #
+# ---------------- #
+# nothing
 
-# *************************
-# WoT Client Hooks
-# *************************
+# ---------------------- #
+#    WoT Client Hooks    #
+# ---------------------- #
 import Avatar
 import Vehicle
 
-# *************************
-# X-Mod Code Library
-# *************************
+# ------------------- #
+#    X-Mod Library    #
+# ------------------- #
 import XModLib.HookUtils
 import XModLib.VehicleInfo
 
-# *************************
-# ExpertPerk Classes
-# *************************
+# ------------------------ #
+#    ExpertPerk Classes    #
+# ------------------------ #
 class ExtrasInfoEntry(collections.namedtuple('ExtrasInfoEntry', ('criticalExtras', 'destroyedExtras'))):
 	__slots__ = ()
 
@@ -190,9 +190,9 @@ class ExtrasInfoController(object):
 			raise RuntimeError('ExtrasInfoController is about to be removed with an active request')
 		return
 
-# *************************
-# PlayerAvatar Hooks
-# *************************
+# ------------------------ #
+#    PlayerAvatar Hooks    #
+# ------------------------ #
 @XModLib.HookUtils.methodHookExt(_inject_hooks_, Avatar.PlayerAvatar, '__init__')
 def new_PlayerAvatar_init(self, *args, **kwargs):
 	config = _config_['plugins']['expertPerk']
@@ -248,9 +248,9 @@ def new_PlayerAvatar_targetFocus(self, entity):
 def new_PlayerAvatar_maySeeOtherVehicleDamagedDevices_getter(old_PlayerAvatar_maySeeOtherVehicleDamagedDevices_getter, self):
 	return old_PlayerAvatar_maySeeOtherVehicleDamagedDevices_getter(self) and getattr(self, 'XExtrasInfoController', None) is None
 
-# *************************
-# Vehicle Hooks
-# *************************
+# ------------------- #
+#    Vehicle Hooks    #
+# ------------------- #
 @XModLib.HookUtils.methodHookExt(_inject_hooks_, Vehicle.Vehicle, 'stopVisual', invoke=XModLib.HookUtils.HookInvoke.PRIMARY)
 def new_Vehicle_stopVisual(self, *args, **kwargs):
 	# When vehicle disappears we should cancel an active request related to it.

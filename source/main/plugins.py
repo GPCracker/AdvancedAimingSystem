@@ -1,6 +1,6 @@
-# *************************
-# Application plug-ins initializer
-# *************************
+# -------------------------------------- #
+#    Application plug-ins initializer    #
+# -------------------------------------- #
 def initApplicationPlugins(targetGlobals=globals(), targetLocals=locals()):
 	for dirpath, dirnames, filenames in XModLib.EngineUtils.walkResMgrTree('mods/{0}/plugins'.format(__application__[2])):
 		for filename in filenames:
@@ -14,7 +14,7 @@ def initApplicationPlugins(targetGlobals=globals(), targetLocals=locals()):
 					print '[{0}] Plug-in {1} successfully loaded.'.format(__application__[1], pluginName)
 	return
 
-# *************************
-# Application plug-ins init
-# *************************
+# ------------------------------- #
+#    Application plug-ins init    #
+# ------------------------------- #
 initApplicationPlugins()

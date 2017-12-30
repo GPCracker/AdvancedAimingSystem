@@ -1,6 +1,6 @@
-# *************************
-# AvatarInputHandler Hooks
-# *************************
+# ------------------------------ #
+#    AvatarInputHandler Hooks    #
+# ------------------------------ #
 @XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.AvatarInputHandler, '__init__', invoke=XModLib.HookUtils.HookInvoke.SECONDARY)
 def new_AvatarInputHandler_init(self, *args, **kwargs):
 	config = _config_['modules']['targetScanner']

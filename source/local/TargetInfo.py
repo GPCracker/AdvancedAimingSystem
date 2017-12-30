@@ -1,6 +1,6 @@
-# *************************
-# TargetInfo Class
-# *************************
+# ------------------------ #
+#    TargetInfo Classes    #
+# ------------------------ #
 class TargetInfo(int):
 	__slots__ = ('__weakref__', 'lastLockTime', 'expiryTimeout', 'relockTimeout', 'shortName', '_height', '_lastHeightVector', '_lastPosition')
 

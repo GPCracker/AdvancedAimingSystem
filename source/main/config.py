@@ -1,6 +1,6 @@
-# *************************
-# Application configuration
-# *************************
+# ------------------------------- #
+#    Application configuration    #
+# ------------------------------- #
 def loadConfiguration():
 	configReader = XModLib.XMLConfigReader.XMLConfigReader((
 		('SimpleShortcut', XModLib.XMLConfigReader.DataObjectXMLReaderMeta.construct(
@@ -406,7 +406,7 @@ def loadConfiguration():
 		print '[{0[1]}] Config file was found. Trying to load it.'.format(__application__)
 	return configReader(mainSection, defaultConfig)
 
-# *************************
-# Configuration init
-# *************************
+# ------------------------ #
+#    Configuration init    #
+# ------------------------ #
 _config_ = loadConfiguration()

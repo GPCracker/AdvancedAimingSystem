@@ -5,9 +5,9 @@ __version__ = '<<version>>'
 __xmodlib__ = ('v0.1.13', None)
 __client__ = (('ru', ), '<<client>>', None)
 
-# *************************
-# Application info
-# *************************
+# ---------------------- #
+#    Application info    #
+# ---------------------- #
 if __name__ == '__main__':
 	applicationInfo = '{appname} ({appshort}) {version} ({client} {clusters}) by {authors}'.format(
 		appname = __application__[0],
@@ -21,9 +21,9 @@ if __name__ == '__main__':
 	__import__('time').sleep(len(applicationInfo) * 0.05)
 	exit()
 
-# *************************
-# X-Mod Library
-# *************************
+# ------------------- #
+#    X-Mod Library    #
+# ------------------- #
 import XModLib
 if not XModLib.isCompatibleLibVersion(__xmodlib__):
 	raise ImportError('XModLib version does not suit this version of application')

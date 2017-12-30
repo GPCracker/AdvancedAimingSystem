@@ -1,6 +1,6 @@
-# *************************
-# Vehicle Hooks
-# *************************
+# ------------------- #
+#    Vehicle Hooks    #
+# ------------------- #
 @XModLib.HookUtils.methodHookExt(_inject_hooks_, Vehicle.Vehicle, 'startVisual', invoke=XModLib.HookUtils.HookInvoke.SECONDARY)
 def new_Vehicle_startVisual(self, *args, **kwargs):
 	if not hasattr(self, 'collisionBounds'):

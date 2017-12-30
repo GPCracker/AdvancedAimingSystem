@@ -1,6 +1,6 @@
-# *************************
-# GuiClasses
-# *************************
+# ----------------- #
+#    Gui Classes    #
+# ----------------- #
 class GuiLoaderView(XModLib.pygui.battle.views.PanelsLoaderView.PanelsLoaderView):
 	INFO_PANELS = (
 		('AdvancedAimingSystemCorrectionPanel', 'TextPanel', 0),

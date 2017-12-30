@@ -1,6 +1,6 @@
-# *************************
-# OperatingControlMode Hooks
-# *************************
+# -------------------------------- #
+#    OperatingControlMode Hooks    #
+# -------------------------------- #
 @XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.control_modes.ArcadeControlMode, '__init__')
 @XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.control_modes.SniperControlMode, '__init__')
 @XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.control_modes.StrategicControlMode, '__init__')

@@ -1,6 +1,6 @@
-# *************************
-# TargetScanner Class
-# *************************
+# --------------------------- #
+#    TargetScanner Classes    #
+# --------------------------- #
 class TargetScanMode(tuple):
 	__slots__ = ()
 

@@ -1,33 +1,33 @@
-# *************************
-# Python
-# *************************
-# Nothing
+# ------------ #
+#    Python    #
+# ------------ #
+# nothing
 
-# *************************
-# BigWorld
-# *************************
+# -------------- #
+#    BigWorld    #
+# -------------- #
 import BigWorld
 
-# *************************
-# WoT Client
-# *************************
+# ---------------- #
+#    WoT Client    #
+# ---------------- #
 import AvatarInputHandler.aih_constants
 
-# *************************
-# WoT Client Hooks
-# *************************
+# ---------------------- #
+#    WoT Client Hooks    #
+# ---------------------- #
 import AvatarInputHandler.control_modes
 import gui.Scaleform.daapi.view.battle.shared.crosshair.gm_factory
 
-# *************************
-# X-Mod Code Library
-# *************************
+# ------------------- #
+#    X-Mod Library    #
+# ------------------- #
 import XModLib.HookUtils
 import XModLib.KeyboardUtils
 
-# *************************
-# ControlMarkersFactory Hooks
-# *************************
+# --------------------------------- #
+#    ControlMarkersFactory Hooks    #
+# --------------------------------- #
 @XModLib.HookUtils.methodHookExt(_inject_hooks_, gui.Scaleform.daapi.view.battle.shared.crosshair.gm_factory._ControlMarkersFactory, '_createSPGMarkers', invoke=XModLib.HookUtils.HookInvoke.MASTER)
 def new_ControlMarkersFactory_createSPGMarkers(old_ControlMarkersFactory_createSPGMarkers, self, markersInfo, components=None):
 	result = old_ControlMarkersFactory_createSPGMarkers(self, markersInfo, components=components)
@@ -42,9 +42,9 @@ def new_ControlMarkersFactory_createSPGMarkers(old_ControlMarkersFactory_createS
 		markerType = AvatarInputHandler.aih_constants.GUN_MARKER_TYPE.UNDEFINED
 	return result + (self._createSniperMarker(markerType, dataProvider, components=components), )
 
-# *************************
-# ArcadeControlMode Hooks
-# *************************
+# ----------------------------- #
+#    ArcadeControlMode Hooks    #
+# ----------------------------- #
 @XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.control_modes.ArcadeControlMode, '_ArcadeControlMode__activateAlternateMode')
 def new_ArcadeControlMode_activateAlternateMode(self, pos=None, bByScroll=False):
 	if _config_['plugins']['sniperModeSPG']['enabled']:
@@ -83,9 +83,9 @@ def new_ArcadeControlMode_handleKeyEvent(old_ArcadeControlMode_handleKeyEvent, s
 					)
 	return result
 
-# *************************
-# SniperControlMode Hooks
-# *************************
+# ----------------------------- #
+#    SniperControlMode Hooks    #
+# ----------------------------- #
 @XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.control_modes.SniperControlMode, 'handleKeyEvent', invoke=XModLib.HookUtils.HookInvoke.MASTER)
 def new_SniperControlMode_handleKeyEvent(old_SniperControlMode_handleKeyEvent, self, isDown, key, mods, event=None):
 	result = old_SniperControlMode_handleKeyEvent(self, isDown, key, mods, event=event)

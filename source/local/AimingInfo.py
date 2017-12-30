@@ -1,6 +1,6 @@
-# *************************
-# AimingInfo Class
-# *************************
+# ------------------------ #
+#    AimingInfo Classes    #
+# ------------------------ #
 class AimingInfo(object):
 	__slots__ = ('__weakref__', 'aimingThreshold')
 

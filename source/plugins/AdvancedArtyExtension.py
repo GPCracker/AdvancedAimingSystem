@@ -1,37 +1,37 @@
-# *************************
-# Python
-# *************************
+# ------------ #
+#    Python    #
+# ------------ #
 import math
 
-# *************************
-# BigWorld
-# *************************
+# -------------- #
+#    BigWorld    #
+# -------------- #
 import Math
 import BigWorld
 
-# *************************
-# WoT Client
-# *************************
+# ---------------- #
+#    WoT Client    #
+# ---------------- #
 import AvatarInputHandler.cameras
 
-# *************************
-# WoT Client Hooks
-# *************************
+# ---------------------- #
+#    WoT Client Hooks    #
+# ---------------------- #
 import gui.battle_control.matrix_factory
 import AvatarInputHandler.control_modes
 import AvatarInputHandler.DynamicCameras.ArtyCamera
 
-# *************************
-# X-Mod Code Library
-# *************************
+# ------------------- #
+#    X-Mod Library    #
+# ------------------- #
 import XModLib.HookUtils
 import XModLib.MathUtils
 import XModLib.KeyboardUtils
 import XModLib.ClientMessages
 
-# *************************
-# ArtyCamera Hooks
-# *************************
+# ---------------------- #
+#    ArtyCamera Hooks    #
+# ---------------------- #
 @XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.DynamicCameras.ArtyCamera.ArtyCamera, '__init__')
 def new_ArtyCamera_init(self, *args, **kwargs):
 	config = _config_['plugins']['advancedArty']
@@ -98,9 +98,9 @@ def new_ArtyCamera_disable(self, *args, **kwargs):
 		config['orthogonalView']['activated'] = config['orthogonalView']['activated'] and config['orthogonalView']['preserveLastView']
 	return
 
-# *************************
-# MatrixFactory Hooks
-# *************************
+# ------------------------- #
+#    MatrixFactory Hooks    #
+# ------------------------- #
 @XModLib.HookUtils.staticMethodHookExt(_inject_hooks_, gui.battle_control.matrix_factory, 'makeArtyAimPointMatrix', invoke=XModLib.HookUtils.HookInvoke.MASTER)
 def new_MatrixFactory_makeArtyAimPointMatrix(old_MatrixFactory_makeArtyAimPointMatrix, *args, **kwargs):
 	result = old_MatrixFactory_makeArtyAimPointMatrix(*args, **kwargs)
@@ -109,9 +109,9 @@ def new_MatrixFactory_makeArtyAimPointMatrix(old_MatrixFactory_makeArtyAimPointM
 		return XModLib.MathUtils.getMatrixProduct(BigWorld.player().inputHandler.ctrl.camera.strategicAreaViewScaleMatrix, result)
 	return result
 
-# *************************
-# ArtyControlMode Hooks
-# *************************
+# --------------------------- #
+#    ArtyControlMode Hooks    #
+# --------------------------- #
 @XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.control_modes.ArtyControlMode, 'handleKeyEvent', invoke=XModLib.HookUtils.HookInvoke.MASTER)
 def new_ArtyControlMode_handleKeyEvent(old_ArtyControlMode_handleKeyEvent, self, isDown, key, mods, event=None):
 	result = old_ArtyControlMode_handleKeyEvent(self, isDown, key, mods, event=event)

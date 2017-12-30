@@ -1,6 +1,6 @@
-# *************************
-# GuiController Class
-# *************************
+# --------------------------- #
+#    GuiController Classes    #
+# --------------------------- #
 class GuiController(object):
 	__slots__ = ('__weakref__', 'formatter', '_updateInterval', '_updateCallbackLoop')
 
