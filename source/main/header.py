@@ -26,4 +26,4 @@ if __name__ == '__main__':
 # *************************
 import XModLib
 if not XModLib.isCompatibleLibVersion(__xmodlib__):
-	raise ImportError('XModLib version does not suit this version of application.')
+	raise ImportError('XModLib version does not suit this version of application')

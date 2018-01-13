@@ -80,7 +80,7 @@ class TargetScanner(object):
 	@targetScanMode.setter
 	def targetScanMode(self, value):
 		if self.isUpdateActive:
-			raise RuntimeError('Target scan mode could not be changed while scanner is running.')
+			raise RuntimeError('target scan mode could not be changed while scanner is running')
 		self._targetScanMode = value
 		# Recreate target scanners and callback loop.
 		self._initInternalComponents()
@@ -210,7 +210,10 @@ class TargetScanner(object):
 		return
 
 	def __repr__(self):
-		return '{!s}(targetScanMode={!r}, autoScanActivated={!r})'.format(self.__class__.__name__, self._targetScanMode, self.autoScanActivated)
+		return '{!s}(targetScanMode={!r}, autoScanActivated={!r})'.format(
+			self.__class__.__name__,
+			self._targetScanMode, self.autoScanActivated
+		)
 
 	def __del__(self):
 		self._updateCallbackLoop = None

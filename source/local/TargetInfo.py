@@ -2,7 +2,7 @@
 # TargetInfo Class
 # *************************
 class TargetInfo(int):
-	__slots__ = ('lastLockTime', 'expiryTimeout', 'relockTimeout', 'shortName', '_height', '_lastHeightVector', '_lastPosition')
+	__slots__ = ('__weakref__', 'lastLockTime', 'expiryTimeout', 'relockTimeout', 'shortName', '_height', '_lastHeightVector', '_lastPosition')
 
 	def __new__(cls, target, *args, **kwargs):
 		return super(TargetInfo, cls).__new__(cls, target.id) if XModLib.VehicleInfo.isVehicle(target) else None
@@ -72,12 +72,9 @@ class TargetInfo(int):
 		return self._lastHeightVector if not actualOnly else None
 
 	def __repr__(self):
-		return '{!s}(target=BigWorld.entity({}), lastLockTime={!r}, expiryTimeout={!r}, relockTimeout={!r})'.format(
+		return '{!s}(target=BigWorld.entity({!s}), lastLockTime={!r}, expiryTimeout={!r}, relockTimeout={!r})'.format(
 			self.__class__.__name__,
-			super(TargetInfo, self).__repr__(),
-			self.lastLockTime,
-			self.expiryTimeout,
-			self.relockTimeout
+			int.__repr__(self), self.lastLockTime, self.expiryTimeout, self.relockTimeout
 		)
 
 	def __del__(self):

@@ -393,9 +393,9 @@ def loadConfiguration():
 	}
 	mainSection = XModLib.XMLConfigReader.openSection(os.path.splitext(__file__)[0] + '.xml')
 	if mainSection is None:
-		print '[{}] Config file is missing. Loading defaults.'.format(__application__[1])
+		print '[{0[1]}] Config file is missing. Loading defaults.'.format(__application__)
 	else:
-		print '[{}] Config file was found. Trying to load it.'.format(__application__[1])
+		print '[{0[1]}] Config file was found. Trying to load it.'.format(__application__)
 	return configReader(mainSection, defaultConfig)
 
 # *************************

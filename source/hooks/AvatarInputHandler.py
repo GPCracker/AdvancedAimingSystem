@@ -5,11 +5,14 @@
 def new_AvatarInputHandler_init(self, *args, **kwargs):
 	config = _config_['modules']['targetScanner']
 	self.XTargetScanner = TargetScanner(
-		TargetScanMode(**config['scanMode']),
-		config['autoScan']['enabled'] and config['autoScan']['activated']
+		targetScanMode=TargetScanMode(**config['scanMode']),
+		autoScanActivated=config['autoScan']['enabled'] and config['autoScan']['activated']
 	) if config['enabled'] else None
 	config = _config_['gui']
-	self.XGuiController = GuiController(_globals_['macrosFormatter'], config['updateInterval']) if config['enabled'] else None
+	self.XGuiController = GuiController(
+		formatter=_globals_['macrosFormatter'],
+		updateInterval=config['updateInterval']
+	) if config['enabled'] else None
 	return
 
 @XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.AvatarInputHandler, 'handleKeyEvent', invoke=XModLib.HookUtils.HookInvoke.MASTER)

@@ -11,35 +11,35 @@ def new_OperatingControlMode_init(self, *args, **kwargs):
 		config = _config_['modules']['aimCorrection'][AvatarInputHandler.aih_constants.CTRL_MODE_NAME.ARCADE]
 		self.XAimCorrection = ArcadeAimCorrection(
 			self,
-			config['manualMode']['enabled'],
-			config['targetMode']['enabled'] and config['targetMode']['activated'],
-			config['targetMode']['distance'][0],
-			config['targetMode']['distance'][1]
+			manualEnabled=config['manualMode']['enabled'],
+			targetEnabled=config['targetMode']['enabled'] and config['targetMode']['activated'],
+			minDistance=config['targetMode']['distance'][0],
+			maxDistance=config['targetMode']['distance'][1]
 		) if config['enabled'] else None
 	elif type(self) is AvatarInputHandler.control_modes.SniperControlMode:
 		config = _config_['modules']['aimCorrection'][AvatarInputHandler.aih_constants.CTRL_MODE_NAME.SNIPER]
 		self.XAimCorrection = SniperAimCorrection(
 			self,
-			config['manualMode']['enabled'],
-			config['targetMode']['enabled'] and config['targetMode']['activated'],
-			config['targetMode']['distance'][0],
-			config['targetMode']['distance'][1]
+			manualEnabled=config['manualMode']['enabled'],
+			targetEnabled=config['targetMode']['enabled'] and config['targetMode']['activated'],
+			minDistance=config['targetMode']['distance'][0],
+			maxDistance=config['targetMode']['distance'][1]
 		) if config['enabled'] else None
 	elif type(self) is AvatarInputHandler.control_modes.StrategicControlMode:
 		config = _config_['modules']['aimCorrection'][AvatarInputHandler.aih_constants.CTRL_MODE_NAME.STRATEGIC]
 		self.XAimCorrection = StrategicAimCorrection(
 			self,
-			config['manualMode']['enabled'],
-			config['targetMode']['enabled'] and config['targetMode']['activated'],
-			config['ignoreVehicles'],
-			config['targetMode']['heightMultiplier']
+			manualEnabled=config['manualMode']['enabled'],
+			targetEnabled=config['targetMode']['enabled'] and config['targetMode']['activated'],
+			ignoreVehicles=config['ignoreVehicles'],
+			heightMultiplier=config['targetMode']['heightMultiplier']
 		) if config['enabled'] else None
 	elif type(self) is AvatarInputHandler.control_modes.ArtyControlMode:
 		config = _config_['modules']['aimCorrection'][AvatarInputHandler.aih_constants.CTRL_MODE_NAME.ARTY]
 		self.XAimCorrection = ArtyAimCorrection(
 			self,
-			config['manualMode']['enabled'],
-			config['targetMode']['enabled'] and config['targetMode']['activated']
+			manualEnabled=config['manualMode']['enabled'],
+			targetEnabled=config['targetMode']['enabled'] and config['targetMode']['activated']
 		) if config['enabled'] else None
 	return
 

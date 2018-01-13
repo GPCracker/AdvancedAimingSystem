@@ -145,7 +145,7 @@ class ExtrasInfoRequester(object):
 
 	def __del__(self):
 		if self._activeRequest is not None:
-			raise RuntimeError('ExtrasInfoRequester is about to be removed with an active request.')
+			raise RuntimeError('ExtrasInfoRequester is about to be removed with an active request')
 		return
 
 class ExtrasInfoController(object):
@@ -197,7 +197,7 @@ class ExtrasInfoController(object):
 
 	def __del__(self):
 		if self._requester.activeRequest is not None:
-			raise RuntimeError('ExtrasInfoController is about to be removed with an active request.')
+			raise RuntimeError('ExtrasInfoController is about to be removed with an active request')
 		return
 
 # *************************
@@ -208,9 +208,9 @@ def new_PlayerAvatar_init(self, *args, **kwargs):
 	config = _config_['plugins']['expertPerk']
 	self.XExtrasInfoController = ExtrasInfoController(
 		self,
-		config['cacheExtrasInfo'],
-		config['cacheExpiryTimeout'],
-		config['responseTimeout']
+		cacheExtrasInfo=config['cacheExtrasInfo'],
+		cacheExpiryTimeout=config['cacheExpiryTimeout'],
+		responseTimeout=config['responseTimeout']
 	) if config['enabled'] else None
 	return
 

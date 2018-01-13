@@ -12,28 +12,28 @@ class GuiController(object):
 	def __init__(self, formatter=None, updateInterval=0.04):
 		super(GuiController, self).__init__()
 		self.formatter = formatter if callable(formatter) else lambda string, *args, **kwargs: string
-		self._updateCallbackLoop = XModLib.CallbackUtils.CallbackLoop(updateInterval, XModLib.CallbackUtils.getMethodProxy(self._update))
+		self._updateCallbackLoop = XModLib.CallbackUtils.CallbackLoop(updateInterval, XModLib.CallbackUtils.getMethodProxy(self._updateInfoPanels))
 		return
 
-	def getAimCorrectionMacroData(self):
+	def _getAimCorrectionMacroData(self):
 		aimCorrection = getattr(BigWorld.player().inputHandler.ctrl, 'XAimCorrection', None)
 		return aimCorrection.getMacroData() if aimCorrection is not None else None
 
-	def getTargetInfoMacroData(self):
+	def _getTargetInfoMacroData(self):
 		targetInfo = getattr(BigWorld.player().inputHandler, 'XTargetInfo', None)
 		return targetInfo.getMacroData() if targetInfo is not None else None
 
-	def getPlayerAimingInfoMacroData(self):
+	def _getAimingInfoMacroData(self):
 		return AimingInfo.getMacroData()
 
 	def _updateInfoPanelMacroData(self, alias, macrodata):
 		self.dispatchEvent(GuiEvent.INFO_PANEL_UPDATE, {'alias': alias, 'formatter': self.formatter, 'macrodata': macrodata})
 		return
 
-	def _update(self):
-		self._updateInfoPanelMacroData(GuiSettings.CORRECTION_PANEL_ALIAS, self.getAimCorrectionMacroData())
-		self._updateInfoPanelMacroData(GuiSettings.TARGET_PANEL_ALIAS, self.getTargetInfoMacroData())
-		self._updateInfoPanelMacroData(GuiSettings.AIMING_PANEL_ALIAS, self.getPlayerAimingInfoMacroData())
+	def _updateInfoPanels(self):
+		self._updateInfoPanelMacroData(GuiSettings.CORRECTION_PANEL_ALIAS, self._getAimCorrectionMacroData())
+		self._updateInfoPanelMacroData(GuiSettings.TARGET_PANEL_ALIAS, self._getTargetInfoMacroData())
+		self._updateInfoPanelMacroData(GuiSettings.AIMING_PANEL_ALIAS, self._getAimingInfoMacroData())
 		return
 
 	@property
