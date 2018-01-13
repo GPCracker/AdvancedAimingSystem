@@ -2,17 +2,38 @@
 # GuiController Class
 # *************************
 class GuiController(object):
-	__slots__ = ('__weakref__', 'formatter', '_updateCallbackLoop')
+	__slots__ = ('__weakref__', 'formatter', '_updateInterval', '_updateCallbackLoop')
 
 	@staticmethod
 	def dispatchEvent(eventType, ctx=None, scope=gui.shared.EVENT_BUS_SCOPE.BATTLE):
 		gui.shared.g_eventBus.handleEvent(GuiEvent(eventType, ctx), scope)
 		return
 
+	@property
+	def updateInterval(self):
+		return self._updateInterval
+
+	@updateInterval.setter
+	def updateInterval(self, value):
+		if self.isUpdateActive:
+			raise RuntimeError('update interval could not be changed while controller is running')
+		self._updateInterval = value
+		# Recreate internal components.
+		self._initInternalComponents()
+		return
+
 	def __init__(self, formatter=None, updateInterval=0.04):
 		super(GuiController, self).__init__()
 		self.formatter = formatter if callable(formatter) else lambda string, *args, **kwargs: string
-		self._updateCallbackLoop = XModLib.CallbackUtils.CallbackLoop(updateInterval, XModLib.CallbackUtils.getMethodProxy(self._updateInfoPanels))
+		self._updateInterval = updateInterval
+		# Initialize internal components.
+		self._initInternalComponents()
+		return
+
+	def _initInternalComponents(self):
+		self._updateCallbackLoop = XModLib.CallbackUtils.CallbackLoop(
+			self._updateInterval, XModLib.CallbackUtils.getMethodProxy(self._updateInfoPanels)
+		)
 		return
 
 	def _getAimCorrectionMacroData(self):
@@ -55,6 +76,9 @@ class GuiController(object):
 	def handleControlModeDisable(self, ctrlModeName):
 		self.dispatchEvent(GuiEvent.CTRL_MODE_DISABLE, {'ctrlModeName': ctrlModeName})
 		return
+
+	def __repr__(self):
+		return '{!s}(formatter={!r}, updateInterval={!r})'.format(self.__class__.__name__, self.formatter, self._updateInterval)
 
 	def __del__(self):
 		self._updateCallbackLoop = None
