@@ -2,13 +2,14 @@
 # AimCorrection Class
 # *************************
 class BaseAimCorrection(object):
-	__slots__ = ('__weakref__', '_aihc', 'manualEnabled', 'targetEnabled', 'manualInfo')
+	__slots__ = ('__weakref__', '_aihc', 'manualEnabled', 'targetEnabled', 'fixGunMarker', 'manualInfo')
 
-	def __init__(self, avatarInputHandlerCtrl, manualEnabled=False, targetEnabled=False):
+	def __init__(self, avatarInputHandlerCtrl, manualEnabled=False, targetEnabled=False, fixGunMarker=False):
 		super(BaseAimCorrection, self).__init__()
 		self._aihc = weakref.proxy(avatarInputHandlerCtrl)
 		self.manualEnabled = manualEnabled
 		self.targetEnabled = targetEnabled
+		self.fixGunMarker = fixGunMarker
 		self.manualInfo = None
 		return
 
@@ -70,8 +71,8 @@ class BaseAimCorrection(object):
 class ArcadeAimCorrection(BaseAimCorrection):
 	__slots__ = ('minDistance', 'maxDistance')
 
-	def __init__(self, avatarInputHandlerCtrl, manualEnabled=False, targetEnabled=False, minDistance=50.0, maxDistance=720.0):
-		super(ArcadeAimCorrection, self).__init__(avatarInputHandlerCtrl, manualEnabled, targetEnabled)
+	def __init__(self, avatarInputHandlerCtrl, manualEnabled=False, targetEnabled=False, fixGunMarker=True, minDistance=50.0, maxDistance=720.0):
+		super(ArcadeAimCorrection, self).__init__(avatarInputHandlerCtrl, manualEnabled, targetEnabled, fixGunMarker)
 		self.minDistance = minDistance
 		self.maxDistance = maxDistance
 		return
@@ -112,15 +113,16 @@ class ArcadeAimCorrection(BaseAimCorrection):
 		return None
 
 	def getGunMarkerCollisionPoint(self, start, end):
-		flatDistance = None
-		positionAboveVehicle = self._getPositionAboveVehicle()
-		if self.manualEnabled and self.manualInfo is not None:
-			flatDistance = self.manualInfo
-		elif self.targetEnabled and self.targetInfo is not None and not self.targetInfo.isExpired:
-			flatDistance = positionAboveVehicle.flatDistTo(self.targetInfo.getPosition())
-		if flatDistance is not None:
-			if positionAboveVehicle.flatDistSqrTo(start) <= flatDistance * flatDistance <= positionAboveVehicle.flatDistSqrTo(end):
-				return start + (end - start).scale((flatDistance - positionAboveVehicle.flatDistTo(start)) / start.flatDistTo(end))
+		if self.fixGunMarker:
+			flatDistance = None
+			positionAboveVehicle = self._getPositionAboveVehicle()
+			if self.manualEnabled and self.manualInfo is not None:
+				flatDistance = self.manualInfo
+			elif self.targetEnabled and self.targetInfo is not None and not self.targetInfo.isExpired:
+				flatDistance = positionAboveVehicle.flatDistTo(self.targetInfo.getPosition())
+			if flatDistance is not None:
+				if positionAboveVehicle.flatDistSqrTo(start) <= flatDistance * flatDistance <= positionAboveVehicle.flatDistSqrTo(end):
+					return start + (end - start).scale((flatDistance - positionAboveVehicle.flatDistTo(start)) / start.flatDistTo(end))
 		return None
 
 	def __repr__(self):
@@ -132,8 +134,8 @@ class ArcadeAimCorrection(BaseAimCorrection):
 class SniperAimCorrection(BaseAimCorrection):
 	__slots__ = ('minDistance', 'maxDistance')
 
-	def __init__(self, avatarInputHandlerCtrl, manualEnabled=False, targetEnabled=False, minDistance=10.0, maxDistance=720.0):
-		super(SniperAimCorrection, self).__init__(avatarInputHandlerCtrl, manualEnabled, targetEnabled)
+	def __init__(self, avatarInputHandlerCtrl, manualEnabled=False, targetEnabled=False, fixGunMarker=True, minDistance=10.0, maxDistance=720.0):
+		super(SniperAimCorrection, self).__init__(avatarInputHandlerCtrl, manualEnabled, targetEnabled, fixGunMarker)
 		self.minDistance = minDistance
 		self.maxDistance = maxDistance
 		return
@@ -168,19 +170,20 @@ class SniperAimCorrection(BaseAimCorrection):
 		return None
 
 	def getGunMarkerCollisionPoint(self, start, end):
-		distance = None
-		scanRay, scanPoint = self._getScanRayAndPoint()
-		if self.manualEnabled and self.manualInfo is not None:
-			distance = self.manualInfo
-		elif self.targetEnabled and self.targetInfo is not None and not self.targetInfo.isExpired:
-			distance = scanPoint.distTo(self.targetInfo.getPosition())
-		if distance is not None:
-			if scanPoint.distSqrTo(start) <= distance * distance <= scanPoint.distSqrTo(end):
-				# Scan point is generally far from small segment of collision test.
-				# In that case we can consider that vectors from scan point to start and end is parallel.
-				# So we can use linear algorithm instead of square one to get some calculation speed.
-				baseDistance = scanPoint.distTo(start)
-				return start + (end - start).scale((distance - baseDistance) / (scanPoint.distTo(end) - baseDistance))
+		if self.fixGunMarker:
+			distance = None
+			scanRay, scanPoint = self._getScanRayAndPoint()
+			if self.manualEnabled and self.manualInfo is not None:
+				distance = self.manualInfo
+			elif self.targetEnabled and self.targetInfo is not None and not self.targetInfo.isExpired:
+				distance = scanPoint.distTo(self.targetInfo.getPosition())
+			if distance is not None:
+				if scanPoint.distSqrTo(start) <= distance * distance <= scanPoint.distSqrTo(end):
+					# Scan point is generally far from small segment of collision test.
+					# In that case we can consider that vectors from scan point to start and end is parallel.
+					# So we can use linear algorithm instead of square one to get some calculation speed.
+					baseDistance = scanPoint.distTo(start)
+					return start + (end - start).scale((distance - baseDistance) / (scanPoint.distTo(end) - baseDistance))
 		return None
 
 	def __repr__(self):
@@ -192,8 +195,8 @@ class SniperAimCorrection(BaseAimCorrection):
 class StrategicAimCorrection(BaseAimCorrection):
 	__slots__ = ('ignoreVehicles', 'heightMultiplier')
 
-	def __init__(self, avatarInputHandlerCtrl, manualEnabled=False, targetEnabled=False, ignoreVehicles=False, heightMultiplier=0.5):
-		super(StrategicAimCorrection, self).__init__(avatarInputHandlerCtrl, manualEnabled, targetEnabled)
+	def __init__(self, avatarInputHandlerCtrl, manualEnabled=False, targetEnabled=False, fixGunMarker=False, ignoreVehicles=False, heightMultiplier=0.5):
+		super(StrategicAimCorrection, self).__init__(avatarInputHandlerCtrl, manualEnabled, targetEnabled, fixGunMarker)
 		self.ignoreVehicles = ignoreVehicles
 		self.heightMultiplier = heightMultiplier
 		return

@@ -11,6 +11,7 @@ def new_OperatingControlMode_init(self, *args, **kwargs):
 		config = _config_['modules']['aimCorrection'][AvatarInputHandler.aih_constants.CTRL_MODE_NAME.ARCADE]
 		self.XAimCorrection = ArcadeAimCorrection(
 			self,
+			fixGunMarker=config['fixGunMarker'],
 			manualEnabled=config['manualMode']['enabled'],
 			targetEnabled=config['targetMode']['enabled'] and config['targetMode']['activated'],
 			minDistance=config['targetMode']['distance'][0],
@@ -20,6 +21,7 @@ def new_OperatingControlMode_init(self, *args, **kwargs):
 		config = _config_['modules']['aimCorrection'][AvatarInputHandler.aih_constants.CTRL_MODE_NAME.SNIPER]
 		self.XAimCorrection = SniperAimCorrection(
 			self,
+			fixGunMarker=config['fixGunMarker'],
 			manualEnabled=config['manualMode']['enabled'],
 			targetEnabled=config['targetMode']['enabled'] and config['targetMode']['activated'],
 			minDistance=config['targetMode']['distance'][0],
@@ -29,6 +31,7 @@ def new_OperatingControlMode_init(self, *args, **kwargs):
 		config = _config_['modules']['aimCorrection'][AvatarInputHandler.aih_constants.CTRL_MODE_NAME.STRATEGIC]
 		self.XAimCorrection = StrategicAimCorrection(
 			self,
+			fixGunMarker=config['fixGunMarker'],
 			manualEnabled=config['manualMode']['enabled'],
 			targetEnabled=config['targetMode']['enabled'] and config['targetMode']['activated'],
 			ignoreVehicles=config['ignoreVehicles'],
@@ -38,6 +41,7 @@ def new_OperatingControlMode_init(self, *args, **kwargs):
 		config = _config_['modules']['aimCorrection'][AvatarInputHandler.aih_constants.CTRL_MODE_NAME.ARTY]
 		self.XAimCorrection = ArtyAimCorrection(
 			self,
+			fixGunMarker=config['fixGunMarker'],
 			manualEnabled=config['manualMode']['enabled'],
 			targetEnabled=config['targetMode']['enabled'] and config['targetMode']['activated']
 		) if config['enabled'] else None

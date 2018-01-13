@@ -9,6 +9,15 @@
 	<!-- Настройки корректировки в аркадном режиме прицеливания. -->
 	<arcade>
 		<enabled>False</enabled>
+		<!-- Vertical gun marker correction in aim correction mode (fixes gun marker falling). -->
+		<!-- Minor jumps of the gun marker can be observed when aim correction is activated or deactivated. -->
+		<!-- This phenomenon is a transient process and is caused by an instantaneous change in the distance to the aiming point. -->
+		<!-- However, the gun elevation angle changes smoothly, so you need to wait until the gun marker is leveled before the shot. -->
+		<!-- Корректировка маркера орудия по высоте при корректировке прицеливания (исправляет провал маркера орудия). -->
+		<!-- При включении или отключении режима корректировки могут наблюдаться незначительные скачки маркера орудия. -->
+		<!-- Данное явление является переходным процессом и вызвано мгновенным изменением дистанции до точки прицеливания. -->
+		<!-- Однако угол возвышения орудия изменяется плавно, поэтому нужно дождаться выравнивания маркера орудия перед выстрелом. -->
+		<fixGunMarker>True</fixGunMarker>
 		<!-- Manual correction mode. -->
 		<!-- Ручной режим корректировки. -->
 		<manualMode>
@@ -38,6 +47,9 @@
 	<!-- Настройки корректировки в снайперском режиме прицеливания. -->
 	<sniper>
 		<enabled>True</enabled>
+		<!-- Vertical gun marker correction in aim correction mode (fixes gun marker falling). -->
+		<!-- Корректировка маркера орудия по высоте при корректировке прицеливания (исправляет провал маркера орудия). -->
+		<fixGunMarker>True</fixGunMarker>
 		<!-- Manual correction mode. -->
 		<!-- Ручной режим корректировки. -->
 		<manualMode>
@@ -67,6 +79,9 @@
 	<!-- Настройки корректировки в артиллерийском режиме прицеливания (вертикальный вид). -->
 	<strategic>
 		<enabled>True</enabled>
+		<!-- Vertical gun marker correction in aim correction mode (fixes gun marker falling). -->
+		<!-- Корректировка маркера орудия по высоте при корректировке прицеливания (исправляет провал маркера орудия). -->
+		<fixGunMarker>False</fixGunMarker>
 		<!-- Manual correction mode. -->
 		<!-- Ручной режим корректировки. -->
 		<manualMode>
@@ -99,6 +114,9 @@
 	<!-- Настройки корректировки в артиллерийском режиме прицеливания (вид от траектории). -->
 	<arty>
 		<enabled>False</enabled>
+		<!-- Vertical gun marker correction in aim correction mode (fixes gun marker falling). -->
+		<!-- Корректировка маркера орудия по высоте при корректировке прицеливания (исправляет провал маркера орудия). -->
+		<fixGunMarker>False</fixGunMarker>
 		<!-- Manual correction mode. -->
 		<!-- Ручной режим корректировки. -->
 		<manualMode>

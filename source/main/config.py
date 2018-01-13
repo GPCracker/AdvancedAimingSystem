@@ -77,6 +77,7 @@ def loadConfiguration():
 			'aimCorrection': {
 				'arcade': {
 					'enabled': ('Bool', False),
+					'fixGunMarker': ('Bool', True),
 					'manualMode': {
 						'enabled': ('Bool', True),
 						'shortcut': ('SimpleShortcut', 'KEY_LALT', {'switch': False, 'invert': False})
@@ -98,6 +99,7 @@ def loadConfiguration():
 				},
 				'sniper': {
 					'enabled': ('Bool', True),
+					'fixGunMarker': ('Bool', True),
 					'manualMode': {
 						'enabled': ('Bool', True),
 						'shortcut': ('SimpleShortcut', 'KEY_LALT', {'switch': False, 'invert': False})
@@ -119,6 +121,7 @@ def loadConfiguration():
 				},
 				'strategic': {
 					'enabled': ('Bool', True),
+					'fixGunMarker': ('Bool', False),
 					'manualMode': {
 						'enabled': ('Bool', True),
 						'shortcut': ('SimpleShortcut', 'KEY_LALT', {'switch': False, 'invert': False})
@@ -141,6 +144,7 @@ def loadConfiguration():
 				},
 				'arty': {
 					'enabled': ('Bool', False),
+					'fixGunMarker': ('Bool', False),
 					'manualMode': {
 						'enabled': ('Bool', True),
 						'shortcut': ('SimpleShortcut', 'KEY_LALT', {'switch': False, 'invert': False})
