@@ -51,10 +51,10 @@ msgid "safeShot/onDeactivate"
 msgstr "[SafeShot] DISABLED."
 
 msgid "safeShot/error/template"
-msgstr "[{{reason}}] Shot has been blocked."
+msgstr "[{reason}] Shot has been blocked."
 
 msgid "safeShot/reasons/team/chat/message"
-msgstr "{{player}} ({{vehicle}}), you're in my line of fire!"
+msgstr "{player} ({vehicle}), you're in my line of fire!"
 
 msgid "safeShot/reasons/team/template"
 msgstr "friendly"
@@ -75,40 +75,40 @@ msgid "gui/panels/CorrectionPanel/default/tooltip"
 msgstr "Aim correction info panel."
 
 msgid "gui/panels/CorrectionPanel/default/text"
-msgstr "<p align='center'><font color='#00FF00' size='20' face='$UniversCondC'>Distance locked: {{manualInfo:.1f}}m.</font></p>"
+msgstr "<p align='center'><font color='#00FF00' size='20' face='$UniversCondC'>Distance locked: {manualInfo:.1f}m.</font></p>"
 
 msgid "gui/panels/CorrectionPanel/arcade/text"
-msgstr "<p align='center'><font color='#00FF00' size='20' face='$UniversCondC'>Distance locked: {{manualInfo:.1f}}m.</font></p>"
+msgstr "<p align='center'><font color='#00FF00' size='20' face='$UniversCondC'>Distance locked: {manualInfo:.1f}m.</font></p>"
 
 msgid "gui/panels/CorrectionPanel/sniper/text"
-msgstr "<p align='center'><font color='#00FF00' size='20' face='$UniversCondC'>Distance locked: {{manualInfo:.1f}}m.</font></p>"
+msgstr "<p align='center'><font color='#00FF00' size='20' face='$UniversCondC'>Distance locked: {manualInfo:.1f}m.</font></p>"
 
 msgid "gui/panels/CorrectionPanel/strategic/text"
-msgstr "<p align='center'><font color='#00FF00' size='20' face='$UniversCondC'>Altitude locked: {{manualInfo:.1f}}m.</font></p>"
+msgstr "<p align='center'><font color='#00FF00' size='20' face='$UniversCondC'>Altitude locked: {manualInfo:.1f}m.</font></p>"
 
 msgid "gui/panels/CorrectionPanel/arty/text"
-msgstr "<p align='center'><font color='#00FF00' size='20' face='$UniversCondC'>Unknown parameter locked: {{manualInfo:.1f}}m.</font></p>"
+msgstr "<p align='center'><font color='#00FF00' size='20' face='$UniversCondC'>Unknown parameter locked: {manualInfo:.1f}m.</font></p>"
 
 msgid "gui/panels/TargetPanel/default/tooltip"
 msgstr "Target scanner info panel."
 
 msgid "gui/panels/TargetPanel/default/text"
-msgstr "<p align='center'><font color='#FF7F00' size='20' face='$UniversCondC'>Target: {{shortName}}; Distance: {{distance:.1f}}m; Speed: {{speedMS:.1f}}m/s.</font></p>"
+msgstr "<p align='center'><font color='#FF7F00' size='20' face='$UniversCondC'>Target: {shortName}; Distance: {distance:.1f}m; Speed: {speedMS:.1f}m/s.</font></p>"
 
 msgid "gui/panels/AimingPanel/default/tooltip"
 msgstr "Aiming info panel."
 
 msgid "gui/panels/AimingPanel/default/text"
-msgstr "<textformat leftmargin='20' rightmargin='20' tabstops='[0,70]'><font color='#64F0B4' size='20' face='$UniversCondC'>\tRemains:\t{{remainingAimingTime:.2f}}s;\n\tDistance:\t{{aimingDistance:.1f}}m;\n\tDeviation:\t{{deviation:.2f}}m;\n\tFly time:\t{{flyTime:.2f}}s;\n\tHit angle:\t{{hitAngleDeg:+.1f}}dg;</font></textformat>"
+msgstr "<textformat leftmargin='20' rightmargin='20' tabstops='[0,70]'><font color='#64F0B4' size='20' face='$UniversCondC'>\tRemains:\t{remainingAimingTime:.2f}s;\n\tDistance:\t{aimingDistance:.1f}m;\n\tDeviation:\t{deviation:.2f}m;\n\tFly time:\t{flyTime:.2f}s;\n\tHit angle:\t{hitAngleDeg:+.1f}dg;</font></textformat>"
 
 msgid "gui/panels/AimingPanel/arcade/text"
-msgstr "<textformat leftmargin='20' rightmargin='20' tabstops='[0,70]'><font color='#64F0B4' size='20' face='$UniversCondC'>\tRemains:\t{{remainingAimingTime:.2f}}s;\n\tDistance:\t{{aimingDistance:.1f}}m;\n\tDeviation:\t{{deviation:.2f}}m;\n\tFly time:\t{{flyTime:.2f}}s;\n\tHit angle:\t{{hitAngleDeg:+.1f}}dg;</font></textformat>"
+msgstr "<textformat leftmargin='20' rightmargin='20' tabstops='[0,70]'><font color='#64F0B4' size='20' face='$UniversCondC'>\tRemains:\t{remainingAimingTime:.2f}s;\n\tDistance:\t{aimingDistance:.1f}m;\n\tDeviation:\t{deviation:.2f}m;\n\tFly time:\t{flyTime:.2f}s;\n\tHit angle:\t{hitAngleDeg:+.1f}dg;</font></textformat>"
 
 msgid "gui/panels/AimingPanel/sniper/text"
-msgstr "<textformat leftmargin='20' rightmargin='20' tabstops='[0,70]'><font color='#64B4F0' size='20' face='$UniversCondC'>\tRemains:\t{{remainingAimingTime:.2f}}s;\n\tDistance:\t{{aimingDistance:.1f}}m;\n\tDeviation:\t{{deviation:.2f}}m;\n\tFly time:\t{{flyTime:.2f}}s;\n\tHit angle:\t{{hitAngleDeg:+.1f}}dg;</font></textformat>"
+msgstr "<textformat leftmargin='20' rightmargin='20' tabstops='[0,70]'><font color='#64B4F0' size='20' face='$UniversCondC'>\tRemains:\t{remainingAimingTime:.2f}s;\n\tDistance:\t{aimingDistance:.1f}m;\n\tDeviation:\t{deviation:.2f}m;\n\tFly time:\t{flyTime:.2f}s;\n\tHit angle:\t{hitAngleDeg:+.1f}dg;</font></textformat>"
 
 msgid "gui/panels/AimingPanel/strategic/text"
-msgstr "<textformat leftmargin='20' rightmargin='20' tabstops='[0,70]'><font color='#B46464' size='20' face='$UniversCondC'>\tRemains:\t{{remainingAimingTime:.2f}}s;\n\tDistance:\t{{aimingDistance:.1f}}m;\n\tDeviation:\t{{deviation:.2f}}m;\n\tFly time:\t{{flyTime:.2f}}s;\n\tHit angle:\t{{hitAngleDeg:+.1f}}dg;</font></textformat>"
+msgstr "<textformat leftmargin='20' rightmargin='20' tabstops='[0,70]'><font color='#B46464' size='20' face='$UniversCondC'>\tRemains:\t{remainingAimingTime:.2f}s;\n\tDistance:\t{aimingDistance:.1f}m;\n\tDeviation:\t{deviation:.2f}m;\n\tFly time:\t{flyTime:.2f}s;\n\tHit angle:\t{hitAngleDeg:+.1f}dg;</font></textformat>"
 
 msgid "gui/panels/AimingPanel/arty/text"
-msgstr "<textformat leftmargin='20' rightmargin='20' tabstops='[0,70]'><font color='#B46464' size='20' face='$UniversCondC'>\tRemains:\t{{remainingAimingTime:.2f}}s;\n\tDistance:\t{{aimingDistance:.1f}}m;\n\tDeviation:\t{{deviation:.2f}}m;\n\tFly time:\t{{flyTime:.2f}}s;\n\tHit angle:\t{{hitAngleDeg:+.1f}}dg;</font></textformat>"
+msgstr "<textformat leftmargin='20' rightmargin='20' tabstops='[0,70]'><font color='#B46464' size='20' face='$UniversCondC'>\tRemains:\t{remainingAimingTime:.2f}s;\n\tDistance:\t{aimingDistance:.1f}m;\n\tDeviation:\t{deviation:.2f}m;\n\tFly time:\t{flyTime:.2f}s;\n\tHit angle:\t{hitAngleDeg:+.1f}dg;</font></textformat>"

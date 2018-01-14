@@ -122,7 +122,7 @@ class GuiInfoPanel(XModLib.pygui.battle.views.components.panels.TextPanel.TextPa
 
 	def _handlePanelUpdateEvent(self, event):
 		if event.ctx['alias'] == self.__alias:
-			self.updateMacroData(event.ctx['formatter'], event.ctx['macrodata'])
+			self.updateMacroData(event.ctx['macrodata'])
 		return
 
 	def getConfig(self):
@@ -135,8 +135,8 @@ class GuiInfoPanel(XModLib.pygui.battle.views.components.panels.TextPanel.TextPa
 		self.__config.update(self._computeConfigPatch(config, self.__config))
 		return
 
-	def updateMacroData(self, formatter, macrodata):
-		self.updateText(formatter(self.__config['template'], **macrodata) if macrodata is not None else '')
+	def updateMacroData(self, macrodata):
+		self.updateText(self.__config['template'](**macrodata) if macrodata is not None else '')
 		return
 
 class GuiCorrectionPanel(GuiInfoPanel):

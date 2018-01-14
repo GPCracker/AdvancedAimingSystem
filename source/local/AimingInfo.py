@@ -15,13 +15,14 @@ class AimingInfo(object):
 			staticDispersionAngle, aimingStartTime, aimingStartFactor, dispersionFactor, expAimingTime = playerAimingInfo
 			aimingFactor = XModLib.BallisticsMath.getAimingFactor(
 				aimingStartTime, aimingStartFactor, dispersionFactor, expAimingTime,
-				aimingFactorThreshold=self.aimingThreshold
+				aimingThreshold=self.aimingThreshold
 			)
 			fullAimingTime = XModLib.BallisticsMath.getFullAimingTime(aimingStartFactor, dispersionFactor, expAimingTime)
 			remainingAimingTime = XModLib.BallisticsMath.getRemainingAimingTime(aimingStartTime, fullAimingTime)
 			realDispersionAngle = XModLib.BallisticsMath.getDispersionAngle(staticDispersionAngle, aimingFactor)
-			aimingDistance, hitAngleRad, flyTime = XModLib.BallisticsMath.getPlayerBallisticsInfo()
-			deviation = XModLib.BallisticsMath.getDeviation(aimingDistance, realDispersionAngle)
+			aimingDistance, flyTime, shotAngleRad, hitAngleRad = XModLib.BallisticsMath.getPlayerBallisticsInfo()
+			deviation = XModLib.BallisticsMath.getDeviation(realDispersionAngle, aimingDistance)
+			shotAngleDeg = math.degrees(shotAngleRad)
 			hitAngleDeg = math.degrees(hitAngleRad)
 			return {
 				'expAimingTime': expAimingTime,
@@ -32,6 +33,8 @@ class AimingInfo(object):
 				'dispersionFactor': dispersionFactor,
 				'aimingDistance': aimingDistance,
 				'aimingFactor': aimingFactor,
+				'shotAngleRad': shotAngleRad,
+				'shotAngleDeg': shotAngleDeg,
 				'hitAngleRad': hitAngleRad,
 				'hitAngleDeg': hitAngleDeg,
 				'deviation': deviation,

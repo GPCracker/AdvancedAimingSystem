@@ -120,12 +120,12 @@ def new_PlayerAvatar_shoot(old_PlayerAvatar_shoot, self, *args, **kwargs):
 	if reason is None:
 		return old_PlayerAvatar_shoot(self, *args, **kwargs)
 	rconfig = config['reasons'][reason]
-	error = _globals_['macrosFormatter'](config['template'], reason=rconfig['template'])
+	error = config['template'](reason=rconfig['template'])
 	XModLib.ClientMessages.showMessageOnPanel('VehicleError', reason, error, 'red')
 	if reason == 'team' and rconfig['chat']['enabled']:
 		channel = XModLib.ClientMessages.getBattleChatControllers()[1]
 		if channel is not None and channel.canSendMessage()[0]:
-			message = _globals_['macrosFormatter'](rconfig['chat']['message'], player=getPlayerName(target.id), vehicle=getShortName(target.id))
+			message = rconfig['chat']['message'](player=getPlayerName(target.id), vehicle=getShortName(target.id))
 			channel.sendMessage(message.encode('utf-8'))
 	if self._PlayerAvatar__tryShootCallbackId is None:
 		self._PlayerAvatar__tryShootCallbackId = BigWorld.callback(0.0, self._PlayerAvatar__tryShootCallback)

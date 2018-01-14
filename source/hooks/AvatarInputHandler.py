@@ -14,7 +14,6 @@ def new_AvatarInputHandler_init(self, *args, **kwargs):
 	) if config['enabled'] else None
 	config = _config_['gui']
 	self.XGuiController = GuiController(
-		formatter=_globals_['macrosFormatter'],
 		updateInterval=config['updateInterval']
 	) if config['enabled'] else None
 	return

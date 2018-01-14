@@ -2,7 +2,7 @@
 #    GuiController Classes    #
 # --------------------------- #
 class GuiController(object):
-	__slots__ = ('__weakref__', 'formatter', '_updateInterval', '_updateCallbackLoop')
+	__slots__ = ('__weakref__', '_updateInterval', '_updateCallbackLoop')
 
 	avatarCtrlMode = AvatarInputHandler.aih_global_binding.bindRO(AvatarInputHandler.aih_global_binding.BINDING_ID.CTRL_MODE_NAME)
 
@@ -24,9 +24,8 @@ class GuiController(object):
 		self._initInternalComponents()
 		return
 
-	def __init__(self, formatter=None, updateInterval=0.04):
+	def __init__(self, updateInterval=0.04):
 		super(GuiController, self).__init__()
-		self.formatter = formatter if callable(formatter) else lambda string, *args, **kwargs: string
 		self._updateInterval = updateInterval
 		# Initialize internal components.
 		self._initInternalComponents()
@@ -66,7 +65,7 @@ class GuiController(object):
 		return aimingInfo.getMacroData() if aimingInfo is not None else None
 
 	def _updateInfoPanelMacroData(self, alias, macrodata):
-		self.dispatchEvent(GuiEvent.INFO_PANEL_UPDATE, {'alias': alias, 'formatter': self.formatter, 'macrodata': macrodata})
+		self.dispatchEvent(GuiEvent.INFO_PANEL_UPDATE, {'alias': alias, 'macrodata': macrodata})
 		return
 
 	def _updateInfoPanels(self):
@@ -88,9 +87,8 @@ class GuiController(object):
 		return
 
 	def __repr__(self):
-		return '{!s}(formatter={!r}, updateInterval={!r})'.format(self.__class__.__name__, self.formatter, self._updateInterval)
+		return '{!s}(updateInterval={!r})'.format(self.__class__.__name__, self._updateInterval)
 
 	def __del__(self):
 		self._updateCallbackLoop = None
-		self.formatter = None
 		return

@@ -51,10 +51,10 @@ msgid "safeShot/onDeactivate"
 msgstr "[ПРЕДОХРАНИТЕЛЬ] ДЕАКТИВИРОВАН."
 
 msgid "safeShot/error/template"
-msgstr "[{{reason}}] Выстрел заблокирован предохранителем."
+msgstr "[{reason}] Выстрел заблокирован предохранителем."
 
 msgid "safeShot/reasons/team/chat/message"
-msgstr "{{player}} ({{vehicle}}), не мешай стрелять!"
+msgstr "{player} ({vehicle}), не мешай стрелять!"
 
 msgid "safeShot/reasons/team/template"
 msgstr "союзник"
@@ -75,40 +75,40 @@ msgid "gui/panels/CorrectionPanel/default/tooltip"
 msgstr "Панель информации корректировщика дальномера."
 
 msgid "gui/panels/CorrectionPanel/default/text"
-msgstr "<p align='center'><font color='#00FF00' size='20' face='$UniversCondC'>Дальномер: {{manualInfo:.1f}}м.</font></p>"
+msgstr "<p align='center'><font color='#00FF00' size='20' face='$UniversCondC'>Дальномер: {manualInfo:.1f}м.</font></p>"
 
 msgid "gui/panels/CorrectionPanel/arcade/text"
-msgstr "<p align='center'><font color='#00FF00' size='20' face='$UniversCondC'>Дальномер: {{manualInfo:.1f}}м.</font></p>"
+msgstr "<p align='center'><font color='#00FF00' size='20' face='$UniversCondC'>Дальномер: {manualInfo:.1f}м.</font></p>"
 
 msgid "gui/panels/CorrectionPanel/sniper/text"
-msgstr "<p align='center'><font color='#00FF00' size='20' face='$UniversCondC'>Дальномер: {{manualInfo:.1f}}м.</font></p>"
+msgstr "<p align='center'><font color='#00FF00' size='20' face='$UniversCondC'>Дальномер: {manualInfo:.1f}м.</font></p>"
 
 msgid "gui/panels/CorrectionPanel/strategic/text"
-msgstr "<p align='center'><font color='#00FF00' size='20' face='$UniversCondC'>Абсолютная высота: {{manualInfo:.1f}}м.</font></p>"
+msgstr "<p align='center'><font color='#00FF00' size='20' face='$UniversCondC'>Абсолютная высота: {manualInfo:.1f}м.</font></p>"
 
 msgid "gui/panels/CorrectionPanel/arty/text"
-msgstr "<p align='center'><font color='#00FF00' size='20' face='$UniversCondC'>Неопределенный параметр: {{manualInfo:.1f}}м.</font></p>"
+msgstr "<p align='center'><font color='#00FF00' size='20' face='$UniversCondC'>Неопределенный параметр: {manualInfo:.1f}м.</font></p>"
 
 msgid "gui/panels/TargetPanel/default/tooltip"
 msgstr "Панель информации сканера целей."
 
 msgid "gui/panels/TargetPanel/default/text"
-msgstr "<p align='center'><font color='#FF7F00' size='20' face='$UniversCondC'>Цель: {{shortName}}; Дистанция: {{distance:.1f}}м; Скорость: {{speedMS:.1f}}м/с.</font></p>"
+msgstr "<p align='center'><font color='#FF7F00' size='20' face='$UniversCondC'>Цель: {shortName}; Дистанция: {distance:.1f}м; Скорость: {speedMS:.1f}м/с.</font></p>"
 
 msgid "gui/panels/AimingPanel/default/tooltip"
 msgstr "Панель информации о сведении."
 
 msgid "gui/panels/AimingPanel/default/text"
-msgstr "<textformat leftmargin='20' rightmargin='20' tabstops='[0,105]'><font color='#64F0B4' size='20' face='$UniversCondC'>\tОсталось:\t{{remainingAimingTime:.2f}}с;\n\tРасстояние:\t{{aimingDistance:.1f}}м;\n\tРазброс:\t{{deviation:.2f}}м;\n\tВремя полета:\t{{flyTime:.2f}}с;\n\tУгол падения:\t{{hitAngleDeg:+.1f}}°;</font></textformat>"
+msgstr "<textformat leftmargin='20' rightmargin='20' tabstops='[0,105]'><font color='#64F0B4' size='20' face='$UniversCondC'>\tОсталось:\t{remainingAimingTime:.2f}с;\n\tРасстояние:\t{aimingDistance:.1f}м;\n\tРазброс:\t{deviation:.2f}м;\n\tВремя полета:\t{flyTime:.2f}с;\n\tУгол падения:\t{hitAngleDeg:+.1f}°;</font></textformat>"
 
 msgid "gui/panels/AimingPanel/arcade/text"
-msgstr "<textformat leftmargin='20' rightmargin='20' tabstops='[0,105]'><font color='#64F0B4' size='20' face='$UniversCondC'>\tОсталось:\t{{remainingAimingTime:.2f}}с;\n\tРасстояние:\t{{aimingDistance:.1f}}м;\n\tРазброс:\t{{deviation:.2f}}м;\n\tВремя полета:\t{{flyTime:.2f}}с;\n\tУгол падения:\t{{hitAngleDeg:+.1f}}°;</font></textformat>"
+msgstr "<textformat leftmargin='20' rightmargin='20' tabstops='[0,105]'><font color='#64F0B4' size='20' face='$UniversCondC'>\tОсталось:\t{remainingAimingTime:.2f}с;\n\tРасстояние:\t{aimingDistance:.1f}м;\n\tРазброс:\t{deviation:.2f}м;\n\tВремя полета:\t{flyTime:.2f}с;\n\tУгол падения:\t{hitAngleDeg:+.1f}°;</font></textformat>"
 
 msgid "gui/panels/AimingPanel/sniper/text"
-msgstr "<textformat leftmargin='20' rightmargin='20' tabstops='[0,105]'><font color='#64B4F0' size='20' face='$UniversCondC'>\tОсталось:\t{{remainingAimingTime:.2f}}с;\n\tРасстояние:\t{{aimingDistance:.1f}}м;\n\tРазброс:\t{{deviation:.2f}}м;\n\tВремя полета:\t{{flyTime:.2f}}с;\n\tУгол падения:\t{{hitAngleDeg:+.1f}}°;</font></textformat>"
+msgstr "<textformat leftmargin='20' rightmargin='20' tabstops='[0,105]'><font color='#64B4F0' size='20' face='$UniversCondC'>\tОсталось:\t{remainingAimingTime:.2f}с;\n\tРасстояние:\t{aimingDistance:.1f}м;\n\tРазброс:\t{deviation:.2f}м;\n\tВремя полета:\t{flyTime:.2f}с;\n\tУгол падения:\t{hitAngleDeg:+.1f}°;</font></textformat>"
 
 msgid "gui/panels/AimingPanel/strategic/text"
-msgstr "<textformat leftmargin='20' rightmargin='20' tabstops='[0,105]'><font color='#B46464' size='20' face='$UniversCondC'>\tОсталось:\t{{remainingAimingTime:.2f}}с;\n\tРасстояние:\t{{aimingDistance:.1f}}м;\n\tРазброс:\t{{deviation:.2f}}м;\n\tВремя полета:\t{{flyTime:.2f}}с;\n\tУгол падения:\t{{hitAngleDeg:+.1f}}°;</font></textformat>"
+msgstr "<textformat leftmargin='20' rightmargin='20' tabstops='[0,105]'><font color='#B46464' size='20' face='$UniversCondC'>\tОсталось:\t{remainingAimingTime:.2f}с;\n\tРасстояние:\t{aimingDistance:.1f}м;\n\tРазброс:\t{deviation:.2f}м;\n\tВремя полета:\t{flyTime:.2f}с;\n\tУгол падения:\t{hitAngleDeg:+.1f}°;</font></textformat>"
 
 msgid "gui/panels/AimingPanel/arty/text"
-msgstr "<textformat leftmargin='20' rightmargin='20' tabstops='[0,105]'><font color='#B46464' size='20' face='$UniversCondC'>\tОсталось:\t{{remainingAimingTime:.2f}}с;\n\tРасстояние:\t{{aimingDistance:.1f}}м;\n\tРазброс:\t{{deviation:.2f}}м;\n\tВремя полета:\t{{flyTime:.2f}}с;\n\tУгол падения:\t{{hitAngleDeg:+.1f}}°;</font></textformat>"
+msgstr "<textformat leftmargin='20' rightmargin='20' tabstops='[0,105]'><font color='#B46464' size='20' face='$UniversCondC'>\tОсталось:\t{remainingAimingTime:.2f}с;\n\tРасстояние:\t{aimingDistance:.1f}м;\n\tРазброс:\t{deviation:.2f}м;\n\tВремя полета:\t{flyTime:.2f}с;\n\tУгол падения:\t{hitAngleDeg:+.1f}°;</font></textformat>"
