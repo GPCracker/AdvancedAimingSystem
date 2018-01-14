@@ -43,6 +43,10 @@ def loadConfiguration():
 		'appLoadedMessage': ('LocalizedWideString', u'<a href="event:AdvancedAimingSystem.official_topic"><font color="#0080FF">"Advanced&nbsp;Aiming&nbsp;System"</font></a> <font color="#008000">successfully loaded.</font>'),
 		'appFailedMessage': ('LocalizedWideString', u'<a href="event:AdvancedAimingSystem.official_topic"><font color="#0080FF">"Advanced&nbsp;Aiming&nbsp;System"</font></a> <font color="#E00000">is incompatible with current client version.</font>'),
 		'modules': {
+			'aimingInfo': {
+				'enabled': ('Bool', True),
+				'aimingThreshold': ('Float', 1.05)
+			},
 			'targetScanner': {
 				'enabled': ('Bool', True),
 				'scanMode': {

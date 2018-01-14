@@ -56,7 +56,7 @@ def new_OperatingControlMode_enable(self, *args, **kwargs):
 	if type(self) in (AvatarInputHandler.control_modes.ArcadeControlMode, AvatarInputHandler.control_modes.SniperControlMode, AvatarInputHandler.control_modes.StrategicControlMode, AvatarInputHandler.control_modes.ArtyControlMode):
 		aimCorrection = getattr(self, 'XAimCorrection', None)
 		if aimCorrection is not None:
-			aimCorrection.handleControlModeEnable()
+			aimCorrection.enable()
 		targetScanner = getattr(self._aih, 'XTargetScanner', None)
 		if targetScanner is not None and not targetScanner.isUpdateActive:
 			targetScanner.start()
@@ -76,7 +76,7 @@ def new_OperatingControlMode_disable(self, *args, **kwargs):
 	if type(self) in (AvatarInputHandler.control_modes.ArcadeControlMode, AvatarInputHandler.control_modes.SniperControlMode, AvatarInputHandler.control_modes.StrategicControlMode, AvatarInputHandler.control_modes.ArtyControlMode):
 		aimCorrection = getattr(self, 'XAimCorrection', None)
 		if aimCorrection is not None:
-			aimCorrection.handleControlModeDisable()
+			aimCorrection.disable()
 		targetScanner = getattr(self._aih, 'XTargetScanner', None)
 		if targetScanner is not None and targetScanner.isUpdateActive:
 			targetScanner.stop()

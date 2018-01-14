@@ -39,11 +39,11 @@ class BaseAimCorrection(object):
 			self.setManualInfo()
 		return
 
-	def handleControlModeEnable(self):
+	def enable(self):
 		self.manualInfo = None
 		return
 
-	def handleControlModeDisable(self):
+	def disable(self):
 		self.manualInfo = None
 		return
 

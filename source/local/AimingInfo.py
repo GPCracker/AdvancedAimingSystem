@@ -2,12 +2,21 @@
 # AimingInfo Class
 # *************************
 class AimingInfo(object):
-	@staticmethod
-	def getMacroData():
+	__slots__ = ('__weakref__', 'aimingThreshold')
+
+	def __init__(self, aimingThreshold=1.05):
+		super(AimingInfo, self).__init__()
+		self.aimingThreshold = aimingThreshold
+		return
+
+	def getMacroData(self):
 		playerAimingInfo = XModLib.BallisticsMath.getPlayerAimingInfo()
 		if playerAimingInfo is not None:
 			staticDispersionAngle, aimingStartTime, aimingStartFactor, dispersionFactor, expAimingTime = playerAimingInfo
-			aimingFactor = XModLib.BallisticsMath.getAimingFactor(aimingStartTime, aimingStartFactor, dispersionFactor, expAimingTime)
+			aimingFactor = XModLib.BallisticsMath.getAimingFactor(
+				aimingStartTime, aimingStartFactor, dispersionFactor, expAimingTime,
+				aimingFactorThreshold=self.aimingThreshold
+			)
 			fullAimingTime = XModLib.BallisticsMath.getFullAimingTime(aimingStartFactor, dispersionFactor, expAimingTime)
 			remainingAimingTime = XModLib.BallisticsMath.getRemainingAimingTime(aimingStartTime, fullAimingTime)
 			realDispersionAngle = XModLib.BallisticsMath.getDispersionAngle(staticDispersionAngle, aimingFactor)
@@ -29,3 +38,17 @@ class AimingInfo(object):
 				'flyTime': flyTime
 			}
 		return None
+
+	def enable(self):
+		# nothing
+		return
+
+	def disable(self):
+		# nothing
+		return
+
+	def __repr__(self):
+		return '{!s}(aimingThreshold={!r})'.format(self.__class__.__name__, self.aimingThreshold)
+
+	def __del__(self):
+		return

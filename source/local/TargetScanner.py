@@ -122,6 +122,14 @@ class TargetScanner(object):
 		)
 		return
 
+	def enable(self):
+		# nothing
+		return
+
+	def disable(self):
+		# nothing
+		return
+
 	def _performScanningProcedure(self):
 		collidableEntities = XModLib.TargetScanners.getCollidableEntities(
 			self._targetScanMode.filterID,

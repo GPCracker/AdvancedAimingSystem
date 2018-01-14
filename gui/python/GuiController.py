@@ -36,6 +36,14 @@ class GuiController(object):
 		)
 		return
 
+	def enable(self):
+		# nothing
+		return
+
+	def disable(self):
+		# nothing
+		return
+
 	def _getAimCorrectionMacroData(self):
 		aimCorrection = getattr(BigWorld.player().inputHandler.ctrl, 'XAimCorrection', None)
 		return aimCorrection.getMacroData() if aimCorrection is not None else None
@@ -45,7 +53,8 @@ class GuiController(object):
 		return targetInfo.getMacroData() if targetInfo is not None else None
 
 	def _getAimingInfoMacroData(self):
-		return AimingInfo.getMacroData()
+		aimingInfo = getattr(BigWorld.player().inputHandler, 'XAimingInfo', None)
+		return aimingInfo.getMacroData() if aimingInfo is not None else None
 
 	def _updateInfoPanelMacroData(self, alias, macrodata):
 		self.dispatchEvent(GuiEvent.INFO_PANEL_UPDATE, {'alias': alias, 'formatter': self.formatter, 'macrodata': macrodata})

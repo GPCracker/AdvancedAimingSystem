@@ -8,11 +8,41 @@ def new_AvatarInputHandler_init(self, *args, **kwargs):
 		targetScanMode=TargetScanMode(**config['scanMode']),
 		autoScanActivated=config['autoScan']['enabled'] and config['autoScan']['activated']
 	) if config['enabled'] else None
+	config = _config_['modules']['aimingInfo']
+	self.XAimingInfo = AimingInfo(
+		aimingThreshold=config['aimingThreshold']
+	) if config['enabled'] else None
 	config = _config_['gui']
 	self.XGuiController = GuiController(
 		formatter=_globals_['macrosFormatter'],
 		updateInterval=config['updateInterval']
 	) if config['enabled'] else None
+	return
+
+@XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.AvatarInputHandler, 'start', invoke=XModLib.HookUtils.HookInvoke.SECONDARY)
+def new_AvatarInputHandler_start(self, *args, **kwargs):
+	targetScanner = getattr(self, 'XTargetScanner', None)
+	if targetScanner is not None:
+		targetScanner.enable()
+	aimingInfo = getattr(self, 'XAimingInfo', None)
+	if aimingInfo is not None:
+		aimingInfo.enable()
+	guiController = getattr(self, 'XGuiController', None)
+	if guiController is not None:
+		guiController.enable()
+	return
+
+@XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.AvatarInputHandler, 'stop', invoke=XModLib.HookUtils.HookInvoke.PRIMARY)
+def new_AvatarInputHandler_stop(self, *args, **kwargs):
+	targetScanner = getattr(self, 'XTargetScanner', None)
+	if targetScanner is not None:
+		targetScanner.disable()
+	aimingInfo = getattr(self, 'XAimingInfo', None)
+	if aimingInfo is not None:
+		aimingInfo.disable()
+	guiController = getattr(self, 'XGuiController', None)
+	if guiController is not None:
+		guiController.disable()
 	return
 
 @XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.AvatarInputHandler, 'handleKeyEvent', invoke=XModLib.HookUtils.HookInvoke.MASTER)
