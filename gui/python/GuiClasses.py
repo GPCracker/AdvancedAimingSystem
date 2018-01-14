@@ -179,8 +179,7 @@ class GuiEvent(gui.shared.events.GameEvent):
 	INFO_PANEL_UPDATE = 'game/AdvancedAimingSystem/InfoPanelUpdate'
 	INFO_PANEL_DRAG = 'game/AdvancedAimingSystem/InfoPanelDrag'
 	INFO_PANEL_DROP = 'game/AdvancedAimingSystem/InfoPanelDrop'
-	CTRL_MODE_ENABLE = 'game/AdvancedAimingSystem/CtrlModeEnable'
-	CTRL_MODE_DISABLE = 'game/AdvancedAimingSystem/CtrlModeDisable'
+	AVATAR_CTRL_MODE = 'game/AdvancedAimingSystem/AvatarCtrlMode'
 
 class GuiBaseBusinessHandler(gui.Scaleform.framework.package_layout.PackageBusinessHandler):
 	@staticmethod
@@ -190,7 +189,7 @@ class GuiBaseBusinessHandler(gui.Scaleform.framework.package_layout.PackageBusin
 
 class GuiBattleBusinessHandler(GuiBaseBusinessHandler):
 	def __init__(self, staticConfigs, ingameConfigs):
-		self._ctrlModeName = None
+		self._ctrlModeName = 'default'
 		self._staticConfigs = staticConfigs
 		self._ingameConfigs = ingameConfigs
 		super(GuiBattleBusinessHandler, self).__init__(
@@ -199,8 +198,7 @@ class GuiBattleBusinessHandler(GuiBaseBusinessHandler):
 				(GuiEvent.INFO_PANEL_INGAME_RESET, self._handleInfoPanelIngameResetEvent),
 				(GuiEvent.INFO_PANEL_DRAG, self._handleInfoPanelDragEvent),
 				(GuiEvent.INFO_PANEL_DROP, self._handleInfoPanelDropEvent),
-				(GuiEvent.CTRL_MODE_ENABLE, self._handleCtrlModeEnableEvent),
-				(GuiEvent.CTRL_MODE_DISABLE, self._handleCtrlModeDisableEvent)
+				(GuiEvent.AVATAR_CTRL_MODE, self._handleAvatarCtrlModeEvent)
 			),
 			gui.app_loader.settings.APP_NAME_SPACE.SF_BATTLE,
 			gui.shared.EVENT_BUS_SCOPE.BATTLE
@@ -208,56 +206,57 @@ class GuiBattleBusinessHandler(GuiBaseBusinessHandler):
 		return
 
 	def _reconfigureInfoPanel(self, alias):
-		if self._ctrlModeName is not None:
-			config = self._staticConfigs.get(alias, {}).get('default', {}).copy()
-			config.update(self._ingameConfigs.get(alias, {}).get('default', {}))
+		config = self._staticConfigs.get(alias, {}).get('default', {}).copy()
+		config.update(self._ingameConfigs.get(alias, {}).get('default', {}))
+		if self._ctrlModeName != 'default':
 			config.update(self._staticConfigs.get(alias, {}).get(self._ctrlModeName, {}))
 			config.update(self._ingameConfigs.get(alias, {}).get(self._ctrlModeName, {}))
-			self._updatePanelConfig(alias, config)
+		self._updatePanelConfig(alias, config)
 		return
 
 	def _handleInfoPanelIngameConfigEvent(self, event):
-		if self._ctrlModeName is not None:
+		if self._ctrlModeName != 'default':
 			self._ingameConfigs.setdefault(event.ctx['alias'], {}).setdefault(self._ctrlModeName, {}).update(event.ctx['config'])
 			self._reconfigureInfoPanel(event.ctx['alias'])
 			self._ingameConfigs.save()
 		return
 
 	def _handleInfoPanelIngameResetEvent(self, event):
-		if self._ctrlModeName is not None:
+		if self._ctrlModeName != 'default':
 			self._ingameConfigs.setdefault(event.ctx['alias'], {}).setdefault(self._ctrlModeName, {}).clear()
 			self._reconfigureInfoPanel(event.ctx['alias'])
 			self._ingameConfigs.save()
 		return
 
 	def _handleInfoPanelDragEvent(self, event):
-		if self._ctrlModeName is not None:
+		if self._ctrlModeName != 'default':
 			self._ingameConfigs.setdefault(event.ctx['alias'], {}).setdefault(self._ctrlModeName, {})['position'] = event.ctx['position']
 			self._ingameConfigs.save()
 		return
 
 	def _handleInfoPanelDropEvent(self, event):
-		if self._ctrlModeName is not None:
+		if self._ctrlModeName != 'default':
 			self._ingameConfigs.setdefault(event.ctx['alias'], {}).setdefault(self._ctrlModeName, {})['position'] = event.ctx['position']
 			self._ingameConfigs.save()
 		return
 
-	def _handleCtrlModeEnableEvent(self, event):
-		ctrlModeName = event.ctx['ctrlModeName']
+	def _handleAvatarCtrlModeEvent(self, event):
+		ctrlMode = event.ctx['ctrlMode']
+		if ctrlMode == AvatarInputHandler.aih_constants.CTRL_MODE_NAME.ARCADE:
+			ctrlModeName = 'arcade'
+		elif ctrlMode == AvatarInputHandler.aih_constants.CTRL_MODE_NAME.SNIPER:
+			ctrlModeName = 'sniper'
+		elif ctrlMode == AvatarInputHandler.aih_constants.CTRL_MODE_NAME.STRATEGIC:
+			ctrlModeName = 'strategic'
+		elif ctrlMode == AvatarInputHandler.aih_constants.CTRL_MODE_NAME.ARTY:
+			ctrlModeName = 'arty'
+		else:
+			ctrlModeName = 'default'
+		self._ctrlModeName = ctrlModeName
 		for alias in (GuiSettings.CORRECTION_PANEL_ALIAS, GuiSettings.TARGET_PANEL_ALIAS, GuiSettings.AIMING_PANEL_ALIAS):
 			config = self._staticConfigs.get(alias, {}).get(ctrlModeName, {}).copy()
 			config.update(self._ingameConfigs.get(alias, {}).get(ctrlModeName, {}))
 			self._updatePanelConfig(alias, config)
-		self._ctrlModeName = ctrlModeName
-		return
-
-	def _handleCtrlModeDisableEvent(self, event):
-		ctrlModeName = event.ctx['ctrlModeName']
-		for alias in (GuiSettings.CORRECTION_PANEL_ALIAS, GuiSettings.TARGET_PANEL_ALIAS, GuiSettings.AIMING_PANEL_ALIAS):
-			config = self._staticConfigs.get(alias, {}).get('default', {}).copy()
-			config.update(self._ingameConfigs.get(alias, {}).get('default', {}))
-			self._updatePanelConfig(alias, config)
-		self._ctrlModeName = None
 		return
 
 class GuiGlobalBusinessHandler(GuiBaseBusinessHandler):

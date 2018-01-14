@@ -26,6 +26,7 @@ import constants
 import gui.shared.personality
 import AvatarInputHandler.cameras
 import AvatarInputHandler.aih_constants
+import AvatarInputHandler.aih_global_binding
 
 # *************************
 # WoT Client GUI

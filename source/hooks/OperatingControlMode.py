@@ -62,8 +62,6 @@ def new_OperatingControlMode_enable(self, *args, **kwargs):
 			targetScanner.start()
 		guiController = getattr(self._aih, 'XGuiController', None)
 		if guiController is not None and not guiController.isUpdateActive:
-			ctrlModeName = next(name for name, ctrl in self._aih.ctrls.viewitems() if ctrl is self)
-			guiController.handleControlModeEnable(ctrlModeName)
 			guiController.start()
 	return
 
@@ -82,8 +80,6 @@ def new_OperatingControlMode_disable(self, *args, **kwargs):
 			targetScanner.stop()
 		guiController = getattr(self._aih, 'XGuiController', None)
 		if guiController is not None and guiController.isUpdateActive:
-			ctrlModeName = next(name for name, ctrl in self._aih.ctrls.viewitems() if ctrl is self)
-			guiController.handleControlModeDisable(ctrlModeName)
 			guiController.stop()
 	return
 

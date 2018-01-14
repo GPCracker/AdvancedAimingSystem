@@ -4,6 +4,8 @@
 class GuiController(object):
 	__slots__ = ('__weakref__', 'formatter', '_updateInterval', '_updateCallbackLoop')
 
+	avatarCtrlMode = AvatarInputHandler.aih_global_binding.bindRO(AvatarInputHandler.aih_global_binding.BINDING_ID.CTRL_MODE_NAME)
+
 	@staticmethod
 	def dispatchEvent(eventType, ctx=None, scope=gui.shared.EVENT_BUS_SCOPE.BATTLE):
 		gui.shared.g_eventBus.handleEvent(GuiEvent(eventType, ctx), scope)
@@ -37,11 +39,18 @@ class GuiController(object):
 		return
 
 	def enable(self):
-		# nothing
+		aihGlobalBinding = AvatarInputHandler.aih_global_binding
+		aihGlobalBinding.subscribe(aihGlobalBinding.BINDING_ID.CTRL_MODE_NAME, self.__onAvatarControlModeChanged)
+		self.dispatchEvent(GuiEvent.AVATAR_CTRL_MODE, {'ctrlMode': self.avatarCtrlMode})
 		return
 
 	def disable(self):
-		# nothing
+		aihGlobalBinding = AvatarInputHandler.aih_global_binding
+		aihGlobalBinding.unsubscribe(aihGlobalBinding.BINDING_ID.CTRL_MODE_NAME, self.__onAvatarControlModeChanged)
+		return
+
+	def __onAvatarControlModeChanged(self, ctrlMode):
+		self.dispatchEvent(GuiEvent.AVATAR_CTRL_MODE, {'ctrlMode': ctrlMode})
 		return
 
 	def _getAimCorrectionMacroData(self):
@@ -76,14 +85,6 @@ class GuiController(object):
 
 	def stop(self):
 		self._updateCallbackLoop.stop()
-		return
-
-	def handleControlModeEnable(self, ctrlModeName):
-		self.dispatchEvent(GuiEvent.CTRL_MODE_ENABLE, {'ctrlModeName': ctrlModeName})
-		return
-
-	def handleControlModeDisable(self, ctrlModeName):
-		self.dispatchEvent(GuiEvent.CTRL_MODE_DISABLE, {'ctrlModeName': ctrlModeName})
 		return
 
 	def __repr__(self):
