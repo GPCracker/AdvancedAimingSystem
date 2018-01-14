@@ -63,16 +63,6 @@ class ExtrasInfoRequest(collections.namedtuple('ExtrasInfoRequest', ('vehicleID'
 			requestTime = BigWorld.time()
 		return super(ExtrasInfoRequest, cls).__new__(cls, vehicleID, requestTime, responseTimeout)
 
-	def __eq__(self, other):
-		if not isinstance(other, self.__class__):
-			return NotImplemented
-		return self.vehicleID == other.vehicleID
-
-	def __ne__(self, other):
-		if not isinstance(other, self.__class__):
-			return NotImplemented
-		return self.vehicleID != other.vehicleID
-
 	@property
 	def isExpired(self):
 		return self.requestTime + self.responseTimeout <= BigWorld.time()
@@ -124,7 +114,7 @@ class ExtrasInfoRequester(object):
 	@activeRequest.setter
 	def activeRequest(self, value):
 		if self._maySeeOtherVehicleDamagedDevices:
-			if self._activeRequest != value:
+			if self._activeRequest.vehicleID != value.vehicleID:
 				# Monitoring is actually activated only four seconds after sending request.
 				# Monitoring means that we immediately receive all updates about vehicle modules.
 				# After monitoring is successfully activated, we also receive initial data to show.
