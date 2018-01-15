@@ -33,6 +33,7 @@ class TargetInfo(int):
 	def getMacroData(self):
 		speed = self.getSpeed() or 0.0
 		return {
+			'insight': self.isInsight,
 			'shortName': self.shortName,
 			'distance': self.getDistance() or 0.0,
 			'speedMS': speed,

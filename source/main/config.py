@@ -231,7 +231,7 @@ g_globals['appDefaultConfig'] = {
 						'visible': ('Bool', False),
 						'background': ('String', ''),
 						'tooltip': ('LocalizedWideString', u'Target scanner info panel.'),
-						'template': ('LocalizedExtendedTemplate', u'<p align="center"><font color="#FF7F00" size="20" face="$UniversCondC">Target: {shortName}; Distance: {distance:.1f}m; Speed: {speedMS:.1f}m/s.</font></p>'),
+						'template': ('LocalizedExtendedTemplate', u'<p align="center"><font color="{if|{insight}:#FF3F00:#FF7F00}" size="20" face="$UniversCondC">Target: {shortName}; Distance: {distance:.1f}m; Speed: {speedMS:.1f}m/s.</font></p>'),
 						'position': ('Vector2AsTuple', (0.0, 0.4)),
 						'size': ('Vector2AsTuple', (450.0, 25.0))
 					},
@@ -240,7 +240,7 @@ g_globals['appDefaultConfig'] = {
 						'visible': ('Bool', True),
 						'background': ('String', ''),
 						'tooltip': ('LocalizedWideString', u'Target scanner info panel.'),
-						'template': ('LocalizedExtendedTemplate', u'<p align="center"><font color="#FF7F00" size="20" face="$UniversCondC">Target: {shortName}; Distance: {distance:.1f}m; Speed: {speedMS:.1f}m/s.</font></p>'),
+						'template': ('LocalizedExtendedTemplate', u'<p align="center"><font color="{if|{insight}:#FF3F00:#FF7F00}" size="20" face="$UniversCondC">Target: {shortName}; Distance: {distance:.1f}m; Speed: {speedMS:.1f}m/s.</font></p>'),
 						'position': ('Vector2AsTuple', (0.0, 0.4)),
 						'size': ('Vector2AsTuple', (450.0, 25.0))
 					}),
@@ -249,7 +249,7 @@ g_globals['appDefaultConfig'] = {
 						'visible': ('Bool', True),
 						'background': ('String', ''),
 						'tooltip': ('LocalizedWideString', u'Target scanner info panel.'),
-						'template': ('LocalizedExtendedTemplate', u'<p align="center"><font color="#FF7F00" size="20" face="$UniversCondC">Target: {shortName}; Distance: {distance:.1f}m; Speed: {speedMS:.1f}m/s.</font></p>'),
+						'template': ('LocalizedExtendedTemplate', u'<p align="center"><font color="{if|{insight}:#FF3F00:#FF7F00}" size="20" face="$UniversCondC">Target: {shortName}; Distance: {distance:.1f}m; Speed: {speedMS:.1f}m/s.</font></p>'),
 						'position': ('Vector2AsTuple', (0.0, 0.4)),
 						'size': ('Vector2AsTuple', (450.0, 25.0))
 					}),
@@ -258,7 +258,7 @@ g_globals['appDefaultConfig'] = {
 						'visible': ('Bool', True),
 						'background': ('String', ''),
 						'tooltip': ('LocalizedWideString', u'Target scanner info panel.'),
-						'template': ('LocalizedExtendedTemplate', u'<p align="center"><font color="#FF7F00" size="20" face="$UniversCondC">Target: {shortName}; Distance: {distance:.1f}m; Speed: {speedMS:.1f}m/s.</font></p>'),
+						'template': ('LocalizedExtendedTemplate', u'<p align="center"><font color="{if|{insight}:#FF3F00:#FF7F00}" size="20" face="$UniversCondC">Target: {shortName}; Distance: {distance:.1f}m; Speed: {speedMS:.1f}m/s.</font></p>'),
 						'position': ('Vector2AsTuple', (0.0, 0.4)),
 						'size': ('Vector2AsTuple', (450.0, 25.0))
 					}),
@@ -267,7 +267,7 @@ g_globals['appDefaultConfig'] = {
 						'visible': ('Bool', True),
 						'background': ('String', ''),
 						'tooltip': ('LocalizedWideString', u'Target scanner info panel.'),
-						'template': ('LocalizedExtendedTemplate', u'<p align="center"><font color="#FF7F00" size="20" face="$UniversCondC">Target: {shortName}; Distance: {distance:.1f}m; Speed: {speedMS:.1f}m/s.</font></p>'),
+						'template': ('LocalizedExtendedTemplate', u'<p align="center"><font color="{if|{insight}:#FF3F00:#FF7F00}" size="20" face="$UniversCondC">Target: {shortName}; Distance: {distance:.1f}m; Speed: {speedMS:.1f}m/s.</font></p>'),
 						'position': ('Vector2AsTuple', (0.0, 0.4)),
 						'size': ('Vector2AsTuple', (450.0, 25.0))
 					})

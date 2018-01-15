@@ -93,7 +93,7 @@ msgid "gui/panels/TargetPanel/default/tooltip"
 msgstr "Target scanner info panel."
 
 msgid "gui/panels/TargetPanel/default/text"
-msgstr "<p align='center'><font color='#FF7F00' size='20' face='$UniversCondC'>Target: {shortName}; Distance: {distance:.1f}m; Speed: {speedMS:.1f}m/s.</font></p>"
+msgstr "<p align='center'><font color='{if|{insight}:#FF3F00:#FF7F00}' size='20' face='$UniversCondC'>Target: {shortName}; Distance: {distance:.1f}m; Speed: {speedMS:.1f}m/s.</font></p>"
 
 msgid "gui/panels/AimingPanel/default/tooltip"
 msgstr "Aiming info panel."
