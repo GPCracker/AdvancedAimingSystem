@@ -27,10 +27,36 @@ import XModLib.HookUtils
 import XModLib.MathUtils
 import XModLib.CollisionUtils
 
+# ----------------------------------- #
+#    Plug-in default configuration    #
+# ----------------------------------- #
+# nothing
+
+# ----------------------------------------- #
+#    Plug-in configuration reading stage    #
+# ----------------------------------------- #
+# nothing
+
+# ------------------------------------ #
+#    Plug-in hooks injection events    #
+# ------------------------------------ #
+p_inject_hooks = XModLib.HookUtils.HookEvent()
+p_inject_ovrds = XModLib.HookUtils.HookEvent()
+
+# ------------------------ #
+#    Plug-in init stage    #
+# ------------------------ #
+if g_config['applicationEnabled']:
+	sections = g_config['modules']['aimCorrection'].viewvalues()
+	if any(section['fixGunMarker'] for section in sections if section['enabled']):
+		p_inject_stage_main += p_inject_hooks
+		p_inject_stage_init += p_inject_ovrds
+	del sections
+
 # ----------------------------- #
 #    VehicleGunRotator Hooks    #
 # ----------------------------- #
-@XModLib.HookUtils.methodAddExt(_inject_hooks_, VehicleGunRotator.VehicleGunRotator, '_VehicleGunRotator__getGunMarkerPosition')
+@XModLib.HookUtils.methodAddExt(p_inject_ovrds, VehicleGunRotator.VehicleGunRotator, '_VehicleGunRotator__getGunMarkerPosition')
 def new_VehicleGunRotator_getGunMarkerPosition(self, shotPoint, shotVector, dispersionAngles):
 	aimCorrection = getattr(self._VehicleGunRotator__avatar.inputHandler.ctrl, 'XAimCorrection', None)
 	def colliderCorrection(collisionTestStart, collisionTestStop):

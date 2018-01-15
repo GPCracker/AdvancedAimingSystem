@@ -1,24 +1,24 @@
 # ------------------------------ #
 #    AvatarInputHandler Hooks    #
 # ------------------------------ #
-@XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.AvatarInputHandler, '__init__', invoke=XModLib.HookUtils.HookInvoke.SECONDARY)
+@XModLib.HookUtils.methodHookExt(g_inject_hooks, AvatarInputHandler.AvatarInputHandler, '__init__', invoke=XModLib.HookUtils.HookInvoke.SECONDARY)
 def new_AvatarInputHandler_init(self, *args, **kwargs):
-	config = _config_['modules']['targetScanner']
+	config = g_config['modules']['targetScanner']
 	self.XTargetScanner = TargetScanner(
 		targetScanMode=TargetScanMode(**config['scanMode']),
 		autoScanActivated=config['autoScan']['enabled'] and config['autoScan']['activated']
 	) if config['enabled'] else None
-	config = _config_['modules']['aimingInfo']
+	config = g_config['modules']['aimingInfo']
 	self.XAimingInfo = AimingInfo(
 		aimingThreshold=config['aimingThreshold']
 	) if config['enabled'] else None
-	config = _config_['gui']
+	config = g_config['gui']
 	self.XGuiController = GuiController(
 		updateInterval=config['updateInterval']
 	) if config['enabled'] else None
 	return
 
-@XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.AvatarInputHandler, 'start', invoke=XModLib.HookUtils.HookInvoke.SECONDARY)
+@XModLib.HookUtils.methodHookExt(g_inject_hooks, AvatarInputHandler.AvatarInputHandler, 'start', invoke=XModLib.HookUtils.HookInvoke.SECONDARY)
 def new_AvatarInputHandler_start(self, *args, **kwargs):
 	targetScanner = getattr(self, 'XTargetScanner', None)
 	if targetScanner is not None:
@@ -31,7 +31,7 @@ def new_AvatarInputHandler_start(self, *args, **kwargs):
 		guiController.enable()
 	return
 
-@XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.AvatarInputHandler, 'stop', invoke=XModLib.HookUtils.HookInvoke.PRIMARY)
+@XModLib.HookUtils.methodHookExt(g_inject_hooks, AvatarInputHandler.AvatarInputHandler, 'stop', invoke=XModLib.HookUtils.HookInvoke.PRIMARY)
 def new_AvatarInputHandler_stop(self, *args, **kwargs):
 	targetScanner = getattr(self, 'XTargetScanner', None)
 	if targetScanner is not None:
@@ -44,7 +44,7 @@ def new_AvatarInputHandler_stop(self, *args, **kwargs):
 		guiController.disable()
 	return
 
-@XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.AvatarInputHandler, 'handleKeyEvent', invoke=XModLib.HookUtils.HookInvoke.MASTER)
+@XModLib.HookUtils.methodHookExt(g_inject_hooks, AvatarInputHandler.AvatarInputHandler, 'handleKeyEvent', invoke=XModLib.HookUtils.HookInvoke.MASTER)
 def new_AvatarInputHandler_handleKeyEvent(old_AvatarInputHandler_handleKeyEvent, self, event):
 	result = old_AvatarInputHandler_handleKeyEvent(self, event)
 	## Keyboard event parsing
@@ -59,7 +59,7 @@ def new_AvatarInputHandler_handleKeyEvent(old_AvatarInputHandler_handleKeyEvent,
 	## AvatarInputHandler started, control mode supported, event not handled by game (for AvatarInputHandler switches)
 	if self._AvatarInputHandler__isStarted and self.ctrlModeName in operatingControlModes and not result:
 		## HotKeys - TargetScanner
-		mconfig = _config_['modules']['targetScanner']
+		mconfig = g_config['modules']['targetScanner']
 		if mconfig['enabled']:
 			## HotKeys - TargetScanner - AutoScan
 			fconfig = mconfig['autoScan']
@@ -91,7 +91,7 @@ def new_AvatarInputHandler_handleKeyEvent(old_AvatarInputHandler_handleKeyEvent,
 				if targetScanner is not None:
 					targetScanner.engageManualOverride()
 		## HotKeys - AimCorrection
-		mconfig = _config_['modules']['aimCorrection'][self.ctrlModeName]
+		mconfig = g_config['modules']['aimCorrection'][self.ctrlModeName]
 		if mconfig['enabled']:
 			## HotKeys - AimCorrection - Target Mode
 			fconfig = mconfig['targetMode']
@@ -118,7 +118,7 @@ def new_AvatarInputHandler_handleKeyEvent(old_AvatarInputHandler_handleKeyEvent,
 	## AvatarInputHandler started, not detached, control mode supported (for AvatarInputHandler shortcuts)
 	if self._AvatarInputHandler__isStarted and not self.isDetached and self.ctrlModeName in operatingControlModes:
 		## HotKeys - AimCorrection
-		mconfig = _config_['modules']['aimCorrection'][self.ctrlModeName]
+		mconfig = g_config['modules']['aimCorrection'][self.ctrlModeName]
 		if mconfig['enabled']:
 			## HotKeys - AimCorrection - ManualMode
 			fconfig = mconfig['manualMode']

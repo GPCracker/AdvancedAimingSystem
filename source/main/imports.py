@@ -2,6 +2,7 @@
 #    Python    #
 # ------------ #
 import os
+import sys
 import enum
 import math
 import time
@@ -65,6 +66,7 @@ import XModLib.ArenaInfo
 import XModLib.HookUtils
 import XModLib.MathUtils
 import XModLib.TextUtils
+import XModLib.ClientUtils
 import XModLib.EngineUtils
 import XModLib.VehicleInfo
 import XModLib.VehicleMath

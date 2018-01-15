@@ -25,10 +25,39 @@ import gui.Scaleform.daapi.view.battle.shared.crosshair.gm_factory
 import XModLib.HookUtils
 import XModLib.KeyboardUtils
 
+# ----------------------------------- #
+#    Plug-in default configuration    #
+# ----------------------------------- #
+g_globals['appDefaultConfig']['plugins']['sniperModeSPG'] = {
+	'enabled': ('Bool', False),
+	'shortcut': ('SimpleShortcut', 'KEY_E', {'switch': True, 'invert': False})
+}
+
+# ----------------------------------------- #
+#    Plug-in configuration reading stage    #
+# ----------------------------------------- #
+g_config['plugins']['sniperModeSPG'] = g_globals['appConfigReader'](
+	XModLib.XMLConfigReader.overrideOpenSubSection(g_globals['appConfigFile'], 'plugins/sniperModeSPG'),
+	g_globals['appDefaultConfig']['plugins']['sniperModeSPG']
+)
+
+# ------------------------------------ #
+#    Plug-in hooks injection events    #
+# ------------------------------------ #
+p_inject_hooks = XModLib.HookUtils.HookEvent()
+p_inject_ovrds = XModLib.HookUtils.HookEvent()
+
+# ------------------------ #
+#    Plug-in init stage    #
+# ------------------------ #
+if g_config['applicationEnabled'] and g_config['plugins']['sniperModeSPG']['enabled']:
+	p_inject_stage_main += p_inject_hooks
+	p_inject_stage_init += p_inject_ovrds
+
 # --------------------------------- #
 #    ControlMarkersFactory Hooks    #
 # --------------------------------- #
-@XModLib.HookUtils.methodHookExt(_inject_hooks_, gui.Scaleform.daapi.view.battle.shared.crosshair.gm_factory._ControlMarkersFactory, '_createSPGMarkers', invoke=XModLib.HookUtils.HookInvoke.MASTER)
+@XModLib.HookUtils.methodHookExt(p_inject_hooks, gui.Scaleform.daapi.view.battle.shared.crosshair.gm_factory._ControlMarkersFactory, '_createSPGMarkers', invoke=XModLib.HookUtils.HookInvoke.MASTER)
 def new_ControlMarkersFactory_createSPGMarkers(old_ControlMarkersFactory_createSPGMarkers, self, markersInfo, components=None):
 	result = old_ControlMarkersFactory_createSPGMarkers(self, markersInfo, components=components)
 	if markersInfo.isServerMarkerActivated:
@@ -45,9 +74,9 @@ def new_ControlMarkersFactory_createSPGMarkers(old_ControlMarkersFactory_createS
 # ----------------------------- #
 #    ArcadeControlMode Hooks    #
 # ----------------------------- #
-@XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.control_modes.ArcadeControlMode, '_ArcadeControlMode__activateAlternateMode')
+@XModLib.HookUtils.methodHookExt(p_inject_hooks, AvatarInputHandler.control_modes.ArcadeControlMode, '_ArcadeControlMode__activateAlternateMode')
 def new_ArcadeControlMode_activateAlternateMode(self, pos=None, bByScroll=False):
-	if _config_['plugins']['sniperModeSPG']['enabled']:
+	if g_config['plugins']['sniperModeSPG']['enabled']:
 		if not BigWorld.player().isGunLocked and not BigWorld.player().isOwnBarrelUnderWater:
 			if self._aih.isSPG and bByScroll:
 				self._aih.onControlModeChanged(
@@ -59,7 +88,7 @@ def new_ArcadeControlMode_activateAlternateMode(self, pos=None, bByScroll=False)
 				)
 	return
 
-@XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.control_modes.ArcadeControlMode, 'handleKeyEvent', invoke=XModLib.HookUtils.HookInvoke.MASTER)
+@XModLib.HookUtils.methodHookExt(p_inject_hooks, AvatarInputHandler.control_modes.ArcadeControlMode, 'handleKeyEvent', invoke=XModLib.HookUtils.HookInvoke.MASTER)
 def new_ArcadeControlMode_handleKeyEvent(old_ArcadeControlMode_handleKeyEvent, self, isDown, key, mods, event=None):
 	result = old_ArcadeControlMode_handleKeyEvent(self, isDown, key, mods, event=event)
 	## Keyboard event parsing
@@ -67,7 +96,7 @@ def new_ArcadeControlMode_handleKeyEvent(old_ArcadeControlMode_handleKeyEvent, s
 	## AvatarInputHandler started, not detached, control mode supported, event not handled by game (for AvatarInputHandler core switches)
 	if not result and self._aih.isSPG:
 		## HotKeys - SPG Sniper Mode
-		mconfig = _config_['plugins']['sniperModeSPG']
+		mconfig = g_config['plugins']['sniperModeSPG']
 		if mconfig['enabled']:
 			## HotKeys - SPG Sniper Mode - Global
 			fconfig = mconfig
@@ -86,7 +115,7 @@ def new_ArcadeControlMode_handleKeyEvent(old_ArcadeControlMode_handleKeyEvent, s
 # ----------------------------- #
 #    SniperControlMode Hooks    #
 # ----------------------------- #
-@XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.control_modes.SniperControlMode, 'handleKeyEvent', invoke=XModLib.HookUtils.HookInvoke.MASTER)
+@XModLib.HookUtils.methodHookExt(p_inject_hooks, AvatarInputHandler.control_modes.SniperControlMode, 'handleKeyEvent', invoke=XModLib.HookUtils.HookInvoke.MASTER)
 def new_SniperControlMode_handleKeyEvent(old_SniperControlMode_handleKeyEvent, self, isDown, key, mods, event=None):
 	result = old_SniperControlMode_handleKeyEvent(self, isDown, key, mods, event=event)
 	## Keyboard event parsing
@@ -94,7 +123,7 @@ def new_SniperControlMode_handleKeyEvent(old_SniperControlMode_handleKeyEvent, s
 	## AvatarInputHandler started, not detached, control mode supported, event not handled by game (for AvatarInputHandler core switches)
 	if not result and self._aih.isSPG:
 		## HotKeys - SPG Sniper Mode
-		mconfig = _config_['plugins']['sniperModeSPG']
+		mconfig = g_config['plugins']['sniperModeSPG']
 		if mconfig['enabled']:
 			## HotKeys - SPG Sniper Mode - Global
 			fconfig = mconfig

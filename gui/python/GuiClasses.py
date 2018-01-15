@@ -23,8 +23,8 @@ class GuiLoaderView(XModLib.pygui.battle.views.PanelsLoaderView.PanelsLoaderView
 
 class GuiInfoPanelContextMenuHandler(XModLib.pygui.battle.views.handlers.ContextMenuHandler.ContextMenuHandler):
 	OPTIONS = (
-		('hideInfoPanel', '_hideInfoPanel', _config_['gui']['panels']['context']['hideInfoPanel'], '', True, None),
-		('resetInfoPanel', '_resetInfoPanel', _config_['gui']['panels']['context']['resetInfoPanel'], '', True, None)
+		('hideInfoPanel', '_hideInfoPanel', g_config['gui']['panels']['context']['hideInfoPanel'], '', True, None),
+		('resetInfoPanel', '_resetInfoPanel', g_config['gui']['panels']['context']['resetInfoPanel'], '', True, None)
 	)
 
 	@classmethod

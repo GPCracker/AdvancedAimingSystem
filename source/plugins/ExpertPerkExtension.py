@@ -27,6 +27,37 @@ import Vehicle
 import XModLib.HookUtils
 import XModLib.VehicleInfo
 
+# ----------------------------------- #
+#    Plug-in default configuration    #
+# ----------------------------------- #
+g_globals['appDefaultConfig']['plugins']['expertPerk'] = {
+	'enabled': ('Bool', False),
+	'cacheExtrasInfo': ('Bool', False),
+	'cacheExpiryTimeout': ('Float', 30.0),
+	'responseTimeout': ('Float', 5.0)
+}
+
+# ----------------------------------------- #
+#    Plug-in configuration reading stage    #
+# ----------------------------------------- #
+g_config['plugins']['expertPerk'] = g_globals['appConfigReader'](
+	XModLib.XMLConfigReader.overrideOpenSubSection(g_globals['appConfigFile'], 'plugins/expertPerk'),
+	g_globals['appDefaultConfig']['plugins']['expertPerk']
+)
+
+# ------------------------------------ #
+#    Plug-in hooks injection events    #
+# ------------------------------------ #
+p_inject_hooks = XModLib.HookUtils.HookEvent()
+p_inject_ovrds = XModLib.HookUtils.HookEvent()
+
+# ------------------------ #
+#    Plug-in init stage    #
+# ------------------------ #
+if g_config['applicationEnabled'] and g_config['plugins']['expertPerk']['enabled']:
+	p_inject_stage_main += p_inject_hooks
+	p_inject_stage_init += p_inject_ovrds
+
 # ------------------------ #
 #    ExpertPerk Classes    #
 # ------------------------ #
@@ -193,9 +224,9 @@ class ExtrasInfoController(object):
 # ------------------------ #
 #    PlayerAvatar Hooks    #
 # ------------------------ #
-@XModLib.HookUtils.methodHookExt(_inject_hooks_, Avatar.PlayerAvatar, '__init__')
+@XModLib.HookUtils.methodHookExt(p_inject_hooks, Avatar.PlayerAvatar, '__init__')
 def new_PlayerAvatar_init(self, *args, **kwargs):
-	config = _config_['plugins']['expertPerk']
+	config = g_config['plugins']['expertPerk']
 	self.XExtrasInfoController = ExtrasInfoController(
 		self,
 		cacheExtrasInfo=config['cacheExtrasInfo'],
@@ -204,7 +235,7 @@ def new_PlayerAvatar_init(self, *args, **kwargs):
 	) if config['enabled'] else None
 	return
 
-@XModLib.HookUtils.methodHookExt(_inject_hooks_, Avatar.PlayerAvatar, 'showOtherVehicleDamagedDevices')
+@XModLib.HookUtils.methodHookExt(p_inject_hooks, Avatar.PlayerAvatar, 'showOtherVehicleDamagedDevices')
 def new_PlayerAvatar_showOtherVehicleDamagedDevices(self, vehicleID, damagedExtras, destroyedExtras):
 	extrasInfoController = getattr(self, 'XExtrasInfoController', None)
 	if extrasInfoController is not None and getattr(self, '_maySeeOtherVehicleDamagedDevices', False):
@@ -218,7 +249,7 @@ def new_PlayerAvatar_showOtherVehicleDamagedDevices(self, vehicleID, damagedExtr
 			self.guiSessionProvider.shared.feedback.showVehicleDamagedDevices(vehicleID, damagedExtras, destroyedExtras)
 	return
 
-@XModLib.HookUtils.methodHookExt(_inject_hooks_, Avatar.PlayerAvatar, 'targetBlur')
+@XModLib.HookUtils.methodHookExt(p_inject_hooks, Avatar.PlayerAvatar, 'targetBlur')
 def new_PlayerAvatar_targetBlur(self, prevEntity):
 	extrasInfoController = getattr(self, 'XExtrasInfoController', None)
 	if extrasInfoController is not None and getattr(self, '_maySeeOtherVehicleDamagedDevices', False):
@@ -230,7 +261,7 @@ def new_PlayerAvatar_targetBlur(self, prevEntity):
 			self.guiSessionProvider.shared.feedback.hideVehicleDamagedDevices()
 	return
 
-@XModLib.HookUtils.methodHookExt(_inject_hooks_, Avatar.PlayerAvatar, 'targetFocus')
+@XModLib.HookUtils.methodHookExt(p_inject_hooks, Avatar.PlayerAvatar, 'targetFocus')
 def new_PlayerAvatar_targetFocus(self, entity):
 	extrasInfoController = getattr(self, 'XExtrasInfoController', None)
 	if extrasInfoController is not None and getattr(self, '_maySeeOtherVehicleDamagedDevices', False):
@@ -244,14 +275,14 @@ def new_PlayerAvatar_targetFocus(self, entity):
 				self.guiSessionProvider.shared.feedback.showVehicleDamagedDevices(entity.id, *extrasInfoEntry)
 	return
 
-@XModLib.HookUtils.propertyHookExt(_inject_hooks_, Avatar.PlayerAvatar, '_PlayerAvatar__maySeeOtherVehicleDamagedDevices', XModLib.HookUtils.PropertyAction.GET, '_maySeeOtherVehicleDamagedDevices', invoke=XModLib.HookUtils.HookInvoke.MASTER)
+@XModLib.HookUtils.propertyHookExt(p_inject_hooks, Avatar.PlayerAvatar, '_PlayerAvatar__maySeeOtherVehicleDamagedDevices', XModLib.HookUtils.PropertyAction.GET, '_maySeeOtherVehicleDamagedDevices', invoke=XModLib.HookUtils.HookInvoke.MASTER)
 def new_PlayerAvatar_maySeeOtherVehicleDamagedDevices_getter(old_PlayerAvatar_maySeeOtherVehicleDamagedDevices_getter, self):
 	return old_PlayerAvatar_maySeeOtherVehicleDamagedDevices_getter(self) and getattr(self, 'XExtrasInfoController', None) is None
 
 # ------------------- #
 #    Vehicle Hooks    #
 # ------------------- #
-@XModLib.HookUtils.methodHookExt(_inject_hooks_, Vehicle.Vehicle, 'stopVisual', invoke=XModLib.HookUtils.HookInvoke.PRIMARY)
+@XModLib.HookUtils.methodHookExt(p_inject_hooks, Vehicle.Vehicle, 'stopVisual', invoke=XModLib.HookUtils.HookInvoke.PRIMARY)
 def new_Vehicle_stopVisual(self, *args, **kwargs):
 	# When vehicle disappears we should cancel an active request related to it.
 	extrasInfoController = getattr(BigWorld.player(), 'XExtrasInfoController', None)
@@ -259,7 +290,7 @@ def new_Vehicle_stopVisual(self, *args, **kwargs):
 		extrasInfoController.cancelExtrasInfoRequest(self.id)
 	return
 
-@XModLib.HookUtils.methodHookExt(_inject_hooks_, Vehicle.Vehicle, '_Vehicle__onVehicleDeath')
+@XModLib.HookUtils.methodHookExt(p_inject_hooks, Vehicle.Vehicle, '_Vehicle__onVehicleDeath')
 def new_Vehicle_onVehicleDeath(self, isDeadStarted=False):
 	# This method is also called when dead target appears (player enters its drawing area).
 	if isDeadStarted:

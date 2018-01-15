@@ -29,10 +29,70 @@ import XModLib.KeyboardUtils
 import XModLib.ClientMessages
 import XModLib.TargetScanners
 
+# ----------------------------------- #
+#    Plug-in default configuration    #
+# ----------------------------------- #
+g_globals['appDefaultConfig']['plugins']['safeShot'] = {
+	'enabled': ('Bool', False),
+	'activated': ('Bool', True),
+	'shortcut': ('AdvancedShortcut', {
+		'sequence': ('String', 'KEY_LALT'),
+		'switch': ('Bool', False),
+		'invert': ('Bool', True)
+	}),
+	'message': {
+		'onActivate': ('LocalizedWideString', u'[SafeShot] ENABLED.'),
+		'onDeactivate': ('LocalizedWideString', u'[SafeShot] DISABLED.')
+	},
+	'useGunTarget': ('Bool', True),
+	'considerBlueHostile': ('Bool', False),
+	'fragExpirationTimeout': ('Float', 2.0),
+	'template': ('LocalizedStandardTemplate', u'[{reason}] Shot has been blocked.'),
+	'reasons': {
+		'team': {
+			'enabled': ('Bool', True),
+			'chat': {
+				'enabled': ('Bool', True),
+				'message': ('LocalizedStandardTemplate', u'{player} ({vehicle}), you\'re in my line of fire!')
+			},
+			'template': ('LocalizedWideString', u'friendly')
+		},
+		'dead': {
+			'enabled': ('Bool', True),
+			'template': ('LocalizedWideString', u'corpse')
+		},
+		'waste': {
+			'enabled': ('Bool', False),
+			'template': ('LocalizedWideString', u'waste')
+		}
+	}
+}
+
+# ----------------------------------------- #
+#    Plug-in configuration reading stage    #
+# ----------------------------------------- #
+g_config['plugins']['safeShot'] = g_globals['appConfigReader'](
+	XModLib.XMLConfigReader.overrideOpenSubSection(g_globals['appConfigFile'], 'plugins/safeShot'),
+	g_globals['appDefaultConfig']['plugins']['safeShot']
+)
+
+# ------------------------------------ #
+#    Plug-in hooks injection events    #
+# ------------------------------------ #
+p_inject_hooks = XModLib.HookUtils.HookEvent()
+p_inject_ovrds = XModLib.HookUtils.HookEvent()
+
+# ------------------------ #
+#    Plug-in init stage    #
+# ------------------------ #
+if g_config['applicationEnabled'] and g_config['plugins']['safeShot']['enabled']:
+	p_inject_stage_main += p_inject_hooks
+	p_inject_stage_init += p_inject_ovrds
+
 # -------------------------- #
 #    GunControlMode Hooks    #
 # -------------------------- #
-@XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.control_modes._GunControlMode, 'updateGunMarker')
+@XModLib.HookUtils.methodHookExt(p_inject_hooks, AvatarInputHandler.control_modes._GunControlMode, 'updateGunMarker')
 def new_GunControlMode_updateGunMarker(self, markerType, pos, dir, size, relaxTime, collData):
 	gunTarget = collData.entity if collData is not None else None
 	if markerType == AvatarInputHandler.aih_constants.GUN_MARKER_TYPE.CLIENT:
@@ -44,7 +104,7 @@ def new_GunControlMode_updateGunMarker(self, markerType, pos, dir, size, relaxTi
 # ------------------- #
 #    Vehicle Hooks    #
 # ------------------- #
-@XModLib.HookUtils.methodHookExt(_inject_hooks_, Vehicle.Vehicle, '_Vehicle__onVehicleDeath')
+@XModLib.HookUtils.methodHookExt(p_inject_hooks, Vehicle.Vehicle, '_Vehicle__onVehicleDeath')
 def new_Vehicle_onVehicleDeath(self, isDeadStarted=False):
 	if not isDeadStarted:
 		self._deathTime = BigWorld.time()
@@ -53,15 +113,15 @@ def new_Vehicle_onVehicleDeath(self, isDeadStarted=False):
 # ------------------------------- #
 #    SafeShotControlMode Hooks    #
 # ------------------------------- #
-@XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.control_modes.ArcadeControlMode, 'handleKeyEvent')
-@XModLib.HookUtils.methodHookExt(_inject_hooks_, AvatarInputHandler.control_modes.SniperControlMode, 'handleKeyEvent')
+@XModLib.HookUtils.methodHookExt(p_inject_hooks, AvatarInputHandler.control_modes.ArcadeControlMode, 'handleKeyEvent')
+@XModLib.HookUtils.methodHookExt(p_inject_hooks, AvatarInputHandler.control_modes.SniperControlMode, 'handleKeyEvent')
 def new_SafeShotControlMode_handleKeyEvent(self, isDown, key, mods, event=None):
 	## Keyboard event parsing
 	kbevent = XModLib.KeyboardUtils.KeyboardEvent(event)
 	## AvatarInputHandler started, not detached, control mode supported (for AvatarInputHandler shortcuts)
 	if True:
 		## HotKeys - SafeShot
-		mconfig = _config_['plugins']['safeShot']
+		mconfig = g_config['plugins']['safeShot']
 		if mconfig['enabled']:
 			## HotKeys - SafeShot - Global
 			fconfig = mconfig
@@ -88,9 +148,9 @@ def new_SafeShotControlMode_handleKeyEvent(self, isDown, key, mods, event=None):
 # ------------------------ #
 #    PlayerAvatar Hooks    #
 # ------------------------ #
-@XModLib.HookUtils.methodHookExt(_inject_hooks_, Avatar.PlayerAvatar, 'shoot', invoke=XModLib.HookUtils.HookInvoke.MASTER)
+@XModLib.HookUtils.methodHookExt(p_inject_hooks, Avatar.PlayerAvatar, 'shoot', invoke=XModLib.HookUtils.HookInvoke.MASTER)
 def new_PlayerAvatar_shoot(old_PlayerAvatar_shoot, self, *args, **kwargs):
-	config = _config_['plugins']['safeShot']
+	config = g_config['plugins']['safeShot']
 	def isIgnoredCtrlMode(ctrlModeName):
 		return ctrlModeName not in (AvatarInputHandler.aih_constants.CTRL_MODE_NAME.ARCADE, AvatarInputHandler.aih_constants.CTRL_MODE_NAME.SNIPER)
 	if not config['enabled'] or not config['activated'] or isIgnoredCtrlMode(self.inputHandler.ctrlModeName):

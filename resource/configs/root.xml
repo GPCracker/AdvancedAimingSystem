@@ -8,12 +8,15 @@
 	<!-- Global parameter. Enables mod loading and hook injection. -->
 	<!-- Глобальный параметр. Разрешает загрузку мода и внедрение хуков. -->
 	<applicationEnabled>True</applicationEnabled>
-	<!-- System message when mod is loaded correctly. HTML partially supported. -->
-	<!-- Системное сообщение при удачной загрузке мода. Частичная поддержка HTML. -->
-	<appLoadedMessage>#AdvancedAimingSystem:appLoadedMessage;</appLoadedMessage>
-	<!-- System message when mod is not loaded correctly. HTML partially supported. -->
-	<!-- Системное сообщение при неудачной загрузке мода. Частичная поддержка HTML. -->
-	<appFailedMessage>#AdvancedAimingSystem:appFailedMessage;</appFailedMessage>
+	<!-- Disables client version compability check. Advanced users only. -->
+	<!-- Отключает проверку совместимости версии клиента. Для опытных пользователей. -->
+	<ignoreClientVersion>False</ignoreClientVersion>
+	<!-- System message when mod is loaded (game client version is expected). HTML partially supported. -->
+	<!-- Системное сообщение при загрузке мода (ожидаемая версия клиента игры). Частичная поддержка HTML. -->
+	<appSuccessMessage>#AdvancedAimingSystem:appSuccessMessage;</appSuccessMessage>
+	<!-- System message when mod is loaded (game client version is unexpected). HTML partially supported. -->
+	<!-- Системное сообщение при загрузке мода (неожиданная версия клиента игры). Частичная поддержка HTML. -->
+	<appWarningMessage>#AdvancedAimingSystem:appWarningMessage;</appWarningMessage>
 	<!-- Basic modules settings. -->
 	<!-- Настройки базовых модулей. -->
 	<modules override="../mods/configs/GPCracker.AdvancedAimingSystem/modules.xml" />

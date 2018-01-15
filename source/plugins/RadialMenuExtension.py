@@ -26,15 +26,45 @@ import gui.Scaleform.daapi.view.battle.shared.radial_menu
 # ------------------- #
 import XModLib.HookUtils
 
+# ----------------------------------- #
+#    Plug-in default configuration    #
+# ----------------------------------- #
+g_globals['appDefaultConfig']['plugins']['radialMenu'] = {
+	'enabled': ('Bool', False),
+	'useTargetScan': ('Bool', False),
+	'useTargetInfo': ('Bool', False)
+}
+
+# ----------------------------------------- #
+#    Plug-in configuration reading stage    #
+# ----------------------------------------- #
+g_config['plugins']['radialMenu'] = g_globals['appConfigReader'](
+	XModLib.XMLConfigReader.overrideOpenSubSection(g_globals['appConfigFile'], 'plugins/radialMenu'),
+	g_globals['appDefaultConfig']['plugins']['radialMenu']
+)
+
+# ------------------------------------ #
+#    Plug-in hooks injection events    #
+# ------------------------------------ #
+p_inject_hooks = XModLib.HookUtils.HookEvent()
+p_inject_ovrds = XModLib.HookUtils.HookEvent()
+
+# ------------------------ #
+#    Plug-in init stage    #
+# ------------------------ #
+if g_config['applicationEnabled'] and g_config['plugins']['radialMenu']['enabled']:
+	p_inject_stage_main += p_inject_hooks
+	p_inject_stage_init += p_inject_ovrds
+
 # ---------------------- #
 #    RadialMenu Hooks    #
 # ---------------------- #
-@XModLib.HookUtils.methodAddExt(_inject_hooks_, gui.Scaleform.daapi.view.battle.shared.radial_menu.RadialMenu, 'show')
+@XModLib.HookUtils.methodAddExt(p_inject_ovrds, gui.Scaleform.daapi.view.battle.shared.radial_menu.RadialMenu, 'show')
 def new_RadialMenu_show(self):
 	player = BigWorld.player()
 	target = BigWorld.target()
 	# Target substitution begins.
-	config = _config_['plugins']['radialMenu']
+	config = g_config['plugins']['radialMenu']
 	if target is None and config['useTargetScan']:
 		targetScanner = getattr(player.inputHandler, 'XTargetScanner', None)
 		if targetScanner is not None:
@@ -58,12 +88,12 @@ def new_RadialMenu_show(self):
 # ---------------------------------- #
 #    ChatCommandsController Hooks    #
 # ---------------------------------- #
-@XModLib.HookUtils.methodAddExt(_inject_hooks_, gui.battle_control.controllers.chat_cmd_ctrl.ChatCommandsController, 'handleShortcutChatCommand')
+@XModLib.HookUtils.methodAddExt(p_inject_ovrds, gui.battle_control.controllers.chat_cmd_ctrl.ChatCommandsController, 'handleShortcutChatCommand')
 def new_ChatCommandsController_handleShortcutChatCommand(self, key):
 	player = BigWorld.player()
 	target = BigWorld.target()
 	# Target substitution begins.
-	config = _config_['plugins']['radialMenu']
+	config = g_config['plugins']['radialMenu']
 	if target is None and config['useTargetScan']:
 		targetScanner = getattr(player.inputHandler, 'XTargetScanner', None)
 		if targetScanner is not None:

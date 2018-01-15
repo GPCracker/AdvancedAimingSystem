@@ -5,6 +5,7 @@
 <!-- *** It is recommended to use Notepad++, Sublime Text or any other professional text editor for making changes in this file. *** -->
 <!-- *** Official topic: http://www.koreanrandom.com/forum/topic/16559-/ *** -->
 <root>
+	<enabled>False</enabled>
 	<!-- Enables real time scanning result substitution while locking on target. -->
 	<!-- Разрешает подстановку результата сканирования в реальном времени при захвате цели. -->
 	<useTargetScan>False</useTargetScan>

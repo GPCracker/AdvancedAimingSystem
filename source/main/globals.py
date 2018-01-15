@@ -1,7 +1,9 @@
 # ---------------------- #
 #    Global variables    #
 # ---------------------- #
-_globals_ = {
-	'appResultMessage': None,
-	'appResultMessageFlag': False
+g_globals = {
+	'appConfigFile': None,
+	'appConfigReader': None,
+	'appDefaultConfig': None,
+	'appLoadingMessage': None
 }

@@ -8,11 +8,11 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-msgid "appLoadedMessage"
-msgstr "<a href='event:AdvancedAimingSystem.official_topic'><font color='#0080FF'>\"Улучшенная&nbsp;система&nbsp;прицеливания\" (AdvancedAimingSystem)</font></a> <font color='#008000'>загружена.</font>"
+msgid "appSuccessMessage"
+msgstr "<a href='event:AdvancedAimingSystem.official_topic'><font color='#0080FF'>\"Улучшенная&nbsp;система&nbsp;прицеливания\" (AdvancedAimingSystem)</font></a> <font color='#008000'>успешно загружена.</font>"
 
-msgid "appFailedMessage"
-msgstr "<a href='event:AdvancedAimingSystem.official_topic'><font color='#0080FF'>\"Улучшенная&nbsp;система&nbsp;прицеливания\" (AdvancedAimingSystem)</font></a> <font color='#E00000'>несовместима с текущей версией клиента.</font>"
+msgid "appWarningMessage"
+msgstr "<a href='event:AdvancedAimingSystem.official_topic'><font color='#0080FF'>\"Улучшенная&nbsp;система&nbsp;прицеливания\" (AdvancedAimingSystem)</font></a> <font color='#E00000'>не была протестирована с текущей версией клиента.</font>"
 
 msgid "targetScanner/autoScan/onActivate"
 msgstr "[СКАНЕР] АВТОРЕЖИМ АКТИВИРОВАН."
