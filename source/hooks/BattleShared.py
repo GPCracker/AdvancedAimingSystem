@@ -32,5 +32,7 @@ def new_BattleShared_getBusinessHandlers(old_BattleShared_getBusinessHandlers, *
 @XModLib.HookUtils.methodHookExt(g_inject_hooks, gui.Scaleform.daapi.view.battle.shared.SharedPage, '_populate', invoke=XModLib.HookUtils.HookInvoke.SECONDARY)
 def new_SharedPage_populate(self, *args, **kwargs):
 	if g_config['gui']['enabled']:
-		self.app.loadView(gui.Scaleform.framework.managers.loaders.ViewLoadParams(GuiSettings.LOADER_VIEW_ALIAS))
+		self.as_createBattlePagePanelS(GuiSettings.CORRECTION_PANEL_ALIAS, 'TextPanel', 0)
+		self.as_createBattlePagePanelS(GuiSettings.TARGET_PANEL_ALIAS, 'TextPanel', 1)
+		self.as_createBattlePagePanelS(GuiSettings.AIMING_PANEL_ALIAS, 'TextPanel', 2)
 	return

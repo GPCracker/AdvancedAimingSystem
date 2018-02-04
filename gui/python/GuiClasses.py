@@ -1,26 +1,6 @@
 # ----------------- #
 #    Gui Classes    #
 # ----------------- #
-class GuiLoaderView(XModLib.pygui.battle.views.PanelsLoaderView.PanelsLoaderView):
-	INFO_PANELS = (
-		('AdvancedAimingSystemCorrectionPanel', 'TextPanel', 0),
-		('AdvancedAimingSystemTargetPanel', 'TextPanel', 1),
-		('AdvancedAimingSystemAimingPanel', 'TextPanel', 2)
-	)
-
-	def _populate(self):
-		super(GuiLoaderView, self)._populate()
-		for panelAlias, panelClass, panelIndex in self.INFO_PANELS:
-			self.as_createBattlePagePanelS(panelAlias, panelClass, panelIndex)
-		self.app.containerManager.onViewAddedToContainer += self.__onViewAddedToContainer
-		return
-
-	def __onViewAddedToContainer(self, container, view):
-		if view.alias == self.alias:
-			self.app.containerManager.onViewAddedToContainer -= self.__onViewAddedToContainer
-			self.destroy()
-		return
-
 class GuiInfoPanelContextMenuHandler(XModLib.pygui.battle.views.handlers.ContextMenuHandler.ContextMenuHandler):
 	OPTIONS = (
 		('hideInfoPanel', '_hideInfoPanel', g_config['gui']['panels']['context']['hideInfoPanel'], '', True, None),
@@ -152,8 +132,6 @@ class GuiSettings(object):
 	CORRECTION_PANEL_ALIAS = 'AdvancedAimingSystemCorrectionPanel'
 	TARGET_PANEL_ALIAS = 'AdvancedAimingSystemTargetPanel'
 	AIMING_PANEL_ALIAS = 'AdvancedAimingSystemAimingPanel'
-	LOADER_VIEW_ALIAS = 'AdvancedAimingSystemLoaderView'
-	SWF_PATH = 'AdvancedAimingSystem.swf'
 
 	@staticmethod
 	def getContextMenuHandlers():
@@ -168,8 +146,7 @@ class GuiSettings(object):
 		return (
 			GuiCorrectionPanel.getSettings(GuiSettings.CORRECTION_PANEL_ALIAS),
 			GuiTargetPanel.getSettings(GuiSettings.TARGET_PANEL_ALIAS),
-			GuiAimingPanel.getSettings(GuiSettings.AIMING_PANEL_ALIAS),
-			GuiLoaderView.getSettings(GuiSettings.LOADER_VIEW_ALIAS, GuiSettings.SWF_PATH)
+			GuiAimingPanel.getSettings(GuiSettings.AIMING_PANEL_ALIAS)
 		)
 
 class GuiEvent(gui.shared.events.GameEvent):

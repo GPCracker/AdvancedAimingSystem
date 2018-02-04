@@ -34,14 +34,8 @@ import AvatarInputHandler.aih_global_binding
 # -------------------- #
 import gui.shared
 import gui.shared.events
-import gui.app_loader
 import gui.app_loader.settings
-import gui.Scaleform.framework
-import gui.Scaleform.framework.ViewTypes
 import gui.Scaleform.framework.package_layout
-import gui.Scaleform.framework.managers.loaders
-import gui.Scaleform.genConsts.BATTLE_VIEW_ALIASES
-import gui.Scaleform.daapi.settings.views
 
 # ---------------------- #
 #    WoT Client Hooks    #
@@ -57,6 +51,7 @@ import AvatarInputHandler.AimingSystems.StrategicAimingSystem
 # -------------------------- #
 #    WoT Client GUI Hooks    #
 # -------------------------- #
+import gui.Scaleform.battle_entry
 import gui.Scaleform.daapi.view.battle.shared
 
 # ------------------- #
@@ -83,6 +78,6 @@ import XModLib.XMLConfigReader
 # ----------------------- #
 #    X-Mod GUI Library    #
 # ----------------------- #
-import XModLib.pygui.battle.views.PanelsLoaderView
+import XModLib.pygui.battle.library
 import XModLib.pygui.battle.views.handlers.ContextMenuHandler
 import XModLib.pygui.battle.views.components.panels.TextPanel

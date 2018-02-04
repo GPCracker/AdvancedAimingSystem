@@ -52,7 +52,7 @@
 	</includeLibraries>
 	<!-- SWC Libraries -->
 	<libraryPaths>
-		<element path="swc/XModLib.swc" />
+		<!-- example: <element path="..." /> -->
 	</libraryPaths>
 	<!-- External Libraries -->
 	<externalLibraryPaths>
@@ -61,6 +61,7 @@
 		<element path="swc/wg/battle.swc" />
 		<element path="swc/wg/gui_base.swc" />
 		<element path="swc/wg/gui_battle.swc" />
+		<element path="swc/XModLib.swc" />
 	</externalLibraryPaths>
 	<!-- Runtime Shared Libraries -->
 	<rslPaths>
@@ -76,7 +77,7 @@
 	</library>
 	<!-- Class files to compile (other referenced classes will automatically be included) -->
 	<compileTargets>
-		<compile path="src/net/GPCracker/AdvancedAimingSystem/LoaderView.as" />
+		<compile path="src/net/GPCracker/AdvancedAimingSystem/LibraryMain.as" />
 	</compileTargets>
 	<!-- Paths to exclude from the Project Explorer tree -->
 	<hiddenPaths>
