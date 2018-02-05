@@ -63,7 +63,7 @@ class TargetInfo(int):
 
 	def getDistance(self, actualOnly=False):
 		position = self.getPosition(actualOnly)
-		return position.distTo(BigWorld.player().position) if position is not None else None
+		return position.distTo(BigWorld.player().getOwnVehiclePosition()) if position is not None else None
 
 	def getHeightVector(self, actualOnly=False):
 		vehicle = self.getVehicle()
