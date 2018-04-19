@@ -159,7 +159,7 @@ def new_MatrixFactory_makeArtyAimPointMatrix(old_MatrixFactory_makeArtyAimPointM
 # --------------------------- #
 @XModLib.HookUtils.methodHookExt(p_inject_hooks, AvatarInputHandler.control_modes.ArtyControlMode, 'handleKeyEvent', invoke=XModLib.HookUtils.HookInvoke.MASTER)
 def new_ArtyControlMode_handleKeyEvent(old_ArtyControlMode_handleKeyEvent, self, isDown, key, mods, event=None):
-	result = old_ArtyControlMode_handleKeyEvent(self, isDown, key, mods, event=event)
+	result = old_ArtyControlMode_handleKeyEvent(self, isDown, key, mods, event)
 	## Keyboard event parsing
 	kbevent = XModLib.KeyboardUtils.KeyboardEvent(event)
 	## AvatarInputHandler started, not detached, control mode supported, event not handled by game (for AvatarInputHandler core switches)

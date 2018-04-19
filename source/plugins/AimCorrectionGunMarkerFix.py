@@ -64,18 +64,13 @@ def new_VehicleGunRotator_getGunMarkerPosition(self, shotPoint, shotVector, disp
 			result = aimCorrection.getGunMarkerCollisionPoint(collisionTestStart, collisionTestStop)
 			return (result, ) if result is not None else None
 		return None
-	collisionEntities = ProjectileMover.getCollidableEntities(
-		(self._VehicleGunRotator__avatar.playerVehicleID, ),
-		shotPoint,
-		shotPoint + shotVector * 10000.0
-	)
 	def colliderMaterial(collisionTestStart, collisionTestStop):
-		return ProjectileMover.collideVehiclesAndStaticScene(collisionTestStart, collisionTestStop, collisionEntities)
+		return ProjectileMover.collideDynamicAndStatic(collisionTestStart, collisionTestStop, (self.getAttachedVehicleID(), ))
 	def colliderSpace(collisionTestStart, collisionTestStop):
 		result = self._VehicleGunRotator__avatar.arena.collideWithSpaceBB(collisionTestStart, collisionTestStop)
 		return (result, ) if result is not None else None
 	colliders = (colliderCorrection, colliderMaterial, colliderSpace)
-	vehicleTypeDescriptor = self._VehicleGunRotator__avatar.vehicleTypeDescriptor
+	vehicleTypeDescriptor = self._VehicleGunRotator__avatar.getVehicleDescriptor()
 	shotGravity = Math.Vector3(0.0, -1.0, 0.0).scale(vehicleTypeDescriptor.shot.gravity)
 	shotMaxDistance = vehicleTypeDescriptor.shot.maxDistance
 	hitPoint, hitVector, hitResult, hitCollider = XModLib.CollisionUtils.computeProjectileTrajectoryEnd(shotPoint, shotVector, shotGravity, colliders)

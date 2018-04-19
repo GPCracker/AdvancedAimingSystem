@@ -1,8 +1,9 @@
 __application__ = ('Advanced Aiming System Mod', 'AdvancedAimingSystem', 'GPCracker.AdvancedAimingSystem')
 __official_topic__ = 'http://www.koreanrandom.com/forum/topic/16559-/'
 __authors__ = ('GPCracker', )
+__bugfixes__ = ('Tempora', )
 __version__ = ('<<version>>', None)
-__xmodlib__ = ('v0.1.17', None)
+__xmodlib__ = ('v0.1.18', None)
 __client__ = (('ru', ), '<<client>>')
 
 # ---------------------- #

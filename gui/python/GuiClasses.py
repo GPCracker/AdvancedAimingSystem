@@ -66,7 +66,6 @@ class GuiAimingPanelContextMenuHandler(GuiInfoPanelContextMenuHandler):
 class GuiInfoPanel(XModLib.pygui.battle.views.components.panels.TextPanel.TextPanel):
 	def __init__(self, *args, **kwargs):
 		super(GuiInfoPanel, self).__init__(*args, **kwargs)
-		self.__alias = None
 		self.__config = {
 			'template': ''
 		}
@@ -74,17 +73,16 @@ class GuiInfoPanel(XModLib.pygui.battle.views.components.panels.TextPanel.TextPa
 
 	def py_onPanelDrag(self, x, y):
 		super(GuiInfoPanel, self).py_onPanelDrag(x, y)
-		self.fireEvent(GuiEvent(GuiEvent.INFO_PANEL_DRAG, {'alias': self.__alias, 'position': (x, y)}), gui.shared.EVENT_BUS_SCOPE.BATTLE)
+		self.fireEvent(GuiEvent(GuiEvent.INFO_PANEL_DRAG, {'alias': self.getAlias(), 'position': (x, y)}), gui.shared.EVENT_BUS_SCOPE.BATTLE)
 		return
 
 	def py_onPanelDrop(self, x, y):
 		super(GuiInfoPanel, self).py_onPanelDrop(x, y)
-		self.fireEvent(GuiEvent(GuiEvent.INFO_PANEL_DROP, {'alias': self.__alias, 'position': (x, y)}), gui.shared.EVENT_BUS_SCOPE.BATTLE)
+		self.fireEvent(GuiEvent(GuiEvent.INFO_PANEL_DROP, {'alias': self.getAlias(), 'position': (x, y)}), gui.shared.EVENT_BUS_SCOPE.BATTLE)
 		return
 
 	def _populate(self):
 		super(GuiInfoPanel, self)._populate()
-		self.__alias = self.flashObject.name if self._isDAAPIInited() else None
 		self.addListener(GuiEvent.INFO_PANEL_CONFIG, self._handlePanelConfigEvent, gui.shared.EVENT_BUS_SCOPE.BATTLE)
 		self.addListener(GuiEvent.INFO_PANEL_UPDATE, self._handlePanelUpdateEvent, gui.shared.EVENT_BUS_SCOPE.BATTLE)
 		return
@@ -96,12 +94,12 @@ class GuiInfoPanel(XModLib.pygui.battle.views.components.panels.TextPanel.TextPa
 		return
 
 	def _handlePanelConfigEvent(self, event):
-		if event.ctx['alias'] == self.__alias:
+		if event.ctx['alias'] == self.getAlias():
 			self.updateConfig(event.ctx['config'])
 		return
 
 	def _handlePanelUpdateEvent(self, event):
-		if event.ctx['alias'] == self.__alias:
+		if event.ctx['alias'] == self.getAlias():
 			self.updateMacroData(event.ctx['macrodata'])
 		return
 

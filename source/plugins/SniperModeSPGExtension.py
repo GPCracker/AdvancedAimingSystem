@@ -90,7 +90,7 @@ def new_ArcadeControlMode_activateAlternateMode(self, pos=None, bByScroll=False)
 
 @XModLib.HookUtils.methodHookExt(p_inject_hooks, AvatarInputHandler.control_modes.ArcadeControlMode, 'handleKeyEvent', invoke=XModLib.HookUtils.HookInvoke.MASTER)
 def new_ArcadeControlMode_handleKeyEvent(old_ArcadeControlMode_handleKeyEvent, self, isDown, key, mods, event=None):
-	result = old_ArcadeControlMode_handleKeyEvent(self, isDown, key, mods, event=event)
+	result = old_ArcadeControlMode_handleKeyEvent(self, isDown, key, mods, event)
 	## Keyboard event parsing
 	kbevent = XModLib.KeyboardUtils.KeyboardEvent(event)
 	## AvatarInputHandler started, not detached, control mode supported, event not handled by game (for AvatarInputHandler core switches)
@@ -117,7 +117,7 @@ def new_ArcadeControlMode_handleKeyEvent(old_ArcadeControlMode_handleKeyEvent, s
 # ----------------------------- #
 @XModLib.HookUtils.methodHookExt(p_inject_hooks, AvatarInputHandler.control_modes.SniperControlMode, 'handleKeyEvent', invoke=XModLib.HookUtils.HookInvoke.MASTER)
 def new_SniperControlMode_handleKeyEvent(old_SniperControlMode_handleKeyEvent, self, isDown, key, mods, event=None):
-	result = old_SniperControlMode_handleKeyEvent(self, isDown, key, mods, event=event)
+	result = old_SniperControlMode_handleKeyEvent(self, isDown, key, mods, event)
 	## Keyboard event parsing
 	kbevent = XModLib.KeyboardUtils.KeyboardEvent(event)
 	## AvatarInputHandler started, not detached, control mode supported, event not handled by game (for AvatarInputHandler core switches)
